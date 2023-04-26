@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "rootDir": "../src",
+    "outDir": "../dist/cjs",
+    "declarationDir": "../dist/cjs/types",
+    "module": "commonjs",
+    "moduleResolution": "node",
+  }
+}
