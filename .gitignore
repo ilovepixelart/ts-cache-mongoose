@@ -1,0 +1,14 @@
+# Dependency directory
+node_modules
+dist
+coverage
+
+# npm debug logs
+npm-debug.log
+
+# Webstorm
+.idea
+.env
+
+# Inmemmory mongo config
+/globalConfig.json
