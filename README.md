@@ -20,3 +20,6 @@ Patch history (audit log) & events plugin for mongoose
 ts-cache-mongoose is a plugin for mongoose
 \
 Caching queries is a good way to improve performance of your application
+
+This is initial release 0.0.1 of the plugin, so it may contain bugs
+I will be glad to receive your feedback and suggestions
