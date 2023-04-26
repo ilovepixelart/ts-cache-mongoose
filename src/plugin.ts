@@ -29,6 +29,7 @@ class CacheMongoose {
     // Private constructor to prevent external instantiation
   }
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   public static init (mongoose: Mongoose, cacheMongooseOptions: ICacheMongooseOptions): CacheMongoose {
     if (typeof mongoose.Model.hydrate !== 'function') throw new Error('Cache is only compatible with versions of mongoose that implement the `model.hydrate` method')
     if (!this.instance) {
