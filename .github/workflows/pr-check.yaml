@@ -75,6 +75,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=ilovepixelart
+            -Dsonar.projectName=ts-cache-mongoose
             -Dsonar.projectKey=ilovepixelart_ts-cache-mongoose
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.sources=src
