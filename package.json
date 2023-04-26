@@ -103,7 +103,6 @@
     "merge": "2.1.1",
     "mongoose": "6.10.5",
     "open-cli": "7.2.0",
-    "ts-node": "10.9.1",
     "typescript": "5.0.4"
   },
   "peerDependencies": {
