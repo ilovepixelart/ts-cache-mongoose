@@ -1,6 +1,6 @@
 # ts-cache-mongoose
 
-Patch history (audit log) & events plugin for mongoose
+Cache queries in mongoose using memory or redis
 
 [![npm](https://img.shields.io/npm/v/ts-cache-mongoose)](https://www.npmjs.com/package/ts-cache-mongoose)
 [![npm](https://img.shields.io/npm/dt/ts-cache-mongoose)](https://www.npmjs.com/package/ts-cache-mongoose)
