@@ -1,25 +1,30 @@
 import ms from 'ms'
 
 import type ICacheEngine from '../interfaces/ICacheEngine'
+import type ICacheOptions from '../interfaces/ICacheOptions'
 
 import MemoryCacheEngine from './engine/MemoryCacheEngine'
 import RedisCacheEngine from './engine/RedisCacheEngine'
 
 export const engines = ['memory', 'redis'] as const
 
-class Cache {
+class CacheEngine {
   private engine: ICacheEngine
   private defaultTTL: number
 
-  constructor (engineName: 'memory' | 'redis', defaultTTL: string) {
-    if (!engines.includes(engineName)) {
-      throw new Error(`Invalid engine name: ${engineName}`)
+  constructor (cacheOptions: ICacheOptions) {
+    if (!engines.includes(cacheOptions.engine)) {
+      throw new Error(`Invalid engine name: ${cacheOptions.engine}`)
     }
 
-    this.defaultTTL = ms(defaultTTL)
+    if (cacheOptions.engine === 'redis' && !cacheOptions.engineOptions) {
+      throw new Error(`Engine options are required for ${cacheOptions.engine} engine`)
+    }
 
-    if (engineName === 'redis') {
-      this.engine = new RedisCacheEngine()
+    this.defaultTTL = ms(cacheOptions.defaultTTL ?? '1 minute')
+
+    if (cacheOptions.engine === 'redis') {
+      this.engine = new RedisCacheEngine(cacheOptions.engineOptions ?? {})
     } else {
       this.engine = new MemoryCacheEngine()
     }
@@ -41,6 +46,10 @@ class Cache {
   async clear (): Promise<void> {
     return await this.engine.clear()
   }
+
+  async close (): Promise<void> {
+    return await this.engine.close()
+  }
 }
 
-export default Cache
+export default CacheEngine

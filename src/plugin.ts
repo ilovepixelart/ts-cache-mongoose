@@ -3,7 +3,7 @@ import ms from 'ms'
 import Cache from './cache/Cache'
 
 import type { Mongoose } from 'mongoose'
-import type ICacheMongooseOptions from './interfaces/ICacheMongooseOptions'
+import type ICacheOptions from './interfaces/ICacheOptions'
 import { getKey } from './crypto'
 
 declare module 'mongoose' {
@@ -24,17 +24,19 @@ class CacheMongoose {
   // eslint-disable-next-line no-use-before-define
   private static instance: CacheMongoose | undefined
   private cache!: Cache
+  private cacheOptions!: ICacheOptions
 
   private constructor () {
     // Private constructor to prevent external instantiation
   }
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  public static init (mongoose: Mongoose, cacheMongooseOptions: ICacheMongooseOptions): CacheMongoose {
+  public static init (mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
     if (typeof mongoose.Model.hydrate !== 'function') throw new Error('Cache is only compatible with versions of mongoose that implement the `model.hydrate` method')
     if (!this.instance) {
       this.instance = new CacheMongoose()
-      this.instance.cache = new Cache(cacheMongooseOptions.engine, cacheMongooseOptions.defaultTTL = '1 minute')
+      this.instance.cache = new Cache(cacheOptions)
+      this.instance.cacheOptions = cacheOptions
 
       const cache = this.instance.cache
 
@@ -116,6 +118,12 @@ class CacheMongoose {
       return
     }
     await this.cache.del(customKey)
+  }
+
+  public async close (): Promise<void> {
+    if (this.cacheOptions.engine === 'redis') {
+      await this.cache.close()
+    }
   }
 }
 
