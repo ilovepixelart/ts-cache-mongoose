@@ -26,7 +26,7 @@ Work in progress...
 
 ## Features
 
-- [x] In memory caching
+- [x] Memory caching
 - [x] Redis caching
 - [x] Cache expiration
 - [x] Cache invalidation
