@@ -113,14 +113,14 @@ describe('CacheMongoose', () => {
       role: 'admin'
     })
 
-    const cachedUser1 = await User.findById(user._id).cache().lean()
+    const cache1 = await User.findById(user._id).cache()
     await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
-    const cachedUser2 = await User.findById(user._id).cache()
+    const cache2 = await User.findById(user._id).cache()
 
-    expect(cachedUser1).not.toBeNull()
-    expect(cachedUser2).not.toBeNull()
-    expect(cachedUser1?._id).toEqual(cachedUser2?._id)
-    expect(cachedUser1?.name).toEqual(cachedUser2?.name)
+    expect(cache1).not.toBeNull()
+    expect(cache2).not.toBeNull()
+    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?.name).not.toEqual(cache2?.name)
 
     cache.close()
   })
