@@ -22,7 +22,6 @@ describe('CacheMongoose', () => {
 
   beforeEach(async () => {
     await mongoose.connection.collection('users').deleteMany({})
-    await cache.clear()
   })
 
   describe('memory scenarios', () => {
