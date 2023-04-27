@@ -1,18 +1,17 @@
 import _ from 'lodash'
-import ms from 'ms'
 import Cache from './cache/Cache'
 
 import type { Mongoose } from 'mongoose'
-import type ICacheMongooseOptions from './interfaces/ICacheMongooseOptions'
+import type ICacheOptions from './interfaces/ICacheOptions'
 import { getKey } from './crypto'
 
 declare module 'mongoose' {
   interface Query<ResultType, DocType, THelpers, RawDocType> {
-    cache: (this: Query<ResultType, DocType, THelpers, RawDocType>, ttl?: string) => this
+    cache: (this: Query<ResultType, DocType, THelpers, RawDocType>, ttl?: string, customKey?: string) => this
     _key?: string
     getCacheKey: (this: Query<ResultType, DocType, THelpers, RawDocType>) => string
-    _ttl: number
-    getCacheTTL: (this: Query<ResultType, DocType, THelpers, RawDocType>) => number
+    _ttl?: string
+    getCacheTTL: (this: Query<ResultType, DocType, THelpers, RawDocType>) => string | undefined
     op?: string
     _fields?: unknown
     _path?: unknown
@@ -24,17 +23,19 @@ class CacheMongoose {
   // eslint-disable-next-line no-use-before-define
   private static instance: CacheMongoose | undefined
   private cache!: Cache
+  private cacheOptions!: ICacheOptions
 
   private constructor () {
     // Private constructor to prevent external instantiation
   }
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  public static init (mongoose: Mongoose, cacheMongooseOptions: ICacheMongooseOptions): CacheMongoose {
+  public static init (mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
     if (typeof mongoose.Model.hydrate !== 'function') throw new Error('Cache is only compatible with versions of mongoose that implement the `model.hydrate` method')
     if (!this.instance) {
       this.instance = new CacheMongoose()
-      this.instance.cache = new Cache(cacheMongooseOptions.engine, cacheMongooseOptions.defaultTTL = '1 minute')
+      this.instance.cache = new Cache(cacheOptions)
+      this.instance.cacheOptions = cacheOptions
 
       const cache = this.instance.cache
 
@@ -72,14 +73,14 @@ class CacheMongoose {
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       mongoose.Query.prototype.cache = function (ttl?: string, customKey?: string) {
-        this._ttl = ms(ttl ?? '1 minute')
+        this._ttl = ttl
         this._key = customKey
         return this
       }
 
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       mongoose.Query.prototype.exec = async function () {
-        if (!_.has(this, '_ttl')) {
+        if (!this._ttl) {
           return mongooseExec.apply(this)
         }
 
@@ -110,12 +111,17 @@ class CacheMongoose {
     return this.instance
   }
 
-  public async clearCache (customKey: string): Promise<void> {
+  public async clear (customKey?: string): Promise<void> {
     if (!customKey) {
-      await this.cache.clear()
-      return
+      return this.cache.clear()
     }
-    await this.cache.del(customKey)
+    return this.cache.del(customKey)
+  }
+
+  public async close (): Promise<void> {
+    if (this.cacheOptions.engine === 'redis') {
+      await this.cache.close()
+    }
   }
 }
 

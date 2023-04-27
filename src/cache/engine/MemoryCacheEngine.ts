@@ -10,6 +10,7 @@ class MemoryCacheEngine implements ICacheEngine {
   get (key: string): Record<string, unknown> | Record<string, unknown>[] | undefined {
     const item = this.cache[key]
     if (!item || item.expiresAt < Date.now()) {
+      this.del(key)
       return undefined
     }
     return item.value
@@ -26,6 +27,10 @@ class MemoryCacheEngine implements ICacheEngine {
 
   clear (): void {
     this.cache = {}
+  }
+
+  close (): void {
+    // do nothing
   }
 }
 

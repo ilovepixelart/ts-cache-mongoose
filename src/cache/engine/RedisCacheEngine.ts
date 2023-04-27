@@ -1,14 +1,16 @@
 import IORedis from 'ioredis'
 
-import type { Redis } from 'ioredis'
-
+import type { Redis, RedisOptions } from 'ioredis'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
 
 class RedisCacheEngine implements ICacheEngine {
   private client: Redis
 
-  constructor () {
-    this.client = new IORedis()
+  constructor (options: RedisOptions) {
+    if (!options.keyPrefix) {
+      options.keyPrefix = 'cache-mongoose:'
+    }
+    this.client = new IORedis(options)
   }
 
   async get (key: string): Promise<Record<string, unknown> | Record<string, unknown>[] | undefined> {
@@ -30,6 +32,10 @@ class RedisCacheEngine implements ICacheEngine {
 
   async clear (): Promise<void> {
     await this.client.flushdb()
+  }
+
+  async close (): Promise<void> {
+    await this.client.quit()
   }
 }
 

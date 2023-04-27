@@ -22,7 +22,50 @@ ts-cache-mongoose is a plugin for mongoose
 Caching queries is a good way to improve performance of your application
 \
 This is initial prerelease of the plugin, so it may contain bugs
-\
-I will be glad to receive your feedback and suggestions
-\
 Work in progress...
+
+## Installation
+
+```bash
+npm install ts-cache-mongoose
+yard add ts-cache-mongoose
+```
+
+- This plugin requires mongoose `>=6.6.x || 7.x` to be installed as a peer dependency
+
+```bash
+# For mongoose 6
+npm install mongoose@legacy
+yarn add mongoose mongoose@legacy
+# For mongoose 7
+npm install mongoose@latest
+yarn add mongoose@latest
+```
+
+## Usage
+
+```typescript
+// On your application startup
+import mongoose from 'mongoose'
+import cache from 'ts-cache-mongoose'
+
+// In memory example 
+const cache = cache.init(mongoose, {
+  engine: 'memory',
+})
+
+// Redis example
+const cache = cache.init(mongoose, {
+  engine: 'redis',
+  engineOptions: {
+    host: 'localhost',
+    port: 6379,
+  },
+})
+
+mongoose.connect('mongodb://localhost:27017/my-database')
+
+// Somewhere in your code
+const User = await User.findById(user._id).cache('1 minute').exec()
+const Book = await Book.findById(user._id).cache('30 seconds').exec()
+```
