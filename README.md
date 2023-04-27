@@ -21,8 +21,9 @@ ts-cache-mongoose is a plugin for mongoose
 \
 Caching queries is a good way to improve performance of your application
 \
-This is initial prerelease of the plugin, so it may contain bugs
-Work in progress...
+⚠️ This is initial prerelease of the plugin, so it may contain bugs
+\
+🛠️ Work in progress...
 
 ## Features
 
