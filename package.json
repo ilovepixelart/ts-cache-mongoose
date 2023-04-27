@@ -1,6 +1,6 @@
 {
   "name": "ts-cache-mongoose",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Cache plugin for mongoose",
   "author": "Alex Eagle",
   "license": "MIT",
