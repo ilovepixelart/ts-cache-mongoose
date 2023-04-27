@@ -1,9 +1,10 @@
-import _ from 'lodash'
 import Cache from './cache/Cache'
 
 import type { Mongoose } from 'mongoose'
 import type ICacheOptions from './interfaces/ICacheOptions'
-import { getKey } from './crypto'
+
+import extendQuery from './extend/query'
+import extendAggregate from './extend/aggregate'
 
 declare module 'mongoose' {
   interface Query<ResultType, DocType, THelpers, RawDocType> {
@@ -17,6 +18,14 @@ declare module 'mongoose' {
     _path?: unknown
     _distinct?: unknown
   }
+
+  interface Aggregate<ResultType> {
+    cache: (this: Aggregate<ResultType>, ttl?: string, customKey?: string) => this
+    _key?: string
+    getCacheKey: (this: Aggregate<ResultType>) => string
+    _ttl?: string
+    getCacheTTL: (this: Aggregate<ResultType>) => string | undefined
+  }
 }
 
 class CacheMongoose {
@@ -29,7 +38,6 @@ class CacheMongoose {
     // Private constructor to prevent external instantiation
   }
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   public static init (mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
     if (typeof mongoose.Model.hydrate !== 'function') throw new Error('Cache is only compatible with versions of mongoose that implement the `model.hydrate` method')
     if (!this.instance) {
@@ -39,73 +47,8 @@ class CacheMongoose {
 
       const cache = this.instance.cache
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      const mongooseExec = mongoose.Query.prototype.exec
-
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      mongoose.Query.prototype.getCacheKey = function () {
-        if (this._key) return this._key
-
-        const filter = this.getFilter()
-        const update = this.getUpdate()
-        const options = this.getOptions()
-
-        const data: Record<string, unknown> = {
-          model: this.model.modelName,
-          op: this.op,
-          filter,
-          update,
-          skip: options.skip,
-          limit: options.limit,
-          sort: options.sort,
-          _fields: this._fields,
-          _path: this._path,
-          _distinct: this._distinct
-        }
-
-        return getKey(data)
-      }
-
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      mongoose.Query.prototype.getCacheTTL = function () {
-        return this._ttl
-      }
-
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      mongoose.Query.prototype.cache = function (ttl?: string, customKey?: string) {
-        this._ttl = ttl
-        this._key = customKey
-        return this
-      }
-
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      mongoose.Query.prototype.exec = async function () {
-        if (!this._ttl) {
-          return mongooseExec.apply(this)
-        }
-
-        const key = this.getCacheKey()
-        const ttl = this.getCacheTTL()
-
-        const model = this.model.modelName
-
-        const resultCache = await cache.get(key)
-        if (resultCache) {
-          const constructor = mongoose.model(model)
-          if (_.isArray(resultCache)) {
-            return resultCache.map((item) => constructor.hydrate(item) as Record<string, unknown>)
-          } else {
-            return constructor.hydrate(resultCache) as Record<string, unknown>
-          }
-        }
-
-        const result = await mongooseExec.call(this) as Record<string, unknown>[] | Record<string, unknown>
-        cache.set(key, result, ttl).catch((err) => {
-          console.error(err)
-        })
-
-        return result
-      }
+      extendQuery(mongoose, cache)
+      extendAggregate(mongoose, cache)
     }
 
     return this.instance
