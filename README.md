@@ -34,7 +34,8 @@ Caching queries is a good way to improve performance of your application
 - [x] Cache key generation
 - [x] Cache key prefix
 - [x] Query caching support
-- [ ] Aggregate caching support
+- [x] Aggregate caching support
+- [ ] More tests
 
 ## Installation
 
