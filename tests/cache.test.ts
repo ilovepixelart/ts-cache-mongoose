@@ -22,31 +22,78 @@ describe('CacheMongoose', () => {
     await mongoose.connection.collection('users').deleteMany({})
   })
 
-  it('should use memory cache', async () => {
+  describe('memory scenarios', () => {
     const cacheOptions: ICacheOptions = {
       engine: 'memory'
     }
 
     const cache = CacheMongoose.init(mongoose, cacheOptions)
-    expect(cache).toBeDefined()
 
-    const user = await User.create({
-      name: 'John Doe',
-      role: 'admin'
+    it('should use memory cache', async () => {
+      const user = await User.create({
+        name: 'John Doe',
+        role: 'admin'
+      })
+
+      const user1 = await User.findById(user._id).cache()
+      await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
+      const user2 = await User.findById(user._id).cache()
+
+      expect(user1).not.toBeNull()
+      expect(user2).not.toBeNull()
+      expect(user1?._id).toEqual(user2?._id)
+      expect(user1?.name).not.toEqual(user2?.name)
     })
 
-    const cachedUser1 = await User.findById(user._id).cache().lean()
-    console.log(cachedUser1)
+    it('should not use memory cache', async () => {
+      const user = await User.create({
+        name: 'John Doe',
+        role: 'admin'
+      })
 
-    await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
+      const cache1 = await User.findById(user._id).cache().exec()
+      await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
+      await cache.clear()
+      const cache2 = await User.findById(user._id).cache().exec()
 
-    const cachedUser2 = await User.findById(user._id).cache()
-    console.log(cachedUser2)
+      expect(cache1).not.toBeNull()
+      expect(cache2).not.toBeNull()
+      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?.name).not.toEqual(cache2?.name)
+    })
 
-    expect(cachedUser1).not.toBeNull()
-    expect(cachedUser2).not.toBeNull()
-    expect(cachedUser1?._id).toEqual(cachedUser2?._id)
-    expect(cachedUser1?.name).toEqual(cachedUser2?.name)
+    it('should use memory cache with custom key', async () => {
+      const user = await User.create({
+        name: 'John Doe',
+        role: 'admin'
+      })
+
+      const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key').exec()
+      await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
+      const cache2 = await User.findById(user._id).cache('1 minute', 'test-custom-key').exec()
+
+      expect(cache1).not.toBeNull()
+      expect(cache2).not.toBeNull()
+      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?.name).toEqual(cache2?.name)
+    })
+
+    it('should use memory cache and clear custom key', async () => {
+      const user = await User.create({
+        name: 'John Doe',
+        role: 'admin'
+      })
+
+      const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
+      await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
+      await cache.clear('test-custom-key-second')
+      const cache2 = await User.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
+
+      expect(cache1).not.toBeNull()
+      expect(cache2).not.toBeNull()
+      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?.name).not.toEqual(cache2?.name)
+    })
   })
 
   it('should use redis cache', async () => {
@@ -67,12 +114,8 @@ describe('CacheMongoose', () => {
     })
 
     const cachedUser1 = await User.findById(user._id).cache().lean()
-    console.log(cachedUser1)
-
     await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
-
     const cachedUser2 = await User.findById(user._id).cache()
-    console.log(cachedUser2)
 
     expect(cachedUser1).not.toBeNull()
     expect(cachedUser2).not.toBeNull()
