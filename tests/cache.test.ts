@@ -102,7 +102,8 @@ describe('CacheMongoose', () => {
       engineOptions: {
         host: 'localhost',
         port: 6379
-      }
+      },
+      defaultTTL: '6 minutes'
     }
 
     const cache = CacheMongoose.init(mongoose, cacheOptions)
@@ -121,6 +122,26 @@ describe('CacheMongoose', () => {
     expect(cache2).not.toBeNull()
     expect(cache1?._id).toEqual(cache2?._id)
     expect(cache1?.name).not.toEqual(cache2?.name)
+
+    await User.create([
+      {
+        name: 'John Doe 3',
+        role: 'admin'
+      },
+      {
+        name: 'John Doe 4',
+        role: 'admin'
+      }
+    ])
+
+    const cache3 = await User.find({ role: 'admin' }).cache()
+    await User.updateMany({ role: 'admin' }, { name: 'John Doe 5' })
+    const cache4 = await User.find({ role: 'admin' }).cache()
+
+    expect(cache3).not.toBeNull()
+    expect(cache4).not.toBeNull()
+    expect(cache3?.length).toEqual(cache4?.length)
+    expect(cache3?.[0].name).not.toEqual(cache4?.[0].name)
 
     cache.close()
   })
