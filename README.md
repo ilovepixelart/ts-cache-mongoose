@@ -24,6 +24,17 @@ Caching queries is a good way to improve performance of your application
 This is initial prerelease of the plugin, so it may contain bugs
 Work in progress...
 
+## Features
+
+- [x] In memory caching
+- [x] Redis caching
+- [x] Cache expiration
+- [x] Cache invalidation
+- [x] Cache key generation
+- [x] Cache key prefix
+- [x] Query caching support
+- [ ] Aggregate caching support
+
 ## Installation
 
 ```bash
