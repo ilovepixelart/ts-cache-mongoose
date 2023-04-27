@@ -16,18 +16,19 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     const filter = this.getFilter()
     const update = this.getUpdate()
     const options = this.getOptions()
+    const mongooseOptions = this.mongooseOptions()
 
     const data: Record<string, unknown> = {
       model: this.model.modelName,
       op: this.op,
       filter,
       update,
-      skip: options.skip,
-      limit: options.limit,
-      sort: options.sort,
-      _fields: this._fields,
+      options,
+      mongooseOptions,
       _path: this._path,
-      _distinct: this._distinct
+      _fields: this._fields,
+      _distinct: this._distinct,
+      _conditions: this._conditions
     }
 
     return getKey(data)

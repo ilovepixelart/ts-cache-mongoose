@@ -14,9 +14,10 @@ declare module 'mongoose' {
     _ttl?: string
     getCacheTTL: (this: Query<ResultType, DocType, THelpers, RawDocType>) => string | undefined
     op?: string
-    _fields?: unknown
     _path?: unknown
+    _fields?: unknown
     _distinct?: unknown
+    _conditions?: unknown
   }
 
   interface Aggregate<ResultType> {
@@ -32,7 +33,6 @@ class CacheMongoose {
   // eslint-disable-next-line no-use-before-define
   private static instance: CacheMongoose | undefined
   private cache!: Cache
-  private cacheOptions!: ICacheOptions
 
   private constructor () {
     // Private constructor to prevent external instantiation
@@ -43,7 +43,6 @@ class CacheMongoose {
     if (!this.instance) {
       this.instance = new CacheMongoose()
       this.instance.cache = new Cache(cacheOptions)
-      this.instance.cacheOptions = cacheOptions
 
       const cache = this.instance.cache
 
@@ -55,16 +54,15 @@ class CacheMongoose {
   }
 
   public async clear (customKey?: string): Promise<void> {
-    if (!customKey) {
-      return this.cache.clear()
+    if (customKey) {
+      await this.cache.del(customKey)
+    } else {
+      await this.cache.clear()
     }
-    return this.cache.del(customKey)
   }
 
   public async close (): Promise<void> {
-    if (this.cacheOptions.engine === 'redis') {
-      await this.cache.close()
-    }
+    await this.cache.close()
   }
 }
 
