@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import Cache from '../src/cache/Cache'
 
 import type ICacheOptions from '../src/interfaces/ICacheOptions'
@@ -37,8 +38,8 @@ describe('Cache class tests', () => {
     const cacheOptions: ICacheOptions = {
       engine: 'redis',
       engineOptions: {
-        host: 'localhost',
-        port: 6379
+        host: process.env.REDIS_HOST ?? 'localhost',
+        port: _.toInteger(process.env.REDIS_PORT ?? 6379)
       },
       defaultTTL: '10 minutes'
     }

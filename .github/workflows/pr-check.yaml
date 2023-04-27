@@ -54,6 +54,11 @@ jobs:
 
       - name: Coverage
         run: npm run test
+        env:
+          # The hostname used to communicate with the Redis service container
+          REDIS_HOST: redis
+          # The default Redis port
+          REDIS_PORT: 6379
   sonar:
     name: Coverage & Sonar
     runs-on: ubuntu-latest
@@ -94,6 +99,11 @@ jobs:
 
       - name: Coverage
         run: npm run test
+        env:
+          # The hostname used to communicate with the Redis service container
+          REDIS_HOST: redis
+          # The default Redis port
+          REDIS_PORT: 6379
 
       - name: Scan
         uses: sonarsource/sonarcloud-github-action@v1.8
