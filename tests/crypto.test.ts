@@ -1,5 +1,8 @@
 import { getKey } from '../src/crypto'
 
+import { Types } from 'mongoose'
+const { ObjectId } = Types
+
 describe('generateHash()', () => {
   const data1 = {
     foo: 42,
@@ -13,7 +16,8 @@ describe('generateHash()', () => {
           fred: null,
           missing: undefined
         }
-      }
+      },
+      _id: new ObjectId('5f9b3b3b3b3b3b3b3b3b3b3b')
     }
   }
 
@@ -35,6 +39,7 @@ describe('generateHash()', () => {
 
   const data3 = {
     bar: {
+      _id: new ObjectId('5f9b3b3b3b3b3b3b3b3b3b3b'),
       qux: 'hello',
       baz: [3, 2, 1],
       wow: {
