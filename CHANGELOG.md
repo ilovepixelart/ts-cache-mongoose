@@ -1,3 +1,15 @@
+<a name="v0.0.6"></a>
+# [v0.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.6) - 28 Apr 2023
+
+- Key  b27f663
+- Hydration cases  aec2d0b
+- Update changelog for &quot;v0.0.5&quot;  92756a9
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.5...v0.0.6
+
+[Changes][v0.0.6]
+
+
 <a name="v0.0.5"></a>
 # [v0.0.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.5) - 27 Apr 2023
 
@@ -57,6 +69,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v0.0.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.3...v0.0.4
 [v0.0.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.2...v0.0.3
