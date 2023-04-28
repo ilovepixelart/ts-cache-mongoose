@@ -1,4 +1,4 @@
-import { getKey } from '../src/crypto'
+import { getKey } from '../src/key'
 
 import { Types } from 'mongoose'
 const { ObjectId } = Types
