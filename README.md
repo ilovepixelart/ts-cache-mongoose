@@ -25,6 +25,15 @@ Caching queries is a good way to improve performance of your application
 \
 🛠️ Work in progress...
 
+## Supports and tested with
+
+```json
+{
+  "node": "16.x || 18.x || 20.x",
+  "mongoose": ">=6.6.x || 7.x",
+}
+```
+
 ## Features
 
 - [x] In-memory caching
@@ -33,11 +42,12 @@ Caching queries is a good way to improve performance of your application
 - [x] Cache invalidation
 - [x] Cache key generation
 - [x] Cache key prefix
-- [x] Query caching support
-- [x] Aggregate caching support
-- [ ] More tests
+- [x] Query caching
+- [x] Aggregate caching
 
 ## Installation
+
+- Locally inside your project
 
 ```bash
 npm install ts-cache-mongoose
@@ -55,7 +65,7 @@ npm install mongoose@latest
 yarn add mongoose@latest
 ```
 
-## Usage
+## Example
 
 ```typescript
 // On your application startup

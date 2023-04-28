@@ -13,6 +13,7 @@ describe('CacheMongoose', () => {
 
   beforeAll(async () => {
     await mongoose.connect(uri)
+    await cache.clear()
   })
 
   afterAll(async () => {

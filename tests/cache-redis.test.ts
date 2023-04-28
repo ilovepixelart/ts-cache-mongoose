@@ -18,6 +18,7 @@ describe('cache redis', () => {
 
   beforeAll(async () => {
     await mongoose.connect(uri)
+    await cache.clear()
   })
 
   afterAll(async () => {
@@ -29,75 +30,73 @@ describe('cache redis', () => {
     await mongoose.connection.collection('users').deleteMany({})
   })
 
-  describe('memory scenarios', () => {
-    it('should use memory cache', async () => {
-      const user = await User.create({
-        name: 'John Doe',
-        role: 'admin'
-      })
-
-      const user1 = await User.findById(user._id).cache()
-      await User.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' })
-      const user2 = await User.findById(user._id).cache()
-
-      expect(user1).not.toBeNull()
-      expect(user2).not.toBeNull()
-      expect(user1?._id).toEqual(user2?._id)
-      expect(user1?.name).toEqual(user2?.name)
+  it('should use cache', async () => {
+    const user = await User.create({
+      name: 'John Doe',
+      role: 'admin'
     })
 
-    it('should not use cache', async () => {
-      const user = await User.create({
-        name: 'John Doe',
-        role: 'admin'
-      })
+    const user1 = await User.findById(user._id).cache()
+    await User.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' })
+    const user2 = await User.findById(user._id).cache()
 
-      const cache1 = await User.findById(user._id).cache().exec()
-      await User.findByIdAndUpdate(user._id, { name: 'John Doe 2' })
-      await cache.clear()
-      const cache2 = await User.findById(user._id).cache().exec()
-
-      expect(cache1).not.toBeNull()
-      expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
-      expect(cache1?.name).not.toEqual(cache2?.name)
-    })
-
-    it('should use memory cache with custom key', async () => {
-      const user = await User.create({
-        name: 'John Doe',
-        role: 'admin'
-      })
-
-      const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key').exec()
-      await User.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' })
-      const cache2 = await User.findById(user._id).cache('1 minute', 'test-custom-key').exec()
-
-      expect(cache1).not.toBeNull()
-      expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
-      expect(cache1?.name).toEqual(cache2?.name)
-    })
-
-    it('should use memory cache and clear custom key', async () => {
-      const user = await User.create({
-        name: 'John Doe',
-        role: 'admin'
-      })
-
-      const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
-      await User.updateOne({ _id: user._id }, { name: 'John Doe 2' })
-      await cache.clear('test-custom-key-second')
-      const cache2 = await User.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
-
-      expect(cache1).not.toBeNull()
-      expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
-      expect(cache1?.name).not.toEqual(cache2?.name)
-    })
+    expect(user1).not.toBeNull()
+    expect(user2).not.toBeNull()
+    expect(user1?._id).toEqual(user2?._id)
+    expect(user1?.name).toEqual(user2?.name)
   })
 
-  it('should use redis cache', async () => {
+  it('should clear cache', async () => {
+    const user = await User.create({
+      name: 'John Doe',
+      role: 'admin'
+    })
+
+    const cache1 = await User.findById(user._id).cache().exec()
+    await User.findByIdAndUpdate(user._id, { name: 'John Doe 2' })
+    await cache.clear()
+    const cache2 = await User.findById(user._id).cache().exec()
+
+    expect(cache1).not.toBeNull()
+    expect(cache2).not.toBeNull()
+    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?.name).not.toEqual(cache2?.name)
+  })
+
+  it('should use cache with custom-key-1', async () => {
+    const user = await User.create({
+      name: 'John Doe',
+      role: 'admin'
+    })
+
+    const cache1 = await User.findById(user._id).cache('1 minute', 'custom-key-1').exec()
+    await User.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' })
+    const cache2 = await User.findById(user._id).cache('1 minute', 'custom-key-1').exec()
+
+    expect(cache1).not.toBeNull()
+    expect(cache2).not.toBeNull()
+    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?.name).toEqual(cache2?.name)
+  })
+
+  it('should clear custom-key-2', async () => {
+    const user = await User.create({
+      name: 'John Doe',
+      role: 'admin'
+    })
+
+    const cache1 = await User.findById(user._id).cache('1 minute', 'custom-key-2').exec()
+    await User.updateOne({ _id: user._id }, { name: 'Steve' })
+    await cache.clear('custom-key-2')
+    const cache2 = await User.findById(user._id).cache('1 minute', 'custom-key-2').exec()
+
+    expect(cache1).not.toBeNull()
+    expect(cache2).not.toBeNull()
+    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?.name).not.toEqual(cache2?.name)
+  })
+
+  it('should use cache without cache options', async () => {
     expect(cache).toBeDefined()
 
     const user = await User.create({
@@ -116,17 +115,17 @@ describe('cache redis', () => {
 
     await User.create([
       {
-        name: 'John Doe 3',
+        name: 'Alice',
         role: 'admin'
       },
       {
-        name: 'John Doe 4',
+        name: 'Bob',
         role: 'admin'
       }
     ])
 
     const cache3 = await User.find({ role: 'admin' }).cache()
-    await User.updateMany({ role: 'admin' }, { name: 'John Doe 5' })
+    await User.updateMany({ role: 'admin' }, { name: 'Steve' })
     const cache4 = await User.find({ role: 'admin' }).cache()
 
     expect(cache3).not.toBeNull()
@@ -135,7 +134,7 @@ describe('cache redis', () => {
     expect(cache3?.[0].name).toEqual(cache4?.[0].name)
   })
 
-  it('should use redis cache and aggregate', async () => {
+  it('should use cache on aggregate', async () => {
     await User.create([
       { name: 'John', role: 'admin' },
       { name: 'Bob', role: 'admin' },
@@ -157,5 +156,77 @@ describe('cache redis', () => {
     expect(cache1).not.toBeNull()
     expect(cache2).not.toBeNull()
     expect(cache1?.[0].count).toEqual(cache2?.[0].count)
+  })
+
+  it('should use cache on aggregate with custom-key', async () => {
+    await User.create([
+      { name: 'John', role: 'admin' },
+      { name: 'Bob', role: 'admin' },
+      { name: 'Alice', role: 'user' }
+    ])
+
+    const cache1 = await User.aggregate([
+      { $match: { role: 'admin' } },
+      { $group: { _id: '$role', count: { $sum: 1 } } }
+    ]).cache('1 minute', 'aggregate-custom-key')
+
+    await User.create({ name: 'Mark', role: 'admin' })
+
+    const cache2 = await User.aggregate([
+      { $match: { role: 'admin' } },
+      { $group: { _id: '$role', count: { $sum: 1 } } }
+    ]).cache('1 minute', 'aggregate-custom-key')
+
+    // Don't use cache key
+    const cache3 = await User.aggregate([
+      { $match: { role: 'admin' } },
+      { $group: { _id: '$role', count: { $sum: 1 } } }
+    ])
+
+    expect(cache1).not.toBeNull()
+    expect(cache2).not.toBeNull()
+    expect(cache3).not.toBeNull()
+    expect(cache1?.[0].count).toEqual(cache2?.[0].count)
+    expect(cache1?.[0].count).not.toEqual(cache3?.[0].count)
+  })
+
+  it('should test lean cache', async () => {
+    await User.create([
+      { name: 'John', role: 'admin' },
+      { name: 'Bob', role: 'admin' },
+      { name: 'Alice', role: 'user' }
+    ])
+
+    const cache1 = await User.find({ role: 'admin' }).lean().cache('1 minute')
+    await User.create({ name: 'Mark', role: 'admin' })
+    const cache2 = await User.find({ role: 'admin' }).lean().cache('1 minute')
+
+    expect(cache1).not.toBeNull()
+    expect(cache2).not.toBeNull()
+    expect(cache1?.length).toEqual(cache2?.length)
+  })
+
+  it('should cache with regex query', async () => {
+    await User.create([
+      { name: 'John', role: 'admin' },
+      { name: 'Alice', role: 'user' },
+      { name: 'Andy', role: 'user' }
+    ])
+
+    const cache1 = await User.find({ name: /^J/ }).cache('1 minute')
+    await User.create({ name: 'Jenifer', role: 'admin' })
+    const cache2 = await User.find({ name: /^J/ }).cache('1 minute')
+
+    expect(cache1).not.toBeNull()
+    expect(cache2).not.toBeNull()
+    expect(cache1?.length).toEqual(cache2?.length)
+
+    const cache3 = await User.find({ name: /^A/ }).cache('1 hour')
+    await User.create({ name: 'Alex', role: 'admin' })
+    const cache4 = await User.find({ name: /^A/ }).cache('1 hour')
+
+    expect(cache3).not.toBeNull()
+    expect(cache4).not.toBeNull()
+    expect(cache3?.length).toEqual(cache4?.length)
   })
 })

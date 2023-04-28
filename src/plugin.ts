@@ -39,7 +39,6 @@ class CacheMongoose {
   }
 
   public static init (mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
-    if (typeof mongoose.Model.hydrate !== 'function') throw new Error('Cache is only compatible with versions of mongoose that implement the `model.hydrate` method')
     if (!this.instance) {
       this.instance = new CacheMongoose()
       this.instance.cache = new Cache(cacheOptions)
