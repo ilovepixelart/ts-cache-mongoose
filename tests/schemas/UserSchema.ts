@@ -10,6 +10,9 @@ const UserSchema = new Schema<IUser>({
   role: {
     type: String,
     required: true
+  },
+  age: {
+    type: Number
   }
 }, { timestamps: true })
 

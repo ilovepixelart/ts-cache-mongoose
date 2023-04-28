@@ -3,7 +3,7 @@ import _ from 'lodash'
 import type { Mongoose } from 'mongoose'
 import type Cache from '../cache/Cache'
 
-import { getKey } from '../crypto'
+import { getKey } from '../key'
 
 export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
   // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -54,7 +54,10 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
 
     const key = this.getCacheKey()
     const ttl = this.getCacheTTL()
+    const mongooseOptions = this.mongooseOptions()
 
+    const isCount = this.op?.includes('count')
+    const isDistinct = this.op === 'distinct'
     const model = this.model.modelName
 
     const resultCache = await cache.get(key).catch((err) => {
@@ -62,6 +65,10 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     })
 
     if (resultCache) {
+      if (isCount || isDistinct || mongooseOptions.lean) {
+        return resultCache
+      }
+
       const constructor = mongoose.model(model)
       if (_.isArray(resultCache)) {
         return resultCache.map((item) => constructor.hydrate(item) as Record<string, unknown>)

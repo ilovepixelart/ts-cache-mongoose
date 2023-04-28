@@ -115,4 +115,60 @@ describe('CacheMongoose', () => {
       expect(cache1?.[0].count).toEqual(cache2?.[0].count)
     })
   })
+
+  describe('memory scenarios with ttl', () => {
+    const users = [
+      { name: 'John', age: 30, role: 'admin' },
+      { name: 'Alice', age: 25, role: 'user' },
+      { name: 'Bob', age: 35, role: 'user' }
+    ]
+
+    beforeEach(async () => {
+      // Delete all users before each test
+      await User.deleteMany()
+
+      // Create new users
+      await User.create(users)
+    })
+
+    it('findById', async () => {
+      const john = await User.create({ name: 'John', age: 30, role: 'admin' })
+      const user = await User.findById(john._id).cache('1 minute').exec()
+      const cachedUser = await User.findById(john._id).cache('1 minute').exec()
+
+      expect(user).toEqual(cachedUser)
+    })
+
+    it('findOne', async () => {
+      const user = await User.findOne({ name: 'John', age: 30, role: 'admin' }).cache('1 minute').exec()
+      await User.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedUser = await User.findOne({ name: 'John', age: 30, role: 'admin' }).cache('1 minute').exec()
+
+      expect(user).toEqual(cachedUser)
+    })
+
+    it('find', async () => {
+      const users = await User.find({ age: { $gte: 30 } }).cache('1 minute').exec()
+      await User.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedUsers = await User.find({ age: { $gte: 30 } }).cache('1 minute').exec()
+
+      expect(users).toEqual(cachedUsers)
+    })
+
+    it('count', async () => {
+      const count = await User.count({ age: { $gte: 30 } }).cache('1 minute').exec()
+      await User.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedCount = await User.count({ age: { $gte: 30 } }).cache('1 minute').exec()
+
+      expect(count).toEqual(cachedCount)
+    })
+
+    it('distinct', async () => {
+      const emails = await User.distinct('name').cache('1 minute').exec()
+      await User.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedEmails = await User.distinct('name').cache('1 minute').exec()
+
+      expect(emails).toEqual(cachedEmails)
+    })
+  })
 })
