@@ -32,24 +32,24 @@ class CacheEngine {
   }
 
   async get (key: string): Promise<Record<string, unknown> | Record<string, unknown>[] | undefined> {
-    return await this.engine.get(key)
+    return this.engine.get(key)
   }
 
   async set (key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl?: string): Promise<void> {
     const actualTTL = ttl ? ms(ttl) : this.defaultTTL
-    return await this.engine.set(key, value, actualTTL)
+    return this.engine.set(key, value, actualTTL)
   }
 
   async del (key: string): Promise<void> {
-    return await this.engine.del(key)
+    return this.engine.del(key)
   }
 
   async clear (): Promise<void> {
-    return await this.engine.clear()
+    return this.engine.clear()
   }
 
   async close (): Promise<void> {
-    return await this.engine.close()
+    return this.engine.close()
   }
 }
 

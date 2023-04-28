@@ -53,7 +53,7 @@ describe('cache redis', () => {
     })
 
     const cache1 = await User.findById(user._id).cache().exec()
-    await User.findByIdAndUpdate(user._id, { name: 'John Doe 2' })
+    await User.findByIdAndUpdate(user._id, { name: 'Steve' }).exec()
     await cache.clear()
     const cache2 = await User.findById(user._id).cache().exec()
 
