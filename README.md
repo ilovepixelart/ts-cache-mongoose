@@ -1,6 +1,6 @@
 # ts-cache-mongoose
 
-Cache queries in mongoose using memory or redis
+Cache query and aggregate in mongoose using in-memory or redis
 
 [![npm](https://img.shields.io/npm/v/ts-cache-mongoose)](https://www.npmjs.com/package/ts-cache-mongoose)
 [![npm](https://img.shields.io/npm/dt/ts-cache-mongoose)](https://www.npmjs.com/package/ts-cache-mongoose)
@@ -21,13 +21,13 @@ ts-cache-mongoose is a plugin for mongoose
 \
 Caching queries is a good way to improve performance of your application
 \
-⚠️ This is initial prerelease of the plugin, so it may contain bugs
+⚠️ This is initial prerelease of the plugin
 \
 🛠️ Work in progress...
 
 ## Features
 
-- [x] Memory caching
+- [x] In-memory caching
 - [x] Redis caching
 - [x] Cache expiration
 - [x] Cache invalidation
@@ -79,6 +79,6 @@ const cache = cache.init(mongoose, {
 mongoose.connect('mongodb://localhost:27017/my-database')
 
 // Somewhere in your code
-const User = await User.findById(user._id).cache('1 minute').exec()
-const Book = await Book.findById(user._id).cache('30 seconds').exec()
+const users = await User.find({ role: 'user' }).cache('1 minute').exec()
+const book = await Book.findById(id).cache('30 seconds').exec()
 ```
