@@ -68,7 +68,7 @@ yarn add mongoose@latest
 import mongoose from 'mongoose'
 import cache from 'ts-cache-mongoose'
 
-// In memory example 
+// In-memory example 
 const cache = cache.init(mongoose, {
   engine: 'memory',
 })
@@ -85,6 +85,32 @@ const cache = cache.init(mongoose, {
 mongoose.connect('mongodb://localhost:27017/my-database')
 
 // Somewhere in your code
-const users = await User.find({ role: 'user' }).cache('1 minute').exec()
-const book = await Book.findById(id).cache('30 seconds').exec()
+const users = await User.find({ role: 'user' }).cache('10 seconds').exec()
+// Cache hit
+const users = await User.find({ role: 'user' }).cache('10 seconds').exec()
+
+const book = await Book.findById(id).cache('1 hour').exec()
+const bookCount = await Book.countDocuments().cache('1 minute').exec()
+const authors = await Book.distinct('author').cache('30 seconds').exec()
+
+const books = await Book.aggregate([
+  {
+    $match: {
+      genre: 'fantasy',
+    },
+  },
+  {
+    $group: {
+      _id: '$author',
+      count: { $sum: 1 },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      author: '$_id',
+      count: 1,
+    },
+  }
+]).cache('1 minute').exec()
 ```
