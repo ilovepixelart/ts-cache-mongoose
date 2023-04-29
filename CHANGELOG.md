@@ -1,3 +1,23 @@
+<a name="v1.0.0"></a>
+# [v1.0.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.0) - 29 Apr 2023
+
+- Doc  dcaa81f
+- Cleanup  bd95d5e
+- Description  2f18d42
+- Description  4115926
+- Doc  684cbbd
+- Merge pull request [#4](https://github.com/ilovepixelart/ts-cache-mongoose/issues/4) from ilovepixelart/feature/test  33a5d0c
+- Test  962f8b1
+- Doc  0b7286a
+- Merge pull request [#3](https://github.com/ilovepixelart/ts-cache-mongoose/issues/3) from ilovepixelart/feature/dep  165321e
+- Dep  bbd94bf
+- Update changelog for &quot;v0.0.6&quot;  c184433
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.6...v1.0.0
+
+[Changes][v1.0.0]
+
+
 <a name="v0.0.6"></a>
 # [v0.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.6) - 28 Apr 2023
 
@@ -69,6 +89,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.6...v1.0.0
 [v0.0.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.3...v0.0.4
