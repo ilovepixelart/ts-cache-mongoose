@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 import type { Mongoose } from 'mongoose'
 import type Cache from '../cache/Cache'
 
@@ -30,7 +28,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Aggregate.prototype.exec = async function () {
-    if (!_.has(this, '_ttl')) {
+    if (!Object.prototype.hasOwnProperty.call(this, '_ttl')) {
       return mongooseExec.apply(this)
     }
 
