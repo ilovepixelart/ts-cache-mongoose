@@ -1,3 +1,20 @@
+<a name="v1.0.1"></a>
+# [v1.0.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.1) - 30 Apr 2023
+
+- Dep  e67c1e3
+- Dep  cc8ebd2
+- Merge pull request [#5](https://github.com/ilovepixelart/ts-cache-mongoose/issues/5) from ilovepixelart/feature/remove-dependency  39cba89
+- Dep  9a3e0bb
+- Remove dependency  811df42
+- Cache npm  0298794
+- Key  e9b19a5
+- Update changelog for &quot;v1.0.0&quot;  777e8c1
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.0...v1.0.1
+
+[Changes][v1.0.1]
+
+
 <a name="v1.0.0"></a>
 # [v1.0.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.0) - 29 Apr 2023
 
@@ -89,6 +106,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.6...v1.0.0
 [v0.0.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.5...v0.0.6
 [v0.0.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.4...v0.0.5
