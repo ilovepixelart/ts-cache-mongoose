@@ -1,3 +1,21 @@
+<a name="v1.0.2"></a>
+# [v1.0.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.2) - 02 May 2023
+
+- Release  36e67ed
+- Merge pull request [#9](https://github.com/ilovepixelart/ts-cache-mongoose/issues/9) from ilovepixelart/feature/test  4b850da
+- Fix rehydration scenario for lean objects  25e2caf
+- Test  820d958
+- Merge pull request [#8](https://github.com/ilovepixelart/ts-cache-mongoose/issues/8) from ilovepixelart/feature/dep  b0fcbef
+- Dep  66e8265
+- Doc  49a26ad
+- Update README.md  61c4494
+- Update changelog for &quot;v1.0.1&quot;  cc5c31e
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.1...v1.0.2
+
+[Changes][v1.0.2]
+
+
 <a name="v1.0.1"></a>
 # [v1.0.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.1) - 30 Apr 2023
 
@@ -106,6 +124,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.6...v1.0.0
 [v0.0.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.5...v0.0.6
