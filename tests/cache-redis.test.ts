@@ -238,19 +238,30 @@ describe('cache redis', () => {
     ])
 
     const cache1 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
-    await User.create({ name: 'Jenifer', role: 'admin' })
+    expect(cache1).not.toBeNull()
+    expect(cache1?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(cache1).toHaveProperty('name', 'G')
+
     const cache2 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
+    expect(cache2).not.toBeNull()
+    expect(cache2?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(cache2).toHaveProperty('name', 'G')
+    expect(cache1).toEqual(cache2)
+
     const cache3 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
+    expect(cache3).not.toBeNull()
+    expect(cache3).toHaveProperty('name', 'G')
+    expect(cache2).toEqual(cache3)
 
     const cache4 = await User.findOne({ name: 'V' }).lean().cache('30 seconds').exec()
-
-    expect(cache1).not.toBeNull()
-    expect(cache2).not.toBeNull()
-    expect(cache3).not.toBeNull()
     expect(cache4).not.toBeNull()
     expect(cache4).toHaveProperty('name', 'V')
+    expect(cache3).not.toEqual(cache4)
 
-    expect(cache2).toEqual(cache3)
-    expect(cache1).toEqual(cache2)
+    const cache5 = await User.findOne({ name: 'O' }).lean().cache('30 seconds').exec()
+    const cache6 = await User.findOne({ name: 'O' }).lean().cache('30 seconds').exec()
+    expect(cache5).toBeNull()
+    expect(cache6).toBeNull()
+    expect(cache5).toEqual(cache6)
   })
 })
