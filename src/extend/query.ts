@@ -63,15 +63,20 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     })
 
     if (resultCache) {
-      if (isCount || isDistinct || mongooseOptions.lean) {
+      if (isCount || isDistinct) {
         return resultCache
       }
 
-      const constructor = mongoose.model(model)
+      const constructor = mongoose.model<unknown>(model)
+
       if (Array.isArray(resultCache)) {
-        return resultCache.map((item) => constructor.hydrate(item) as Record<string, unknown>)
+        return resultCache.map((item) => {
+          const hydrated = constructor.hydrate(item)
+          return mongooseOptions.lean ? hydrated.toObject() : hydrated
+        })
       } else {
-        return constructor.hydrate(resultCache) as Record<string, unknown>
+        const hydrated = constructor.hydrate(resultCache)
+        return mongooseOptions.lean ? hydrated.toObject() : hydrated
       }
     }
 

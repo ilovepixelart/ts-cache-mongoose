@@ -82,4 +82,20 @@ describe('generateHash()', () => {
     expect(hash1).not.toEqual(hash3)
     expect(hash3).not.toEqual(hash4)
   })
+
+  it('should test dates', async () => {
+    const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+    const date = new Date()
+    const hash1 = getKey({
+      name: 'John Doe',
+      date: { $lte: date }
+    })
+    await wait(50)
+    const date2 = new Date()
+    const hash2 = getKey({
+      name: 'John Doe',
+      date: { $lte: date2 }
+    })
+    expect(hash1).not.toEqual(hash2)
+  })
 })
