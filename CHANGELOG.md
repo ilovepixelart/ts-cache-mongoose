@@ -1,3 +1,17 @@
+<a name="v1.0.3"></a>
+# [v1.0.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.3) - 03 May 2023
+
+- Doc  6b5d1c7
+- Merge pull request [#10](https://github.com/ilovepixelart/ts-cache-mongoose/issues/10) from ilovepixelart/feature/apply  6184e24
+- Lint  17d03e2
+- Fixes - Type for simplicity - Lean with hydration of dates and ids - Distinct hydration of dates and ids - Apply args for callbacks - Some tests to cover above  c363e2b
+- Update changelog for &quot;v1.0.2&quot;  e04dc70
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.2...v1.0.3
+
+[Changes][v1.0.3]
+
+
 <a name="v1.0.2"></a>
 # [v1.0.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.2) - 02 May 2023
 
@@ -124,6 +138,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.2...v1.0.3
 [v1.0.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.6...v1.0.0
