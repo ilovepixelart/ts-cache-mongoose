@@ -159,7 +159,7 @@ describe('CacheMongoose', () => {
       await User.create({ name: 'Steve', age: 30, role: 'admin' })
       const cachedUsers = await User.find({ age: { $gte: 30 } }).cache('1 minute').exec()
 
-      expect(users.length).toEqual(cachedUsers.length)
+      expect(users).toHaveLength(cachedUsers.length)
     })
 
     it('count', async () => {
