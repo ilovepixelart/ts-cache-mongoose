@@ -1,5 +1,6 @@
 import ms from 'ms'
 
+import type IData from '../interfaces/IData'
 import type ICacheEngine from '../interfaces/ICacheEngine'
 import type ICacheOptions from '../interfaces/ICacheOptions'
 
@@ -31,7 +32,7 @@ class CacheEngine {
     }
   }
 
-  async get (key: string): Promise<Record<string, unknown> | Record<string, unknown>[] | undefined> {
+  async get (key: string): Promise<IData> {
     return this.engine.get(key)
   }
 

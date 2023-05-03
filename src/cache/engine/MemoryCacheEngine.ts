@@ -1,13 +1,14 @@
+import type IData from '../../interfaces/IData'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
 
 class MemoryCacheEngine implements ICacheEngine {
-  private cache: Record<string, { value: Record<string, unknown> | Record<string, unknown>[], expiresAt: number } | undefined>
+  private cache: Record<string, { value: IData, expiresAt: number } | undefined>
 
   constructor () {
     this.cache = {}
   }
 
-  get (key: string): Record<string, unknown> | Record<string, unknown>[] | undefined {
+  get (key: string): IData {
     const item = this.cache[key]
     if (!item || item.expiresAt < Date.now()) {
       this.del(key)
@@ -16,7 +17,7 @@ class MemoryCacheEngine implements ICacheEngine {
     return item.value
   }
 
-  set (key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl = Infinity): void {
+  set (key: string, value: IData, ttl = Infinity): void {
     this.cache[key] = { value, expiresAt: Date.now() + ttl }
   }
 

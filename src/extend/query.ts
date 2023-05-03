@@ -44,10 +44,10 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     return this
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  mongoose.Query.prototype.exec = async function () {
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, sonarjs/cognitive-complexity
+  mongoose.Query.prototype.exec = async function (...args: []) {
     if (!Object.prototype.hasOwnProperty.call(this, '_ttl')) {
-      return mongooseExec.apply(this)
+      return mongooseExec.apply(this, args)
     }
 
     const key = this.getCacheKey()
@@ -63,7 +63,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     })
 
     if (resultCache) {
-      if (isCount || isDistinct) {
+      if (isCount || isDistinct || mongooseOptions.lean) {
         return resultCache
       }
 
@@ -71,17 +71,15 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
 
       if (Array.isArray(resultCache)) {
         return resultCache.map((item) => {
-          const hydrated = constructor.hydrate(item)
-          return mongooseOptions.lean ? hydrated.toObject() : hydrated
+          return constructor.hydrate(item)
         })
       } else {
-        const hydrated = constructor.hydrate(resultCache)
-        return mongooseOptions.lean ? hydrated.toObject() : hydrated
+        return constructor.hydrate(resultCache)
       }
     }
 
     const result = await mongooseExec.call(this) as Record<string, unknown>[] | Record<string, unknown>
-    cache.set(key, result, ttl).catch((err) => {
+    await cache.set(key, result, ttl).catch((err) => {
       console.error(err)
     })
 

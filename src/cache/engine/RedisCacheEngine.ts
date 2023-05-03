@@ -1,6 +1,8 @@
 import IORedis from 'ioredis'
+import { Types } from 'mongoose'
 
 import type { Redis, RedisOptions } from 'ioredis'
+import type IData from '../../interfaces/IData'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
 
 class RedisCacheEngine implements ICacheEngine {
@@ -13,12 +15,22 @@ class RedisCacheEngine implements ICacheEngine {
     this.client = new IORedis(options)
   }
 
-  async get (key: string): Promise<Record<string, unknown> | Record<string, unknown>[] | undefined> {
+  async get (key: string): Promise<IData> {
     const value = await this.client.get(key)
     if (value === null) {
       return undefined
     }
-    return JSON.parse(value) as Promise<Record<string, unknown> | Record<string, unknown>[]>
+    return JSON.parse(value, (_key, value) => {
+      if (typeof value === 'string') {
+        const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
+        if (dateRegex.test(value)) {
+          return new Date(value)
+        } else if (Types.ObjectId.isValid(value)) {
+          return new Types.ObjectId(value)
+        }
+      }
+      return value as unknown
+    }) as Promise<Record<string, unknown> | Record<string, unknown>[]>
   }
 
   async set (key: string, value: unknown, ttl = Infinity): Promise<void> {

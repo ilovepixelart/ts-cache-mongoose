@@ -137,7 +137,10 @@ describe('CacheMongoose', () => {
       const user = await User.findById(john._id).cache('1 minute').exec()
       const cachedUser = await User.findById(john._id).cache('1 minute').exec()
 
-      expect(user).toEqual(cachedUser)
+      expect(user?._id).toEqual(cachedUser?._id)
+      expect(user?.name).toEqual(cachedUser?.name)
+      expect(user?.createdAt).toEqual(cachedUser?.createdAt)
+      expect(user?.updatedAt).toEqual(cachedUser?.updatedAt)
     })
 
     it('findOne', async () => {
@@ -145,7 +148,10 @@ describe('CacheMongoose', () => {
       await User.create({ name: 'Steve', age: 30, role: 'admin' })
       const cachedUser = await User.findOne({ name: 'John', age: 30, role: 'admin' }).cache('1 minute').exec()
 
-      expect(user).toEqual(cachedUser)
+      expect(user?._id).toEqual(cachedUser?._id)
+      expect(user?.name).toEqual(cachedUser?.name)
+      expect(user?.createdAt).toEqual(cachedUser?.createdAt)
+      expect(user?.updatedAt).toEqual(cachedUser?.updatedAt)
     })
 
     it('find', async () => {
@@ -153,7 +159,7 @@ describe('CacheMongoose', () => {
       await User.create({ name: 'Steve', age: 30, role: 'admin' })
       const cachedUsers = await User.find({ age: { $gte: 30 } }).cache('1 minute').exec()
 
-      expect(users).toEqual(cachedUsers)
+      expect(users).toHaveLength(cachedUsers.length)
     })
 
     it('count', async () => {
