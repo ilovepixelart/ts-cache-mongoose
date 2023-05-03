@@ -70,11 +70,13 @@ import cache from 'ts-cache-mongoose'
 
 // In-memory example 
 const cache = cache.init(mongoose, {
+  defaultTTL: '60 seconds',
   engine: 'memory',
 })
 
 // Redis example
 const cache = cache.init(mongoose, {
+  defaultTTL: '60 seconds',
   engine: 'redis',
   engineOptions: {
     host: 'localhost',
