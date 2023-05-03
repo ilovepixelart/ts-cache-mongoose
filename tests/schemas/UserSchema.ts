@@ -16,4 +16,10 @@ const UserSchema = new Schema<IUser>({
   }
 }, { timestamps: true })
 
+UserSchema.virtual('stories', {
+  ref: 'Story',
+  localField: '_id',
+  foreignField: 'userId'
+})
+
 export default UserSchema

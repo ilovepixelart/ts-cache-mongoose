@@ -27,9 +27,9 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  mongoose.Aggregate.prototype.exec = async function () {
+  mongoose.Aggregate.prototype.exec = async function (...args: []) {
     if (!Object.prototype.hasOwnProperty.call(this, '_ttl')) {
-      return mongooseExec.apply(this)
+      return mongooseExec.apply(this, args)
     }
 
     const key = this.getCacheKey()
@@ -44,7 +44,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     }
 
     const result = await mongooseExec.call(this) as Record<string, unknown>[] | Record<string, unknown>
-    cache.set(key, result, ttl).catch((err) => {
+    await cache.set(key, result, ttl).catch((err) => {
       console.error(err)
     })
 

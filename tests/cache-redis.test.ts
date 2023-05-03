@@ -1,13 +1,13 @@
-import mongoose, { model } from 'mongoose'
-import CacheMongoose from '../src/plugin'
+import mongoose from 'mongoose'
+import plugin from '../src/plugin'
 
-import UserSchema from './schemas/UserSchema'
+import User from './models/User'
+import Story from './models/Story'
 
 describe('cache redis', () => {
   const uri = `${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`
-  const User = model('User', UserSchema)
 
-  const cache = CacheMongoose.init(mongoose, {
+  const cache = plugin.init(mongoose, {
     engine: 'redis',
     engineOptions: {
       host: 'localhost',
@@ -28,6 +28,7 @@ describe('cache redis', () => {
 
   beforeEach(async () => {
     await mongoose.connection.collection('users').deleteMany({})
+    await mongoose.connection.collection('stories').deleteMany({})
   })
 
   it('should use cache', async () => {
@@ -263,5 +264,51 @@ describe('cache redis', () => {
     expect(cache5).toBeNull()
     expect(cache6).toBeNull()
     expect(cache5).toEqual(cache6)
+  })
+
+  it('should distinct("_id") and distinct("role") and distinct("createdAt")', async () => {
+    await User.create({ name: 'i', role: 'admin' })
+    await User.create({ name: 'p', role: 'user' })
+    await User.create({ name: 'm', role: 'user' })
+
+    const cache1 = await User.distinct('_id').cache('30 seconds').exec()
+    expect(cache1).not.toBeNull()
+    expect(cache1?.length).toBe(3)
+
+    const cache2 = await User.distinct('_id').cache('30 seconds').exec()
+    expect(cache2).not.toBeNull()
+    expect(cache2?.length).toBe(3)
+
+    const cache4 = await User.distinct('role').cache('30 seconds').exec()
+    expect(cache4).not.toBeNull()
+    expect(cache4?.length).toBe(2)
+
+    const cache5 = await User.distinct('role').cache('30 seconds').exec()
+    expect(cache5).not.toBeNull()
+    expect(cache5?.length).toBe(2)
+
+    const cache6 = await User.distinct('createdAt').cache('30 seconds').exec()
+    expect(cache6).not.toBeNull()
+    expect(cache6?.length).toBe(3)
+    const cache7 = await User.distinct('createdAt').cache('30 seconds').exec()
+
+    expect(cache1).toEqual(cache2)
+    expect(cache4).toEqual(cache5)
+    expect(cache6).toEqual(cache7)
+  })
+
+  it('should test exceptions', async () => {
+    const user = await User.create({ name: 'i', role: 'admin' })
+    const story1 = await Story.create({ title: '1', userId: user._id })
+    const story2 = await Story.create({ title: '2', userId: user._id })
+
+    const cache1 = await User.findOne({ name: 'i' }).populate({ path: 'stories' }).lean().cache('30 seconds').exec()
+    const cache2 = await User.findOne({ name: 'i' }).populate({ path: 'stories' }).lean().cache('30 seconds').exec()
+    expect(cache1).not.toBeNull()
+    expect(cache1?.stories).not.toBeNull()
+    expect(cache1?.stories?.length).toBe(2)
+    expect(cache1?.stories?.[0]._id).toEqual(story1._id)
+    expect(cache1?.stories?.[1]._id).toEqual(story2._id)
+    expect(cache1).toEqual(cache2)
   })
 })
