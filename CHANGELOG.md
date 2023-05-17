@@ -1,5 +1,35 @@
+<a name="v1.0.4"></a>
+# [v1.0.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.4) - 17 May 2023
+
+- Merge pull request [#17](https://github.com/ilovepixelart/ts-cache-mongoose/issues/17) from ilovepixelart/feature/dep  c13843f
+- Dep  370436d
+- Merge pull request [#15](https://github.com/ilovepixelart/ts-cache-mongoose/issues/15) from ilovepixelart/dependabot/npm_and_yarn/swc/core-1.3.58  c405297
+- Merge pull request [#16](https://github.com/ilovepixelart/ts-cache-mongoose/issues/16) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.1.4  a56a146
+- Bump @types/node from 20.1.3 to 20.1.4  051256c
+- Bump @swc/core from 1.3.57 to 1.3.58  96ba39c
+- Merge pull request [#13](https://github.com/ilovepixelart/ts-cache-mongoose/issues/13) from ilovepixelart/feature/dep  97f21a6
+- Dep  186fb1b
+- Merge pull request [#12](https://github.com/ilovepixelart/ts-cache-mongoose/issues/12) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.1.0  e819e8f
+- Bump @types/node from 18.16.3 to 20.1.0  ce3c4d9
+- Merge pull request [#11](https://github.com/ilovepixelart/ts-cache-mongoose/issues/11) from ilovepixelart/feature/dep  24363c5
+- Dep  eb57f13
+- Update changelog for &quot;v1.0.3&quot;  343521a
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.3...v1.0.4
+
+[Changes][v1.0.4]
+
+
 <a name="v1.0.3"></a>
 # [v1.0.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.3) - 03 May 2023
+
+```
+- Type for simplicity
+- Lean with hydration of dates and ids
+- Distinct hydration of dates and ids
+- Apply args for callbacks
+- Some tests to cover above
+```
 
 - Doc  6b5d1c7
 - Merge pull request [#10](https://github.com/ilovepixelart/ts-cache-mongoose/issues/10) from ilovepixelart/feature/apply  6184e24
@@ -138,6 +168,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.3...v1.0.4
 [v1.0.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.2...v1.0.3
 [v1.0.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.0...v1.0.1
