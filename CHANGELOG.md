@@ -1,3 +1,40 @@
+<a name="v1.0.5"></a>
+# [v1.0.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.5) - 09 Jun 2023
+
+- Merge pull request [#36](https://github.com/ilovepixelart/ts-cache-mongoose/issues/36) from ilovepixelart/feature/dep  723a84b
+- Sonar cloud latest version, settings for vscode  fdffdf1
+- Dep  4d68f53
+- Merge pull request [#35](https://github.com/ilovepixelart/ts-cache-mongoose/issues/35) from ilovepixelart/feature/dep  5cc9e34
+- Dep  eca2a0a
+- Merge pull request [#34](https://github.com/ilovepixelart/ts-cache-mongoose/issues/34) from ilovepixelart/dependabot/npm_and_yarn/typescript-5.1.3  1947bb2
+- Bump typescript from 5.0.4 to 5.1.3  2a337d6
+- Merge pull request [#33](https://github.com/ilovepixelart/ts-cache-mongoose/issues/33) from ilovepixelart/dependabot/npm_and_yarn/swc/core-1.3.62  990a7a5
+- Merge pull request [#31](https://github.com/ilovepixelart/ts-cache-mongoose/issues/31) from ilovepixelart/dependabot/npm_and_yarn/types/jest-29.5.2  25ced59
+- Merge pull request [#30](https://github.com/ilovepixelart/ts-cache-mongoose/issues/30) from ilovepixelart/dependabot/npm_and_yarn/eslint-8.42.0  f7c9eda
+- Bump @swc/core from 1.3.61 to 1.3.62  be64cb2
+- Bump @types/jest from 29.5.1 to 29.5.2  5e4001a
+- Bump eslint from 8.41.0 to 8.42.0  4900965
+- Merge pull request [#29](https://github.com/ilovepixelart/ts-cache-mongoose/issues/29) from ilovepixelart/feature/dep  124df0e
+- Dep  9b1b0b9
+- Merge pull request [#24](https://github.com/ilovepixelart/ts-cache-mongoose/issues/24) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.2.5  bb9388c
+- Merge pull request [#23](https://github.com/ilovepixelart/ts-cache-mongoose/issues/23) from ilovepixelart/dependabot/npm_and_yarn/swc/core-1.3.60  008f11c
+- Merge pull request [#22](https://github.com/ilovepixelart/ts-cache-mongoose/issues/22) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/parser-5.59.7  6d86a7d
+- Bump @types/node from 20.2.3 to 20.2.5  000a98b
+- Bump @swc/core from 1.3.59 to 1.3.60  f3d3509
+- Bump @typescript-eslint/parser from 5.59.6 to 5.59.7  f62a530
+- Merge pull request [#21](https://github.com/ilovepixelart/ts-cache-mongoose/issues/21) from ilovepixelart/dependabot/npm_and_yarn/eslint-8.41.0  bdffee1
+- Merge pull request [#20](https://github.com/ilovepixelart/ts-cache-mongoose/issues/20) from ilovepixelart/dependabot/npm_and_yarn/swc/core-1.3.59  02e51e1
+- Merge pull request [#18](https://github.com/ilovepixelart/ts-cache-mongoose/issues/18) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.2.3  b3da66e
+- Bump eslint from 8.40.0 to 8.41.0  01e08b5
+- Bump @swc/core from 1.3.58 to 1.3.59  0bc14d7
+- Bump @types/node from 20.1.7 to 20.2.3  dacefb5
+- Update changelog for &quot;v1.0.4&quot;  9fadca3
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.4...v1.0.5
+
+[Changes][v1.0.5]
+
+
 <a name="v1.0.4"></a>
 # [v1.0.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.4) - 17 May 2023
 
@@ -168,6 +205,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.4...v1.0.5
 [v1.0.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.3...v1.0.4
 [v1.0.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.2...v1.0.3
 [v1.0.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.1...v1.0.2
