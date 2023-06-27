@@ -89,7 +89,7 @@
     "@types/jest": "29.5.2",
     "@types/ms": "^0.7.31",
     "@types/node": "20.3.1",
-    "@typescript-eslint/eslint-plugin": "5.59.11",
+    "@typescript-eslint/eslint-plugin": "5.60.1",
     "@typescript-eslint/parser": "5.59.11",
     "eslint": "8.42.0",
     "eslint-config-standard": "17.1.0",
