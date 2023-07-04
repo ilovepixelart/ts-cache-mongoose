@@ -1,3 +1,41 @@
+<a name="v1.0.6"></a>
+# [v1.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.6) - 04 Jul 2023
+
+- Merge pull request [#57](https://github.com/ilovepixelart/ts-cache-mongoose/issues/57) from ilovepixelart/feature/dep  06e9cb2
+- Dep  3d3876f
+- Merge pull request [#55](https://github.com/ilovepixelart/ts-cache-mongoose/issues/55) from ilovepixelart/dependabot/npm_and_yarn/eslint-8.44.0  edb1de4
+- Bump eslint from 8.43.0 to 8.44.0  183a8bc
+- Merge pull request [#52](https://github.com/ilovepixelart/ts-cache-mongoose/issues/52) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.3.3  a885149
+- Merge pull request [#54](https://github.com/ilovepixelart/ts-cache-mongoose/issues/54) from ilovepixelart/dependabot/npm_and_yarn/eslint-plugin-n-16.0.1  0df2358
+- Merge pull request [#56](https://github.com/ilovepixelart/ts-cache-mongoose/issues/56) from ilovepixelart/dependabot/npm_and_yarn/swc/core-1.3.67  062be47
+- Bump @swc/core from 1.3.66 to 1.3.67  6a01da3
+- Bump eslint-plugin-n from 16.0.0 to 16.0.1  51d0445
+- Bump @types/node from 20.3.1 to 20.3.3  d48f584
+- Merge pull request [#51](https://github.com/ilovepixelart/ts-cache-mongoose/issues/51) from ilovepixelart/snyk-upgrade-28ddc4ad3cc15b5ccaf3efbf4c8efe08  12f1c00
+- fix: upgrade mongoose from 6.10.5 to 6.11.1  e94b5cc
+- Merge pull request [#50](https://github.com/ilovepixelart/ts-cache-mongoose/issues/50) from ilovepixelart/dependabot/npm_and_yarn/fast-xml-parser-and-aws-sdk/credential-providers-4.2.5  f94d51d
+- Merge pull request [#46](https://github.com/ilovepixelart/ts-cache-mongoose/issues/46) from ilovepixelart/dependabot/npm_and_yarn/swc/core-1.3.66  d25909e
+- Merge pull request [#44](https://github.com/ilovepixelart/ts-cache-mongoose/issues/44) from ilovepixelart/dependabot/npm_and_yarn/eslint-8.43.0  730dc1b
+- Merge pull request [#49](https://github.com/ilovepixelart/ts-cache-mongoose/issues/49) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.60.1  9918498
+- Bump fast-xml-parser and @aws-sdk/credential-providers  565a529
+- Bump @typescript-eslint/eslint-plugin from 5.59.11 to 5.60.1  f360866
+- Bump eslint from 8.42.0 to 8.43.0  e83cedb
+- Merge pull request [#48](https://github.com/ilovepixelart/ts-cache-mongoose/issues/48) from ilovepixelart/dependabot/npm_and_yarn/eslint-plugin-jest-27.2.2  4a11f94
+- Bump eslint-plugin-jest from 27.2.1 to 27.2.2  53e086d
+- Bump @swc/core from 1.3.62 to 1.3.66  dedaba1
+- Merge pull request [#41](https://github.com/ilovepixelart/ts-cache-mongoose/issues/41) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/parser-5.59.11  1530df4
+- Merge pull request [#40](https://github.com/ilovepixelart/ts-cache-mongoose/issues/40) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.3.1  0314799
+- Bump @typescript-eslint/parser from 5.59.9 to 5.59.11  a7aa637
+- Bump @types/node from 20.2.5 to 20.3.1  f70db9f
+- Merge pull request [#43](https://github.com/ilovepixelart/ts-cache-mongoose/issues/43) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-5.59.11  dcab8c5
+- Bump @typescript-eslint/eslint-plugin from 5.59.9 to 5.59.11  e3b41f6
+- Update changelog for &quot;v1.0.5&quot;  427b286
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.5...v1.0.6
+
+[Changes][v1.0.6]
+
+
 <a name="v1.0.5"></a>
 # [v1.0.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.5) - 09 Jun 2023
 
@@ -205,6 +243,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.5...v1.0.6
 [v1.0.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.4...v1.0.5
 [v1.0.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.3...v1.0.4
 [v1.0.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.2...v1.0.3
