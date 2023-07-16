@@ -1,3 +1,18 @@
+<a name="v1.0.7"></a>
+# [v1.0.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.7) - 16 Jul 2023
+
+- Merge pull request [#63](https://github.com/ilovepixelart/ts-cache-mongoose/issues/63) from ilovepixelart/feature/dep  daf6776
+- Ts node  aa08a17
+- Dep  5fb1efb
+- Merge pull request [#58](https://github.com/ilovepixelart/ts-cache-mongoose/issues/58) from ilovepixelart/snyk-upgrade-8a29cddcb70f40bb2243efa11c83881a  b784814
+- fix: upgrade mongoose from 6.11.1 to 6.11.2  fe5468a
+- Update changelog for &quot;v1.0.6&quot;  1c92b67
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.6...v1.0.7
+
+[Changes][v1.0.7]
+
+
 <a name="v1.0.6"></a>
 # [v1.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.6) - 04 Jul 2023
 
@@ -243,6 +258,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.0.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.6...v1.0.7
 [v1.0.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.5...v1.0.6
 [v1.0.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.4...v1.0.5
 [v1.0.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.3...v1.0.4
