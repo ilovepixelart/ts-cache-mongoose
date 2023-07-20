@@ -20,7 +20,7 @@ class RedisCacheEngine implements ICacheEngine {
     if (value === null) {
       return undefined
     }
-    return JSON.parse(value, (_key, value) => {
+    return JSON.parse(value, (_, value) => {
       if (typeof value === 'string') {
         const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
         if (dateRegex.test(value)) {
