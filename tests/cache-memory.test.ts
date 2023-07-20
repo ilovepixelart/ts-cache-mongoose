@@ -92,7 +92,7 @@ describe('CacheMongoose', () => {
       expect(cache1?.name).not.toEqual(cache2?.name)
     })
 
-    it('should use memory cache and custom key with an empty string custom key', async () => {
+    it('should use memory cache and custom key with an empty string', async () => {
       const user = await User.create({
         name: 'John Doe',
         role: 'admin'
