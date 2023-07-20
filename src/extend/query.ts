@@ -9,7 +9,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Query.prototype.getCacheKey = function () {
-    if (this._key) return this._key
+    if (this._key != null) return this._key
 
     const filter = this.getFilter()
     const update = this.getUpdate()
