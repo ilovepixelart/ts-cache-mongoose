@@ -53,7 +53,7 @@ class CacheMongoose {
   }
 
   public async clear (customKey?: string): Promise<void> {
-    if (customKey !== undefined) {
+    if (typeof customKey === 'string') {
       await this.cache.del(customKey)
     } else {
       await this.cache.clear()
