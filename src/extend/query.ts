@@ -54,7 +54,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     const ttl = this.getCacheTTL()
     const mongooseOptions = this.mongooseOptions()
 
-    const isCount = this.op?.includes('count')
+    const isCount = this.op?.includes('count') ?? false
     const isDistinct = this.op === 'distinct'
     const model = this.model.modelName
 
