@@ -1,3 +1,19 @@
+<a name="v1.1.0"></a>
+# [v1.1.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.0) - 05 Aug 2023
+
+- Merge pull request [#79](https://github.com/ilovepixelart/ts-cache-mongoose/issues/79) from ilovepixelart/feature/dep  189e3f4
+- Dep + new version of swc - Remove env use target in .swcrc  47d040e
+- Merge pull request [#76](https://github.com/ilovepixelart/ts-cache-mongoose/issues/76) from ilovepixelart/dependabot/npm_and_yarn/eslint-8.46.0  d6d11d1
+- Merge pull request [#77](https://github.com/ilovepixelart/ts-cache-mongoose/issues/77) from ilovepixelart/dependabot/npm_and_yarn/jest-29.6.2  45f271e
+- Bump jest from 29.6.1 to 29.6.2  ba66284
+- Bump eslint from 8.45.0 to 8.46.0  ae317b3
+- Update changelog for &quot;v1.0.9&quot;  73394a4
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.9...v1.1.0
+
+[Changes][v1.1.0]
+
+
 <a name="v1.0.9"></a>
 # [v1.0.9](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.9) - 24 Jul 2023
 
@@ -289,6 +305,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.1.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.9...v1.1.0
 [v1.0.9]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.8...v1.0.9
 [v1.0.8]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.7...v1.0.8
 [v1.0.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.6...v1.0.7
