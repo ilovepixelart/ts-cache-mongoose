@@ -47,7 +47,7 @@ Caching queries is a good way to improve performance of your application
 
 ```bash
 npm install ts-cache-mongoose
-yard add ts-cache-mongoose
+yarn add ts-cache-mongoose
 ```
 
 - This plugin requires mongoose `>=6.6.x || 7.x` to be installed as a peer dependency
