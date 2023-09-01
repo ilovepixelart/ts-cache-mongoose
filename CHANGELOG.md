@@ -1,3 +1,24 @@
+<a name="v1.1.2"></a>
+# [v1.1.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.2) - 01 Sep 2023
+
+- Merge pull request [#102](https://github.com/ilovepixelart/ts-cache-mongoose/issues/102) from ilovepixelart/feature/dep  916df05
+- NodeNext  66dbe4d
+- Dep  df4e305
+- Merge pull request [#94](https://github.com/ilovepixelart/ts-cache-mongoose/issues/94) from pilot22/main  6a9671f
+- Update README.md  440d924
+- Merge pull request [#93](https://github.com/ilovepixelart/ts-cache-mongoose/issues/93) from ilovepixelart/feature/dep  e17fafb
+- Dep  1c7a4b2
+- Merge pull request [#91](https://github.com/ilovepixelart/ts-cache-mongoose/issues/91) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-6.4.0  2156674
+- Merge pull request [#88](https://github.com/ilovepixelart/ts-cache-mongoose/issues/88) from ilovepixelart/dependabot/npm_and_yarn/swc/core-1.3.78  85a356f
+- Bump @typescript-eslint/eslint-plugin from 6.3.0 to 6.4.0  e0511e1
+- Bump @swc/core from 1.3.76 to 1.3.78  46c70ab
+- Update changelog for &quot;v1.1.1&quot;  4cc4ddf
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.1...v1.1.2
+
+[Changes][v1.1.2]
+
+
 <a name="v1.1.1"></a>
 # [v1.1.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.1) - 14 Aug 2023
 
@@ -317,6 +338,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.1.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.1...v1.1.2
 [v1.1.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.9...v1.1.0
 [v1.0.9]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.8...v1.0.9
