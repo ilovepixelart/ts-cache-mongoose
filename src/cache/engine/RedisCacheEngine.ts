@@ -26,7 +26,8 @@ class RedisCacheEngine implements ICacheEngine {
         if (dateRegex.test(value)) {
           return new Date(value)
         } else if (Types.ObjectId.isValid(value)) {
-          return new Types.ObjectId(value)
+          const oId = new Types.ObjectId(value)
+          return oId.toString() === value ? oId : value
         }
       }
       return value as unknown

@@ -311,4 +311,16 @@ describe('cache redis', () => {
     expect(cache1?.stories?.[1]._id).toEqual(story2._id)
     expect(cache1).toEqual(cache2)
   })
+
+  it('should not misclassify certain fields as objectIds', async () => {
+    // ObjectId.isValid will return true for multiple scenarios.
+    // A string being a potentially valid objectId should not be the
+    // determining factor on wether or not deserialize it as objectId.
+    await User.create({ name: '12CharString', role: 'admin' })
+    const miss = await User.find({ name: '12CharString' }).lean().cache('30 seconds')
+    const hit = await User.find({ name: '12CharString' }).lean().cache('30 seconds')
+    expect(miss).not.toBeNull()
+    expect(hit).not.toBeNull()
+    expect(hit).toEqual(miss)
+  })
 })
