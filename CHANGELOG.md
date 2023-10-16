@@ -1,3 +1,17 @@
+<a name="v1.2.1"></a>
+# [v1.2.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.2.1) - 16 Oct 2023
+
+- Merge pull request [#122](https://github.com/ilovepixelart/ts-cache-mongoose/issues/122) from ilovepixelart/feature/dep  43c9973
+- Dep  fc808db
+- Merge pull request [#121](https://github.com/ilovepixelart/ts-cache-mongoose/issues/121) from ilovepixelart/feature/object-id-detection  4e6c111
+- Certain strings get erroneously deserialised to ObjectID  b045283
+- Update changelog for &quot;v1.2.0&quot;  b65a2fa
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.0...v1.2.1
+
+[Changes][v1.2.1]
+
+
 <a name="v1.2.0"></a>
 # [v1.2.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.2.0) - 02 Oct 2023
 
@@ -353,6 +367,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.2.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.2...v1.2.0
 [v1.1.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.1...v1.1.2
 [v1.1.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.0...v1.1.1
