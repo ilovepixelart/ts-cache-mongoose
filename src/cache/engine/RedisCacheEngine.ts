@@ -1,5 +1,5 @@
 import IORedis from 'ioredis'
-import { Types } from 'mongoose'
+import mongoose, { Types } from 'mongoose'
 
 import type { Redis, RedisOptions } from 'ioredis'
 import type IData from '../../interfaces/IData'
@@ -25,7 +25,7 @@ class RedisCacheEngine implements ICacheEngine {
         const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
         if (dateRegex.test(value)) {
           return new Date(value)
-        } else if (Types.ObjectId.isValid(value)) {
+        } else if (mongoose.isObjectIdOrHexString(value)) {
           return new Types.ObjectId(value)
         }
       }
