@@ -26,7 +26,7 @@ Caching queries is a good way to improve performance of your application
 ```json
 {
   "node": "16.x || 18.x || 20.x",
-  "mongoose": ">=6.6.x < 9",
+  "mongoose": "6.6.x || 7.x || 8.x",
 }
 ```
 
