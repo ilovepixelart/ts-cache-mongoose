@@ -1,3 +1,22 @@
+<a name="v1.3.0"></a>
+# [v1.3.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.3.0) - 06 Nov 2023
+
+- Merge pull request [#130](https://github.com/ilovepixelart/ts-cache-mongoose/issues/130) from ilovepixelart/feature/mongoose-8  682d868
+- Latest  7a5bcd8
+- Doc  dd80f0b
+- Mongoose 8  07eb6e0
+- Merge pull request [#129](https://github.com/ilovepixelart/ts-cache-mongoose/issues/129) from ilovepixelart/feature/dep  5ffeae7
+- Fixed versions  04b67c6
+- Dep  b030219
+- Merge pull request [#123](https://github.com/ilovepixelart/ts-cache-mongoose/issues/123) from ilovepixelart/dependabot/npm_and_yarn/babel/traverse-7.23.2  5201ef3
+- Bump @babel/traverse from 7.22.17 to 7.23.2  8361552
+- Update changelog for &quot;v1.2.1&quot;  fd583ee
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.1...v1.3.0
+
+[Changes][v1.3.0]
+
+
 <a name="v1.2.1"></a>
 # [v1.2.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.2.1) - 16 Oct 2023
 
@@ -367,6 +386,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.3.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.2...v1.2.0
 [v1.1.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.1...v1.1.2
