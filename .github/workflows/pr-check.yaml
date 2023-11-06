@@ -36,7 +36,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x, 18.x]
-        mongoose-version: [mongoose@6.12.2, mongoose@7.6.4]
+        mongoose-version: [mongoose@6.12.2, mongoose@7.6.4, mongoose@latest]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
