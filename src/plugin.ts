@@ -9,10 +9,10 @@ import extendAggregate from './extend/aggregate'
 declare module 'mongoose' {
   interface Query<ResultType, DocType, THelpers, RawDocType> {
     cache: (this: Query<ResultType, DocType, THelpers, RawDocType>, ttl?: string, customKey?: string) => this
-    _key?: string
+    _key: string | null
     getCacheKey: (this: Query<ResultType, DocType, THelpers, RawDocType>) => string
-    _ttl?: string
-    getCacheTTL: (this: Query<ResultType, DocType, THelpers, RawDocType>) => string | undefined
+    _ttl: string | null
+    getCacheTTL: (this: Query<ResultType, DocType, THelpers, RawDocType>) => string | null
     op?: string
     _path?: unknown
     _fields?: unknown
@@ -22,10 +22,10 @@ declare module 'mongoose' {
 
   interface Aggregate<ResultType> {
     cache: (this: Aggregate<ResultType>, ttl?: string, customKey?: string) => this
-    _key?: string
+    _key: string | null
     getCacheKey: (this: Aggregate<ResultType>) => string
-    _ttl?: string
-    getCacheTTL: (this: Aggregate<ResultType>) => string | undefined
+    _ttl: string | null
+    getCacheTTL: (this: Aggregate<ResultType>) => string | null
   }
 }
 
