@@ -36,7 +36,7 @@ class CacheEngine {
     return this.engine.get(key)
   }
 
-  async set (key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl?: string): Promise<void> {
+  async set (key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl: string | null): Promise<void> {
     const actualTTL = ttl ? ms(ttl) : this.defaultTTL
     return this.engine.set(key, value, actualTTL)
   }

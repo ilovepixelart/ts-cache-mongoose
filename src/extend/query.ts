@@ -39,8 +39,8 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Query.prototype.cache = function (ttl?: string, customKey?: string) {
-    this._ttl = ttl
-    this._key = customKey
+    this._ttl = ttl ?? null
+    this._key = customKey ?? null
     return this
   }
 
