@@ -1,3 +1,17 @@
+<a name="v1.4.0"></a>
+# [v1.4.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.0) - 12 Nov 2023
+
+- Merge pull request [#131](https://github.com/ilovepixelart/ts-cache-mongoose/issues/131) from ilovepixelart/feature/tsconfig-eslint  df15116
+- Dep  9a8e813
+- Engines  66b73a8
+- Tsconfig strictest rules  64923f0
+- Update changelog for &quot;v1.3.0&quot;  a215539
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.3.0...v1.4.0
+
+[Changes][v1.4.0]
+
+
 <a name="v1.3.0"></a>
 # [v1.3.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.3.0) - 06 Nov 2023
 
@@ -386,6 +400,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.4.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.0...v1.2.1
 [v1.2.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.2...v1.2.0
