@@ -9,7 +9,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Aggregate.prototype.getCacheKey = function () {
-    return getKey({
+    return this._key || getKey({
       pipeline: this.pipeline()
     })
   }
