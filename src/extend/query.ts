@@ -16,7 +16,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
     const options = this.getOptions()
     const mongooseOptions = this.mongooseOptions()
 
-    const data: Record<string, unknown> = {
+    return getKey({
       model: this.model.modelName,
       op: this.op,
       filter,
@@ -27,9 +27,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
       _fields: this._fields,
       _distinct: this._distinct,
       _conditions: this._conditions
-    }
-
-    return getKey(data)
+    })
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
