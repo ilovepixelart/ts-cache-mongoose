@@ -48,6 +48,7 @@ Caching queries is a good way to improve performance of your application
 ```bash
 npm install ts-cache-mongoose
 yarn add ts-cache-mongoose
+pnpm add ts-cache-mongoose
 ```
 
 - This plugin requires mongoose `6.6.x || 7.x || 8.x` to be installed as a peer dependency
@@ -56,12 +57,15 @@ yarn add ts-cache-mongoose
 # For mongoose 6
 npm install mongoose@6.12.2
 yarn add mongoose mongoose@6.12.2
+pnpm add mongoose@6.12.2
 # For mongoose 7
 npm install mongoose@7.6.4
 yarn add mongoose@7.6.4
+pnpm add mongoose@7.6.4
 # For mongoose 8
 npm install mongoose@8.0.0
 yarn add mongoose@8.0.0
+pnpm add mongoose@8.0.0
 ```
 
 ## Example
@@ -72,13 +76,13 @@ import mongoose from 'mongoose'
 import cache from 'ts-cache-mongoose'
 
 // In-memory example 
-const cache = cache.init(mongoose, {
+cache.init(mongoose, {
   defaultTTL: '60 seconds',
   engine: 'memory',
 })
 
 // Redis example
-const cache = cache.init(mongoose, {
+cache.init(mongoose, {
   defaultTTL: '60 seconds',
   engine: 'redis',
   engineOptions: {
