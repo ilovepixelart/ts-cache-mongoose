@@ -1,3 +1,17 @@
+<a name="v1.4.1"></a>
+# [v1.4.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.1) - 15 Nov 2023
+
+- Merge pull request [#134](https://github.com/ilovepixelart/ts-cache-mongoose/issues/134) from ilovepixelart/feature/custom-key-for-aggregate  bd4cd95
+- Enable custom cache key for aggregate  ff4151c
+- Doc  b6300b6
+- Doc  dad993d
+- Update changelog for &quot;v1.4.0&quot;  8fe292c
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.0...v1.4.1
+
+[Changes][v1.4.1]
+
+
 <a name="v1.4.0"></a>
 # [v1.4.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.0) - 12 Nov 2023
 
@@ -400,6 +414,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.4.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.1...v1.3.0
 [v1.2.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.0...v1.2.1
