@@ -56,7 +56,7 @@ pnpm add ts-cache-mongoose
 ```bash
 # For mongoose 6
 npm install mongoose@6.12.2
-yarn add mongoose mongoose@6.12.2
+yarn add mongoose@6.12.2
 pnpm add mongoose@6.12.2
 # For mongoose 7
 npm install mongoose@7.6.4
