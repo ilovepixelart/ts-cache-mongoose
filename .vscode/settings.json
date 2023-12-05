@@ -34,6 +34,7 @@
     "npmignore",
     "parens",
     "setex",
+    "singleline",
     "sonarcloud",
     "sonarjs",
     "sonarsource",
