@@ -81,6 +81,8 @@ cache.init(mongoose, {
   engine: 'memory',
 })
 
+// OR
+
 // Redis example
 cache.init(mongoose, {
   defaultTTL: '60 seconds',
@@ -91,6 +93,7 @@ cache.init(mongoose, {
   },
 })
 
+// Connect to your database
 mongoose.connect('mongodb://localhost:27017/my-database')
 
 // Somewhere in your code
@@ -122,6 +125,15 @@ const books = await Book.aggregate([
     },
   }
 ]).cache('1 minute').exec()
+
+// Cache invalidation
+
+// To clear all cache, don't use in production unless you know what you are doing
+await cache.clear()
+
+// Instead use custom cache key
+const user = await User.findById('61bb4d6a1786e5123d7f4cf1').cache('1 minute', 'some-custom-key').exec()
+await cache.clear('some-custom-key')
 ```
 
 ## Check my other projects
