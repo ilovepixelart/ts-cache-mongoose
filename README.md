@@ -40,6 +40,7 @@ Caching queries is a good way to improve performance of your application
 - [x] Cache key prefix
 - [x] Query caching
 - [x] Aggregate caching
+- [x] Supports ESM and CommonJS
 
 ## Installation
 
