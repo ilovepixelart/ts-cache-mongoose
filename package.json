@@ -1,6 +1,6 @@
 {
   "name": "ts-cache-mongoose",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Cache plugin for mongoose Queries and Aggregate (in-memory, redis)",
   "author": "Alex Eagle",
   "license": "MIT",
