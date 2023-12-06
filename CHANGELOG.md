@@ -1,3 +1,20 @@
+<a name="v1.4.3"></a>
+# [v1.4.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.3) - 06 Dec 2023
+
+- Doc  ae2fee9
+- Merge pull request [#143](https://github.com/ilovepixelart/ts-cache-mongoose/issues/143) from ilovepixelart/feature/esm-support  9cdaa4a
+- Doc  ee606bb
+- ESM support  1f2c00f
+- Settings  70858d6
+- System files ignore  41bcd1c
+- Delimiter style for interfaces  68003aa
+- Update changelog for &quot;v1.4.2&quot;  06cacc7
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.2...v1.4.3
+
+[Changes][v1.4.3]
+
+
 <a name="v1.4.2"></a>
 # [v1.4.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.2) - 28 Nov 2023
 
@@ -426,6 +443,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.4.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.2...v1.4.3
 [v1.4.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.1...v1.4.2
 [v1.4.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.3.0...v1.4.0
