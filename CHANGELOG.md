@@ -1,3 +1,16 @@
+<a name="v1.4.4"></a>
+# [v1.4.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.4) - 09 Jan 2024
+
+- Merge pull request [#152](https://github.com/ilovepixelart/ts-cache-mongoose/issues/152) from ilovepixelart/feature/esm-bash-and-dep  5ea3ecb
+- Audit  e98d515
+- ESM bash and Dep  d6851db
+- Update changelog for &quot;v1.4.3&quot;  ca0e4d2
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.3...v1.4.4
+
+[Changes][v1.4.4]
+
+
 <a name="v1.4.3"></a>
 # [v1.4.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.3) - 06 Dec 2023
 
@@ -443,6 +456,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.4.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.3...v1.4.4
 [v1.4.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.2...v1.4.3
 [v1.4.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.1...v1.4.2
 [v1.4.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.0...v1.4.1
