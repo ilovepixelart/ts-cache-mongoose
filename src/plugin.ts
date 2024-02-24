@@ -30,38 +30,37 @@ declare module 'mongoose' {
 }
 
 class CacheMongoose {
-  // eslint-disable-next-line no-use-before-define
-  private static instance: CacheMongoose | undefined
-  private cache!: Cache
+  static #instance: CacheMongoose | undefined
+  #cache!: Cache
 
   private constructor () {
     // Private constructor to prevent external instantiation
   }
 
   public static init (mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
-    if (!this.instance) {
-      this.instance = new CacheMongoose()
-      this.instance.cache = new Cache(cacheOptions)
+    if (!this.#instance) {
+      this.#instance = new CacheMongoose()
+      this.#instance.#cache = new Cache(cacheOptions)
 
-      const cache = this.instance.cache
+      const cache = this.#instance.#cache
 
       extendQuery(mongoose, cache)
       extendAggregate(mongoose, cache)
     }
 
-    return this.instance
+    return this.#instance
   }
 
   public async clear (customKey?: string): Promise<void> {
     if (customKey != null) {
-      await this.cache.del(customKey)
+      await this.#cache.del(customKey)
     } else {
-      await this.cache.clear()
+      await this.#cache.clear()
     }
   }
 
   public async close (): Promise<void> {
-    await this.cache.close()
+    await this.#cache.close()
   }
 }
 
