@@ -25,7 +25,6 @@ class MemoryCacheEngine implements ICacheEngine {
   }
 
   del (key: string): void {
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     this.cache.delete(key)
   }
 
