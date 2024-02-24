@@ -1,3 +1,31 @@
+<a name="v1.4.6"></a>
+# [v1.4.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.6) - 24 Feb 2024
+
+- Lock  a389447
+- Merge pull request [#169](https://github.com/ilovepixelart/ts-cache-mongoose/issues/169) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.2.0  752171b
+- Merge pull request [#170](https://github.com/ilovepixelart/ts-cache-mongoose/issues/170) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.11.20  a1d3f34
+- Merge pull request [#171](https://github.com/ilovepixelart/ts-cache-mongoose/issues/171) from ilovepixelart/dependabot/npm_and_yarn/eslint-8.57.0  4a101a8
+- Bump eslint from 8.56.0 to 8.57.0  ae10a2c
+- Bump @types/node from 20.8.10 to 20.11.20  d63732c
+- Bump mongoose from 8.0.0 to 8.2.0  b82efd0
+- Dependabot ignore  0181902
+- Merge pull request [#168](https://github.com/ilovepixelart/ts-cache-mongoose/issues/168) from ilovepixelart/feature/dep  a3d1be1
+- Merge pull request [#167](https://github.com/ilovepixelart/ts-cache-mongoose/issues/167) from ekamahuja/memor-engine-map  8f50596
+- Remove eslint delete method memory engine comment  cb72814
+- Enhancement: Upgrade cache to use Map for improved performance  e3df1e9
+- Dep  da387c0
+- Update changelog for v1.4.5  538865a
+- Merge pull request [#163](https://github.com/ilovepixelart/ts-cache-mongoose/issues/163) from ilovepixelart/feature/dep  9f37105
+- Dep  3916a8f
+- Merge pull request [#155](https://github.com/ilovepixelart/ts-cache-mongoose/issues/155) from ilovepixelart/feature/dep  13d99f3
+- Dep  03656ba
+- Update changelog for &quot;v1.4.5&quot;  13a3e8e
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.5...v1.4.6
+
+[Changes][v1.4.6]
+
+
 <a name="v1.4.5"></a>
 # [v1.4.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.5) - 20 Jan 2024
 
@@ -468,6 +496,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.4.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.5...v1.4.6
 [v1.4.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.4...v1.4.5
 [v1.4.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.3...v1.4.4
 [v1.4.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.2...v1.4.3
