@@ -6,17 +6,17 @@ import type IData from '../../interfaces/IData'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
 
 class RedisCacheEngine implements ICacheEngine {
-  private client: Redis
+  #client: Redis
 
   constructor (options: RedisOptions) {
     if (!options.keyPrefix) {
       options.keyPrefix = 'cache-mongoose:'
     }
-    this.client = new IORedis(options)
+    this.#client = new IORedis(options)
   }
 
   async get (key: string): Promise<IData> {
-    const value = await this.client.get(key)
+    const value = await this.#client.get(key)
     if (value === null) {
       return undefined
     }
@@ -35,19 +35,19 @@ class RedisCacheEngine implements ICacheEngine {
 
   async set (key: string, value: unknown, ttl = Infinity): Promise<void> {
     const serializedValue = JSON.stringify(value)
-    await this.client.setex(key, Math.ceil(ttl / 1000), serializedValue)
+    await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
   }
 
   async del (key: string): Promise<void> {
-    await this.client.del(key)
+    await this.#client.del(key)
   }
 
   async clear (): Promise<void> {
-    await this.client.flushdb()
+    await this.#client.flushdb()
   }
 
   async close (): Promise<void> {
-    await this.client.quit()
+    await this.#client.quit()
   }
 }
 

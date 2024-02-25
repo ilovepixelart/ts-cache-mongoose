@@ -30,8 +30,7 @@ declare module 'mongoose' {
 }
 
 class CacheMongoose {
-  // eslint-disable-next-line no-use-before-define
-  private static instance: CacheMongoose | undefined
+  static #instance: CacheMongoose | undefined
   private cache!: Cache
 
   private constructor () {
@@ -39,17 +38,17 @@ class CacheMongoose {
   }
 
   public static init (mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
-    if (!this.instance) {
-      this.instance = new CacheMongoose()
-      this.instance.cache = new Cache(cacheOptions)
+    if (!this.#instance) {
+      this.#instance = new CacheMongoose()
+      this.#instance.cache = new Cache(cacheOptions)
 
-      const cache = this.instance.cache
+      const cache = this.#instance.cache
 
       extendQuery(mongoose, cache)
       extendAggregate(mongoose, cache)
     }
 
-    return this.instance
+    return this.#instance
   }
 
   public async clear (customKey?: string): Promise<void> {
