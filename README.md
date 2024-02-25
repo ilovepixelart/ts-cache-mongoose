@@ -50,6 +50,7 @@ Caching queries is a good way to improve performance of your application
 npm install ts-cache-mongoose
 yarn add ts-cache-mongoose
 pnpm add ts-cache-mongoose
+bun add ts-cache-mongoose
 ```
 
 - This plugin requires mongoose `6.6.x || 7.x || 8.x` to be installed as a peer dependency
@@ -59,14 +60,17 @@ pnpm add ts-cache-mongoose
 npm install mongoose@6.12.2
 yarn add mongoose@6.12.2
 pnpm add mongoose@6.12.2
+bun add mongoose@6.12.2
 # For mongoose 7
 npm install mongoose@7.6.4
 yarn add mongoose@7.6.4
 pnpm add mongoose@7.6.4
+bun add mongoose@7.6.4
 # For mongoose 8
 npm install mongoose@8.0.0
 yarn add mongoose@8.0.0
 pnpm add mongoose@8.0.0
+bun add mongoose@8.0.0
 ```
 
 ## Example
