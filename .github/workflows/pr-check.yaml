@@ -115,6 +115,7 @@ jobs:
           REDIS_PORT: 6379
 
       - name: Scan
+        if: env.SONAR_TOKEN
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
