@@ -82,16 +82,17 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "4.2.0",
+    "@stylistic/eslint-plugin": "1.6.3",
     "@swc/cli": "0.3.10",
-    "@swc/core": "1.4.2",
+    "@swc/core": "1.4.7",
     "@swc/helpers": "0.5.6",
     "@swc/jest": "0.2.36",
     "@swc/register": "0.1.10",
     "@types/jest": "29.5.12",
     "@types/ms": "0.7.34",
     "@types/node": "20",
-    "@typescript-eslint/eslint-plugin": "7.1.0",
-    "@typescript-eslint/parser": "7.1.0",
+    "@typescript-eslint/eslint-plugin": "7.2.0",
+    "@typescript-eslint/parser": "7.2.0",
     "eslint": "8.57.0",
     "eslint-plugin-jest": "27.9.0",
     "eslint-plugin-jest-formatting": "3.1.0",
@@ -100,7 +101,7 @@
     "merge": "2.1.1",
     "mongoose": "latest",
     "open-cli": "8.0.0",
-    "typescript": "5.3.3"
+    "typescript": "5.4.2"
   },
   "peerDependencies": {
     "mongoose": ">=6.6.0 < 9"

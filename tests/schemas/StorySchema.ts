@@ -7,12 +7,12 @@ const UserSchema = new Schema<IStory>({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-    index: true
+    index: true,
   },
   title: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 }, { timestamps: true })
 
 export default UserSchema

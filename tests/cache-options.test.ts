@@ -5,7 +5,7 @@ import type ICacheOptions from '../src/interfaces/ICacheOptions'
 describe('Cache class tests', () => {
   it('should create a new instance of Cache', () => {
     const cacheOptions: ICacheOptions = {
-      engine: 'memory'
+      engine: 'memory',
     }
 
     const cache = new Cache(cacheOptions)
@@ -19,7 +19,7 @@ describe('Cache class tests', () => {
 
   it('should throw an error if the cache engine is not supported', () => {
     const cacheOptions: ICacheOptions = {
-      engine: 'not-supported'
+      engine: 'not-supported',
     }
 
     expect(() => new Cache(cacheOptions)).toThrow(`Invalid engine name: ${cacheOptions.engine}`)
@@ -27,7 +27,7 @@ describe('Cache class tests', () => {
 
   it('should throw an error if the cache engine is redis and no engine options are provided', () => {
     const cacheOptions: ICacheOptions = {
-      engine: 'redis'
+      engine: 'redis',
     }
 
     expect(() => new Cache(cacheOptions)).toThrow(`Engine options are required for ${cacheOptions.engine} engine`)
@@ -38,9 +38,9 @@ describe('Cache class tests', () => {
       engine: 'redis',
       engineOptions: {
         host: 'localhost',
-        port: 6379
+        port: 6379,
       },
-      defaultTTL: '10 minutes'
+      defaultTTL: '10 minutes',
     }
 
     const cache = new Cache(cacheOptions)

@@ -4,11 +4,11 @@ import type ICacheEngine from '../../interfaces/ICacheEngine'
 class MemoryCacheEngine implements ICacheEngine {
   #cache: Map<string, { value: IData, expiresAt: number } | undefined>
 
-  constructor () {
+  constructor() {
     this.#cache = new Map()
   }
 
-  get (key: string): IData {
+  get(key: string): IData {
     const item = this.#cache.get(key)
     if (!item || item.expiresAt < Date.now()) {
       this.del(key)
@@ -17,22 +17,22 @@ class MemoryCacheEngine implements ICacheEngine {
     return item.value
   }
 
-  set (key: string, value: IData, ttl = Infinity): void {
-    this.#cache.set(key, { 
-      value, 
-      expiresAt: Date.now() + ttl 
+  set(key: string, value: IData, ttl = Infinity): void {
+    this.#cache.set(key, {
+      value,
+      expiresAt: Date.now() + ttl,
     })
   }
 
-  del (key: string): void {
+  del(key: string): void {
     this.#cache.delete(key)
   }
 
-  clear (): void {
+  clear(): void {
     this.#cache.clear()
   }
 
-  close (): void {
+  close(): void {
     // do nothing
   }
 }

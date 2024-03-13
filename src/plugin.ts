@@ -33,11 +33,11 @@ class CacheMongoose {
   static #instance: CacheMongoose | undefined
   private cache!: Cache
 
-  private constructor () {
+  private constructor() {
     // Private constructor to prevent external instantiation
   }
 
-  public static init (mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
+  public static init(mongoose: Mongoose, cacheOptions: ICacheOptions): CacheMongoose {
     if (!this.#instance) {
       this.#instance = new CacheMongoose()
       this.#instance.cache = new Cache(cacheOptions)
@@ -51,7 +51,7 @@ class CacheMongoose {
     return this.#instance
   }
 
-  public async clear (customKey?: string): Promise<void> {
+  public async clear(customKey?: string): Promise<void> {
     if (customKey != null) {
       await this.cache.del(customKey)
     } else {
@@ -59,7 +59,7 @@ class CacheMongoose {
     }
   }
 
-  public async close (): Promise<void> {
+  public async close(): Promise<void> {
     await this.cache.close()
   }
 }

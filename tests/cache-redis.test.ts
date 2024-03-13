@@ -11,9 +11,9 @@ describe('cache redis', () => {
     engine: 'redis',
     engineOptions: {
       host: 'localhost',
-      port: 6379
+      port: 6379,
     },
-    defaultTTL: '10 seconds'
+    defaultTTL: '10 seconds',
   })
 
   beforeAll(async () => {
@@ -34,7 +34,7 @@ describe('cache redis', () => {
   it('should use cache', async () => {
     const user = await User.create({
       name: 'John Doe',
-      role: 'admin'
+      role: 'admin',
     })
 
     const user1 = await User.findById(user._id).cache().exec()
@@ -50,7 +50,7 @@ describe('cache redis', () => {
   it('should clear cache', async () => {
     const user = await User.create({
       name: 'John Doe',
-      role: 'admin'
+      role: 'admin',
     })
 
     const cache1 = await User.findById(user._id).cache().exec()
@@ -67,7 +67,7 @@ describe('cache redis', () => {
   it('should use cache with custom-key-1', async () => {
     const user = await User.create({
       name: 'John Doe',
-      role: 'admin'
+      role: 'admin',
     })
 
     const cache1 = await User.findById(user._id).cache('30 seconds', 'custom-key-1').exec()
@@ -83,7 +83,7 @@ describe('cache redis', () => {
   it('should clear custom-key-2', async () => {
     const user = await User.create({
       name: 'John Doe',
-      role: 'admin'
+      role: 'admin',
     })
 
     const cache1 = await User.findById(user._id).cache('30 seconds', 'custom-key-2').exec()
@@ -102,7 +102,7 @@ describe('cache redis', () => {
 
     const user = await User.create({
       name: 'John Doe',
-      role: 'admin'
+      role: 'admin',
     })
 
     const cache1 = await User.findById(user._id).cache().exec()
@@ -117,12 +117,12 @@ describe('cache redis', () => {
     await User.create([
       {
         name: 'Alice',
-        role: 'admin'
+        role: 'admin',
       },
       {
         name: 'Bob',
-        role: 'admin'
-      }
+        role: 'admin',
+      },
     ])
 
     const cache3 = await User.find({ role: 'admin' }).cache().exec()
@@ -139,19 +139,19 @@ describe('cache redis', () => {
     await User.create([
       { name: 'John', role: 'admin' },
       { name: 'Bob', role: 'admin' },
-      { name: 'Alice', role: 'user' }
+      { name: 'Alice', role: 'user' },
     ])
 
     const cache1 = await User.aggregate([
       { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } }
+      { $group: { _id: '$role', count: { $sum: 1 } } },
     ]).cache('30 seconds').exec()
 
     await User.create({ name: 'Mark', role: 'admin' })
 
     const cache2 = await User.aggregate([
       { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } }
+      { $group: { _id: '$role', count: { $sum: 1 } } },
     ]).cache('30 seconds').exec()
 
     expect(cache1).not.toBeNull()
@@ -163,25 +163,25 @@ describe('cache redis', () => {
     await User.create([
       { name: 'John', role: 'admin' },
       { name: 'Bob', role: 'admin' },
-      { name: 'Alice', role: 'user' }
+      { name: 'Alice', role: 'user' },
     ])
 
     const cache1 = await User.aggregate([
       { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } }
+      { $group: { _id: '$role', count: { $sum: 1 } } },
     ]).cache('30 seconds', 'aggregate-custom-key').exec()
 
     await User.create({ name: 'Mark', role: 'admin' })
 
     const cache2 = await User.aggregate([
       { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } }
+      { $group: { _id: '$role', count: { $sum: 1 } } },
     ]).cache('30 seconds', 'aggregate-custom-key').exec()
 
     // Don't use cache key
     const cache3 = await User.aggregate([
       { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } }
+      { $group: { _id: '$role', count: { $sum: 1 } } },
     ]).exec()
 
     expect(cache1).not.toBeNull()
@@ -195,7 +195,7 @@ describe('cache redis', () => {
     await User.create([
       { name: 'John', role: 'admin' },
       { name: 'Bob', role: 'admin' },
-      { name: 'Alice', role: 'user' }
+      { name: 'Alice', role: 'user' },
     ])
 
     const cache1 = await User.find({ role: 'admin' }).lean().cache('30 seconds').exec()
@@ -211,7 +211,7 @@ describe('cache redis', () => {
     await User.create([
       { name: 'John', role: 'admin' },
       { name: 'Alice', role: 'user' },
-      { name: 'Andy', role: 'user' }
+      { name: 'Andy', role: 'user' },
     ])
 
     const cache1 = await User.find({ name: /^J/ }).cache('30 seconds').exec()
@@ -235,7 +235,7 @@ describe('cache redis', () => {
     await User.create([
       { name: 'C', role: 'admin' },
       { name: 'V', role: 'user' },
-      { name: 'G', role: 'user' }
+      { name: 'G', role: 'user' },
     ])
 
     const cache1 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()

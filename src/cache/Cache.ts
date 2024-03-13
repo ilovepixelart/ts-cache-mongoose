@@ -12,7 +12,7 @@ class CacheEngine {
   #defaultTTL: number
   readonly #engines = ['memory', 'redis'] as const
 
-  constructor (cacheOptions: ICacheOptions) {
+  constructor(cacheOptions: ICacheOptions) {
     if (!this.#engines.includes(cacheOptions.engine)) {
       throw new Error(`Invalid engine name: ${cacheOptions.engine}`)
     }
@@ -32,24 +32,24 @@ class CacheEngine {
     }
   }
 
-  async get (key: string): Promise<IData> {
+  async get(key: string): Promise<IData> {
     return this.#engine.get(key)
   }
 
-  async set (key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl: string | null): Promise<void> {
+  async set(key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl: string | null): Promise<void> {
     const actualTTL = ttl ? ms(ttl) : this.#defaultTTL
     return this.#engine.set(key, value, actualTTL)
   }
 
-  async del (key: string): Promise<void> {
+  async del(key: string): Promise<void> {
     return this.#engine.del(key)
   }
 
-  async clear (): Promise<void> {
+  async clear(): Promise<void> {
     return this.#engine.clear()
   }
 
-  async close (): Promise<void> {
+  async close(): Promise<void> {
     return this.#engine.close()
   }
 }

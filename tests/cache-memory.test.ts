@@ -8,7 +8,7 @@ describe('CacheMongoose', () => {
   const User = model('User', UserSchema)
 
   const cache = CacheMongoose.init(mongoose, {
-    engine: 'memory'
+    engine: 'memory',
   })
 
   beforeAll(async () => {
@@ -29,7 +29,7 @@ describe('CacheMongoose', () => {
     it('should use memory cache', async () => {
       const user = await User.create({
         name: 'John Doe',
-        role: 'admin'
+        role: 'admin',
       })
 
       const user1 = await User.findById(user._id).cache().exec()
@@ -45,7 +45,7 @@ describe('CacheMongoose', () => {
     it('should not use cache', async () => {
       const user = await User.create({
         name: 'John Doe',
-        role: 'admin'
+        role: 'admin',
       })
 
       const cache1 = await User.findById(user._id).cache().exec()
@@ -62,7 +62,7 @@ describe('CacheMongoose', () => {
     it('should use memory cache with custom key', async () => {
       const user = await User.create({
         name: 'John Doe',
-        role: 'admin'
+        role: 'admin',
       })
 
       const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key').exec()
@@ -78,7 +78,7 @@ describe('CacheMongoose', () => {
     it('should use memory cache and clear custom key', async () => {
       const user = await User.create({
         name: 'John Doe',
-        role: 'admin'
+        role: 'admin',
       })
 
       const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
@@ -95,7 +95,7 @@ describe('CacheMongoose', () => {
     it('should use memory cache and custom key with an empty string', async () => {
       const user = await User.create({
         name: 'John Doe',
-        role: 'admin'
+        role: 'admin',
       })
 
       const cache1 = await User.findById(user._id).cache('1 minute', '').exec()
@@ -118,19 +118,19 @@ describe('CacheMongoose', () => {
       await User.create([
         { name: 'John', role: 'admin' },
         { name: 'Bob', role: 'admin' },
-        { name: 'Alice', role: 'user' }
+        { name: 'Alice', role: 'user' },
       ])
 
       const cache1 = await User.aggregate([
         { $match: { role: 'admin' } },
-        { $group: { _id: '$role', count: { $sum: 1 } } }
+        { $group: { _id: '$role', count: { $sum: 1 } } },
       ]).cache().exec()
 
       await User.create({ name: 'Mark', role: 'admin' })
 
       const cache2 = await User.aggregate([
         { $match: { role: 'admin' } },
-        { $group: { _id: '$role', count: { $sum: 1 } } }
+        { $group: { _id: '$role', count: { $sum: 1 } } },
       ]).cache().exec()
 
       expect(cache1).not.toBeNull()
@@ -143,7 +143,7 @@ describe('CacheMongoose', () => {
     const users = [
       { name: 'John', age: 30, role: 'admin' },
       { name: 'Alice', age: 25, role: 'user' },
-      { name: 'Bob', age: 35, role: 'user' }
+      { name: 'Bob', age: 35, role: 'user' },
     ]
 
     beforeEach(async () => {

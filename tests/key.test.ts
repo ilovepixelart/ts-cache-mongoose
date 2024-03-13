@@ -15,10 +15,10 @@ describe('generateHash()', () => {
         hey: {
           waldo: true,
           fred: null,
-          missing: undefined
-        }
-      }
-    }
+          missing: undefined,
+        },
+      },
+    },
   }
 
   const data2 = {
@@ -32,10 +32,10 @@ describe('generateHash()', () => {
         hey: {
           waldo: true,
           fred: null,
-          missing: undefined
-        }
-      }
-    }
+          missing: undefined,
+        },
+      },
+    },
   }
 
   const data3 = {
@@ -47,12 +47,12 @@ describe('generateHash()', () => {
         hey: {
           fred: null,
           waldo: true,
-          missing: undefined
+          missing: undefined,
         },
-        word: 'world'
-      }
+        word: 'world',
+      },
     },
-    foo: 42
+    foo: 42,
   }
 
   const data4 = {
@@ -64,12 +64,12 @@ describe('generateHash()', () => {
         hey: {
           fred: null,
           waldo: true,
-          missing: undefined
+          missing: undefined,
         },
-        word: 'world'
-      }
+        word: 'world',
+      },
     },
-    foo: 42
+    foo: 42,
   }
 
   it('should generate hash keys for objects with different key orders', () => {
@@ -88,13 +88,13 @@ describe('generateHash()', () => {
     const date = new Date()
     const hash1 = getKey({
       name: 'John Doe',
-      date: { $lte: date }
+      date: { $lte: date },
     })
     await wait(50)
     const date2 = new Date()
     const hash2 = getKey({
       name: 'John Doe',
-      date: { $lte: date2 }
+      date: { $lte: date2 },
     })
     expect(hash1).not.toEqual(hash2)
   })
