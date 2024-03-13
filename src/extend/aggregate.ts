@@ -3,16 +3,16 @@ import type Cache from '../cache/Cache'
 
 import { getKey } from '../key'
 
-export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
+export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const mongooseExec = mongoose.Aggregate.prototype.exec
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Aggregate.prototype.getCacheKey = function () {
     if (this._key != null) return this._key
-    
+
     return getKey({
-      pipeline: this.pipeline()
+      pipeline: this.pipeline(),
     })
   }
 

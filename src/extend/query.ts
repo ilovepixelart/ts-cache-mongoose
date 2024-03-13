@@ -3,7 +3,7 @@ import type Cache from '../cache/Cache'
 
 import { getKey } from '../key'
 
-export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
+export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const mongooseExec = mongoose.Query.prototype.exec
 
@@ -26,7 +26,7 @@ export default function extendQuery (mongoose: Mongoose, cache: Cache): void {
       _path: this._path,
       _fields: this._fields,
       _distinct: this._distinct,
-      _conditions: this._conditions
+      _conditions: this._conditions,
     })
   }
 

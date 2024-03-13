@@ -5,21 +5,21 @@ import type IUser from '../interfaces/IUser'
 const UserSchema = new Schema<IUser>({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
-    required: true
+    required: true,
   },
   age: {
-    type: Number
-  }
+    type: Number,
+  },
 }, { timestamps: true })
 
 UserSchema.virtual('stories', {
   ref: 'Story',
   localField: '_id',
-  foreignField: 'userId'
+  foreignField: 'userId',
 })
 
 export default UserSchema

@@ -5,28 +5,28 @@ const mongo = require('@shelf/jest-mongodb/jest-preset')
 const config = recursive(mongo, {
   roots: [
     '<rootDir>/src/',
-    '<rootDir>/tests/'
+    '<rootDir>/tests/',
   ],
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/**/*.d.ts',
-    '!src/interfaces/**/*.ts'
+    '!src/interfaces/**/*.ts',
   ],
   coverageDirectory: 'coverage',
   testMatch: [
-    '<rootDir>/tests/**/*.test.ts'
+    '<rootDir>/tests/**/*.test.ts',
   ],
   transform: {
-    '^.+\\.(t|j)sx?$': '@swc/jest'
+    '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   testPathIgnorePatterns: [
-    'node_modules'
+    'node_modules',
   ],
   watchPathIgnorePatterns: [
-    'globalConfig'
-  ]
+    'globalConfig',
+  ],
 })
 
 module.exports = config
