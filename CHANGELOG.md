@@ -1,3 +1,32 @@
+<a name="v1.4.7"></a>
+# [v1.4.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.7) - 14 Mar 2024
+
+- Merge pull request [#181](https://github.com/ilovepixelart/ts-cache-mongoose/issues/181) from ilovepixelart/feature/dep  9b6afae
+- tsconfig  196a371
+- Dep  edfe4e3
+- Merge pull request [#180](https://github.com/ilovepixelart/ts-cache-mongoose/issues/180) from ilovepixelart/feature/lint  531edee
+- Lint  eb152d4
+- Merge pull request [#179](https://github.com/ilovepixelart/ts-cache-mongoose/issues/179) from ilovepixelart/dependabot/npm_and_yarn/swc/cli-0.3.10  4ad38ae
+- Merge pull request [#177](https://github.com/ilovepixelart/ts-cache-mongoose/issues/177) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/parser-7.1.0  6cde986
+- Bump @typescript-eslint/parser from 7.0.2 to 7.1.0  0eb587c
+- Merge pull request [#176](https://github.com/ilovepixelart/ts-cache-mongoose/issues/176) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.11.24  639fba0
+- Merge pull request [#178](https://github.com/ilovepixelart/ts-cache-mongoose/issues/178) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-7.1.0  090792f
+- Bump @swc/cli from 0.3.9 to 0.3.10  4ff420b
+- Bump @typescript-eslint/eslint-plugin from 7.0.2 to 7.1.0  dec1024
+- Bump @types/node from 20.11.20 to 20.11.24  80a8ad8
+- Merge pull request [#173](https://github.com/ilovepixelart/ts-cache-mongoose/issues/173) from ekamahuja/private-ecma-#  e846475
+- Merge remote-tracking branch &[#39](https://github.com/ilovepixelart/ts-cache-mongoose/issues/39);upstream/main&[#39](https://github.com/ilovepixelart/ts-cache-mongoose/issues/39); into private-ecma-#  bc82eb9
+- Skip sonar for forked PRs  9d7989f
+- Merge pull request [#175](https://github.com/ilovepixelart/ts-cache-mongoose/issues/175) from ekamahuja/installation-bun-readme  18ba561
+- Added &[#39](https://github.com/ilovepixelart/ts-cache-mongoose/issues/39);bun&[#39](https://github.com/ilovepixelart/ts-cache-mongoose/issues/39); commands to installation instructions in README.md  1331853
+- Refactor: Replace private keyword with ECMAScript private fields  e26d905
+- Update changelog for v1.4.6  a9f621c
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.6...v1.4.7
+
+[Changes][v1.4.7]
+
+
 <a name="v1.4.6"></a>
 # [v1.4.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.6) - 24 Feb 2024
 
@@ -496,6 +525,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.4.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.6...v1.4.7
 [v1.4.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.5...v1.4.6
 [v1.4.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.4...v1.4.5
 [v1.4.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.3...v1.4.4
