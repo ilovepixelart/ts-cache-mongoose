@@ -32,7 +32,7 @@ class CacheEngine {
       this.#engine = new MemoryCacheEngine()
     }
 
-    this.#debug = (cacheOptions.debug === true) ?? false
+    this.#debug = cacheOptions.debug === true
   }
 
   async get(key: string): Promise<IData> {
