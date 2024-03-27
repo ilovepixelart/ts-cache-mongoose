@@ -37,7 +37,7 @@ export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
     const key = this.getCacheKey()
     const ttl = this.getCacheTTL()
 
-    const resultCache = await cache.get(key).catch((err) => {
+    const resultCache = await cache.get(key).catch((err: unknown) => {
       console.error(err)
     })
 
@@ -46,7 +46,7 @@ export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
     }
 
     const result = await mongooseExec.call(this) as Record<string, unknown>[] | Record<string, unknown>
-    await cache.set(key, result, ttl).catch((err) => {
+    await cache.set(key, result, ttl).catch((err: unknown) => {
       console.error(err)
     })
 
