@@ -4,7 +4,7 @@ interface ICacheOptions {
   engine: 'memory' | 'redis'
   engineOptions?: RedisOptions
   defaultTTL?: string
-  debug?: boolean;
+  debug?: boolean
 }
 
 export default ICacheOptions

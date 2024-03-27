@@ -10,7 +10,7 @@ import RedisCacheEngine from './engine/RedisCacheEngine'
 class CacheEngine {
   #engine!: ICacheEngine
   #defaultTTL: number
-  #debug: boolean;
+  #debug: boolean
   readonly #engines = ['memory', 'redis'] as const
 
   constructor(cacheOptions: ICacheOptions) {
@@ -38,7 +38,7 @@ class CacheEngine {
   async get(key: string): Promise<IData> {
     const cacheEntry = await this.#engine.get(key)
     if (this.#debug) {
-      const cacheHit = (cacheEntry != undefined) ? "HIT" : "MISS"
+      const cacheHit = (cacheEntry != undefined) ? 'HIT' : 'MISS'
       console.log(`[ts-cache-mongoose] GET '${key}' - ${cacheHit}`)
     }
     return cacheEntry
@@ -50,7 +50,6 @@ class CacheEngine {
     if (this.#debug) {
       console.log(`[ts-cache-mongoose] SET '${key}' - ttl: ${actualTTL} ms`)
     }
-    
   }
 
   async del(key: string): Promise<void> {
