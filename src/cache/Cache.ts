@@ -48,7 +48,7 @@ class CacheEngine {
     const actualTTL = ttl ? ms(ttl) : this.#defaultTTL
     await this.#engine.set(key, value, actualTTL)
     if (this.#debug) {
-      console.log(`[ts-cache-mongoose] SET '${key}' - ttl: ${actualTTL} ms`)
+      console.log(`[ts-cache-mongoose] SET '${key}' - ttl: ${actualTTL.toFixed(0)} ms`)
     }
   }
 
