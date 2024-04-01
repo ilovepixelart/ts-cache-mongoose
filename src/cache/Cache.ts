@@ -10,6 +10,7 @@ import RedisCacheEngine from './engine/RedisCacheEngine'
 class CacheEngine {
   #engine!: ICacheEngine
   #defaultTTL: number
+  #debug: boolean
   readonly #engines = ['memory', 'redis'] as const
 
   constructor(cacheOptions: ICacheOptions) {
@@ -30,23 +31,39 @@ class CacheEngine {
     if (cacheOptions.engine === 'memory') {
       this.#engine = new MemoryCacheEngine()
     }
+
+    this.#debug = cacheOptions.debug === true
   }
 
   async get(key: string): Promise<IData> {
-    return this.#engine.get(key)
+    const cacheEntry = await this.#engine.get(key)
+    if (this.#debug) {
+      const cacheHit = (cacheEntry != undefined) ? 'HIT' : 'MISS'
+      console.log(`[ts-cache-mongoose] GET '${key}' - ${cacheHit}`)
+    }
+    return cacheEntry
   }
 
   async set(key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl: string | null): Promise<void> {
     const actualTTL = ttl ? ms(ttl) : this.#defaultTTL
-    return this.#engine.set(key, value, actualTTL)
+    await this.#engine.set(key, value, actualTTL)
+    if (this.#debug) {
+      console.log(`[ts-cache-mongoose] SET '${key}' - ttl: ${actualTTL.toFixed(0)} ms`)
+    }
   }
 
   async del(key: string): Promise<void> {
-    return this.#engine.del(key)
+    await this.#engine.del(key)
+    if (this.#debug) {
+      console.log(`[ts-cache-mongoose] DEL '${key}'`)
+    }
   }
 
   async clear(): Promise<void> {
-    return this.#engine.clear()
+    await this.#engine.clear()
+    if (this.#debug) {
+      console.log(`[ts-cache-mongoose] CLEAR`)
+    }
   }
 
   async close(): Promise<void> {
