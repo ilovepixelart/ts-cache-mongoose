@@ -83,7 +83,7 @@
   "devDependencies": {
     "@shelf/jest-mongodb": "4.2.0",
     "@stylistic/eslint-plugin": "1.7.0",
-    "@swc/cli": "0.3.10",
+    "@swc/cli": "0.3.12",
     "@swc/core": "1.4.11",
     "@swc/helpers": "0.5.7",
     "@swc/jest": "0.2.36",
