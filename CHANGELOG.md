@@ -1,3 +1,33 @@
+<a name="v1.5.0"></a>
+# [v1.5.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.5.0) - 01 Apr 2024
+
+- Eslint  6f4aea2
+- Merge pull request [#183](https://github.com/ilovepixelart/ts-cache-mongoose/issues/183) from PfisterFactor/main  e1da1f1
+- fix: lint again  214fb35
+- Merge pull request [#189](https://github.com/ilovepixelart/ts-cache-mongoose/issues/189) from ilovepixelart/dependabot/npm_and_yarn/eslint-plugin-sonarjs-0.25.0  7a9fa42
+- Bump eslint-plugin-sonarjs from 0.24.0 to 0.25.0  a454088
+- Merge pull request [#186](https://github.com/ilovepixelart/ts-cache-mongoose/issues/186) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.2.4  919f735
+- Merge pull request [#187](https://github.com/ilovepixelart/ts-cache-mongoose/issues/187) from ilovepixelart/dependabot/npm_and_yarn/swc/cli-0.3.12  6da6a7d
+- Merge pull request [#188](https://github.com/ilovepixelart/ts-cache-mongoose/issues/188) from ilovepixelart/dependabot/npm_and_yarn/swc/helpers-0.5.8  481b6d4
+- Merge pull request [#190](https://github.com/ilovepixelart/ts-cache-mongoose/issues/190) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.12.2  f84e1b6
+- Bump @types/node from 20.11.24 to 20.12.2  7792d7f
+- Bump @swc/helpers from 0.5.7 to 0.5.8  14d4306
+- Bump @swc/cli from 0.3.10 to 0.3.12  fadec48
+- Bump mongoose from 8.2.3 to 8.2.4  d2c9f49
+- fix: linting  414b4a5
+- Merge pull request [#185](https://github.com/ilovepixelart/ts-cache-mongoose/issues/185) from ilovepixelart/feature/dep  1a1a1f3
+- Dep  9282287
+- Merge pull request [#184](https://github.com/ilovepixelart/ts-cache-mongoose/issues/184) from ilovepixelart/snyk-upgrade-0cc3c149099921abc857d6f2207ebc4d  ec6382e
+- fix: upgrade mongoose from 8.2.0 to 8.2.1  3ed60f8
+- fix: boolean check  49cf22e
+- feat: add debug logging  59bd5df
+- Update changelog for v1.4.7  2ebcef7
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.7...v1.5.0
+
+[Changes][v1.5.0]
+
+
 <a name="v1.4.7"></a>
 # [v1.4.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.7) - 14 Mar 2024
 
@@ -525,6 +555,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.5.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.7...v1.5.0
 [v1.4.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.6...v1.4.7
 [v1.4.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.5...v1.4.6
 [v1.4.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.4...v1.4.5
