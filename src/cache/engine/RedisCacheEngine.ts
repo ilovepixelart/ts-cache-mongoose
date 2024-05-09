@@ -4,6 +4,7 @@ import { EJSON } from 'bson'
 import type { Redis, RedisOptions } from 'ioredis'
 import type IData from '../../interfaces/IData'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
+import { convertToObject } from '../../version'
 
 class RedisCacheEngine implements ICacheEngine {
   #client: Redis
@@ -24,7 +25,7 @@ class RedisCacheEngine implements ICacheEngine {
   }
 
   async set(key: string, value: unknown, ttl = Infinity): Promise<void> {
-    const serializedValue = EJSON.stringify(value)
+    const serializedValue = EJSON.stringify(convertToObject(value))
     await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
   }
 
