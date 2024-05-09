@@ -406,35 +406,61 @@ describe('cache redis', () => {
     expect(miss).toEqual(hit)
   })
 
-  it('should hydrate populated objects', async () => {
+  it('should hydrate populated objects from cache', async () => {
     const user = await User.create({ name: 'Alex', role: 'user' })
     const story1 = await Story.create({ title: 'Ticket 1', userId: user._id })
     const story2 = await Story.create({ title: 'Ticket 2', userId: user._id })
 
-    const populated = await User.findOne({ name: 'Alex' }).populate('stories').lean().exec()
+    const populatedOriginal = await User.findOne({ name: 'Alex' }).populate('stories').lean().cache('1 minute').exec()
 
-    expect(populated).not.toBeNull()
-    expect(populated?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    expect(populated?.name).toBe('Alex')
-    expect(populated?.stories).not.toBeNull()
-    expect(populated?.stories?.length).toBe(2)
+    expect(populatedOriginal).not.toBeNull()
+    expect(populatedOriginal?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(populatedOriginal?.name).toBe('Alex')
+    expect(populatedOriginal?.stories).not.toBeNull()
+    expect(populatedOriginal?.stories?.length).toBe(2)
 
-    expect(populated?.stories?.[0]._id).toEqual(story1._id)
-    expect(populated?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    expect(typeof populated?.stories?.[0]._id).toBe('object')
-    expect(populated?.stories?.[0].createdAt instanceof Date).toBeTruthy()
-    expect(typeof populated?.stories?.[0].createdAt).toBe('object')
+    expect(populatedOriginal?.stories?.[0]._id).toEqual(story1._id)
+    expect(populatedOriginal?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(typeof populatedOriginal?.stories?.[0]._id).toBe('object')
+    expect(populatedOriginal?.stories?.[0].createdAt instanceof Date).toBeTruthy()
+    expect(typeof populatedOriginal?.stories?.[0].createdAt).toBe('object')
 
-    expect(populated?.stories?.[1]._id).toEqual(story2._id)
-    expect(populated?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    expect(typeof populated?.stories?.[1]._id).toBe('object')
-    expect(populated?.stories?.[1].createdAt instanceof Date).toBeTruthy()
-    expect(typeof populated?.stories?.[1].createdAt).toBe('object')
+    expect(populatedOriginal?.stories?.[1]._id).toEqual(story2._id)
+    expect(populatedOriginal?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(typeof populatedOriginal?.stories?.[1]._id).toBe('object')
+    expect(populatedOriginal?.stories?.[1].createdAt instanceof Date).toBeTruthy()
+    expect(typeof populatedOriginal?.stories?.[1].createdAt).toBe('object')
 
-    const populatedJson = JSON.stringify(populated)
-    expect(populatedJson).not.toBeNull()
+    // Deleting user and stories, to ensure that the cache is used
+    await User.deleteOne({ _id: user._id }).exec()
+    await Story.deleteMany({ userId: user._id }).exec()
+
+    const populatedCache = await User.findOne({ name: 'Alex' }).populate('stories').lean().cache('1 minute').exec()
+
+    expect(populatedCache).not.toBeNull()
+    expect(populatedCache?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(populatedCache?.name).toBe('Alex')
+    expect(populatedCache?.stories).not.toBeNull()
+    expect(populatedCache?.stories?.length).toBe(2)
+
+    expect(populatedCache?.stories?.[0]._id).toEqual(story1._id)
+    expect(populatedCache?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(typeof populatedCache?.stories?.[0]._id).toBe('object')
+    expect(populatedCache?.stories?.[0].createdAt instanceof Date).toBeTruthy()
+    expect(typeof populatedCache?.stories?.[0].createdAt).toBe('object')
+
+    expect(populatedCache?.stories?.[1]._id).toEqual(story2._id)
+    expect(populatedCache?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(typeof populatedCache?.stories?.[1]._id).toBe('object')
+    expect(populatedCache?.stories?.[1].createdAt instanceof Date).toBeTruthy()
+    expect(typeof populatedCache?.stories?.[1].createdAt).toBe('object')
+
+    expect(populatedOriginal).toEqual(populatedCache)
 
     // Code bellow will fail see: https://github.com/Automattic/mongoose/issues/14503
+
+    // const populatedJson = JSON.stringify(populatedOriginal)
+    // expect(populatedJson).not.toBeNull()
 
     // const hydrated = User.hydrate(JSON.parse(populatedJson), undefined, { hydratedPopulatedDocs: true })
 
