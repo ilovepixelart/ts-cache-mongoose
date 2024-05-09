@@ -34,6 +34,8 @@ jobs:
           - 6379:6379
 
     strategy:
+      # Run sequentially on the same runner
+      max-parallel: 1
       matrix:
         node-version: [16.x, 18.x]
         mongoose-version: [mongoose@6.12.2, mongoose@7.6.4, mongoose@latest]
