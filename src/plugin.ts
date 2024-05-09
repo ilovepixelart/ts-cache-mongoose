@@ -1,10 +1,9 @@
 import Cache from './cache/Cache'
+import extendQuery from './extend/query'
+import extendAggregate from './extend/aggregate'
 
 import type { Mongoose } from 'mongoose'
 import type ICacheOptions from './interfaces/ICacheOptions'
-
-import extendQuery from './extend/query'
-import extendAggregate from './extend/aggregate'
 
 declare module 'mongoose' {
   interface Query<ResultType, DocType, THelpers, RawDocType> {

@@ -1,7 +1,7 @@
+import { getKey } from '../key'
+
 import type { Mongoose } from 'mongoose'
 import type Cache from '../cache/Cache'
-
-import { getKey } from '../key'
 
 export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
   // eslint-disable-next-line @typescript-eslint/unbound-method

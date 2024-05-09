@@ -1,5 +1,7 @@
 import IORedis from 'ioredis'
-import mongoose, { Types } from 'mongoose'
+import { EJSON } from 'bson'
+
+import { convertToObject } from '../../version'
 
 import type { Redis, RedisOptions } from 'ioredis'
 import type IData from '../../interfaces/IData'
@@ -16,26 +18,25 @@ class RedisCacheEngine implements ICacheEngine {
   }
 
   async get(key: string): Promise<IData> {
-    const value = await this.#client.get(key)
-    if (value === null) {
+    try {
+      const value = await this.#client.get(key)
+      if (value === null) {
+        return undefined
+      }
+      return EJSON.parse(value) as IData
+    } catch (err) {
+      console.error(err)
       return undefined
     }
-    return JSON.parse(value, (_, value) => {
-      if (typeof value === 'string') {
-        const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
-        if (dateRegex.test(value)) {
-          return new Date(value)
-        } else if (mongoose.isObjectIdOrHexString(value)) {
-          return new Types.ObjectId(value)
-        }
-      }
-      return value as unknown
-    }) as Promise<Record<string, unknown> | Record<string, unknown>[]>
   }
 
-  async set(key: string, value: unknown, ttl = Infinity): Promise<void> {
-    const serializedValue = JSON.stringify(value)
-    await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
+  async set(key: string, value: IData, ttl = Infinity): Promise<void> {
+    try {
+      const serializedValue = EJSON.stringify(convertToObject(value))
+      await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   async del(key: string): Promise<void> {
