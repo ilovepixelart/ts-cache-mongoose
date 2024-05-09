@@ -1,11 +1,11 @@
 import ms from 'ms'
 
+import MemoryCacheEngine from './engine/MemoryCacheEngine'
+import RedisCacheEngine from './engine/RedisCacheEngine'
+
 import type IData from '../interfaces/IData'
 import type ICacheEngine from '../interfaces/ICacheEngine'
 import type ICacheOptions from '../interfaces/ICacheOptions'
-
-import MemoryCacheEngine from './engine/MemoryCacheEngine'
-import RedisCacheEngine from './engine/RedisCacheEngine'
 
 class CacheEngine {
   #engine!: ICacheEngine

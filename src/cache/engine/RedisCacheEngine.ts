@@ -1,10 +1,11 @@
 import IORedis from 'ioredis'
 import { EJSON } from 'bson'
 
+import { convertToObject } from '../../version'
+
 import type { Redis, RedisOptions } from 'ioredis'
 import type IData from '../../interfaces/IData'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
-import { convertToObject } from '../../version'
 
 class RedisCacheEngine implements ICacheEngine {
   #client: Redis

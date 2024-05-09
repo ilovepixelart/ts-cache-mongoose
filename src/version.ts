@@ -1,5 +1,6 @@
 import { satisfies } from 'semver'
 import mongoose from 'mongoose'
+
 import type IData from './interfaces/IData'
 
 export const isMongooseLessThan7 = satisfies(mongoose.version, '<7')
