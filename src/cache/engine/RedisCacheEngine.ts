@@ -1,5 +1,5 @@
 import IORedis from 'ioredis'
-import mongoose, { Types } from 'mongoose'
+import { EJSON } from 'bson'
 
 import type { Redis, RedisOptions } from 'ioredis'
 import type IData from '../../interfaces/IData'
@@ -20,21 +20,11 @@ class RedisCacheEngine implements ICacheEngine {
     if (value === null) {
       return undefined
     }
-    return JSON.parse(value, (_, value) => {
-      if (typeof value === 'string') {
-        const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
-        if (dateRegex.test(value)) {
-          return new Date(value)
-        } else if (mongoose.isObjectIdOrHexString(value)) {
-          return new Types.ObjectId(value)
-        }
-      }
-      return value as unknown
-    }) as Promise<Record<string, unknown> | Record<string, unknown>[]>
+    return EJSON.parse(value) as Promise<Record<string, unknown> | Record<string, unknown>[]>
   }
 
   async set(key: string, value: unknown, ttl = Infinity): Promise<void> {
-    const serializedValue = JSON.stringify(value)
+    const serializedValue = EJSON.stringify(value)
     await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
   }
 

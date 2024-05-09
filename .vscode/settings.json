@@ -22,8 +22,10 @@
   ],
   "cSpell.words": [
     "autosync",
+    "bson",
     "dbaeumer",
     "Dsonar",
+    "EJSON",
     "ilovepixelart",
     "jsonpatch",
     "lcov",
