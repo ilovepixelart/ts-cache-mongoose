@@ -106,6 +106,6 @@
   },
   "peerDependencies": {
     "mongoose": ">=6.6.0 < 9",
-    "bson": ">=4.0.0 < 5"
+    "bson": ">=4.7.2"
   }
 }
