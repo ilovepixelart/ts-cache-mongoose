@@ -17,16 +17,25 @@ class RedisCacheEngine implements ICacheEngine {
   }
 
   async get(key: string): Promise<IData> {
-    const value = await this.#client.get(key)
-    if (value === null) {
+    try {
+      const value = await this.#client.get(key)
+      if (value === null) {
+        return undefined
+      }
+      return EJSON.parse(value) as IData
+    } catch (err) {
+      console.error(err)
       return undefined
     }
-    return EJSON.parse(value) as Promise<Record<string, unknown> | Record<string, unknown>[]>
   }
 
   async set(key: string, value: IData, ttl = Infinity): Promise<void> {
-    const serializedValue = EJSON.stringify(convertToObject(value))
-    await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
+    try {
+      const serializedValue = EJSON.stringify(convertToObject(value))
+      await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   async del(key: string): Promise<void> {
