@@ -38,7 +38,7 @@ jobs:
       max-parallel: 1
       matrix:
         node-version: [16.x, 18.x]
-        mongoose-version: [mongoose@6.12.2, mongoose@7.6.4, mongoose@latest]
+        mongoose-version: [[mongoose@6.12.2, bson@^4.7.2], [mongoose@7.6.4, bson@^5.5.0], [mongoose@latest, bson@^6.5.0]]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -55,8 +55,8 @@ jobs:
       - name: Installing dependencies
         run: npm ci
 
-      - name: Installing ${{ matrix.mongoose-version }}
-        run: npm i ${{ matrix.mongoose-version }}
+      - name: Installing ${{ matrix.mongoose-version[0] }} {{ matrix.mongoose-version[1] }}
+        run: npm i ${{ matrix.mongoose-version[0] }} ${{ matrix.mongoose-version[1] }}
 
       - name: Coverage
         run: npm run test
@@ -67,6 +67,7 @@ jobs:
           REDIS_PORT: 6379
   
   sonar:
+    needs: tests
     name: Coverage & Sonar
     runs-on: ubuntu-latest
 
