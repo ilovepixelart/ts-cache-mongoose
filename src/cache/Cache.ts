@@ -44,7 +44,7 @@ class CacheEngine {
     return cacheEntry
   }
 
-  async set(key: string, value: Record<string, unknown> | Record<string, unknown>[], ttl: string | null): Promise<void> {
+  async set(key: string, value: IData, ttl: string | null): Promise<void> {
     const actualTTL = ttl ? ms(ttl) : this.#defaultTTL
     await this.#engine.set(key, value, actualTTL)
     if (this.#debug) {

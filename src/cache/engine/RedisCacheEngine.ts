@@ -24,7 +24,7 @@ class RedisCacheEngine implements ICacheEngine {
     return EJSON.parse(value) as Promise<Record<string, unknown> | Record<string, unknown>[]>
   }
 
-  async set(key: string, value: unknown, ttl = Infinity): Promise<void> {
+  async set(key: string, value: IData, ttl = Infinity): Promise<void> {
     const serializedValue = EJSON.stringify(convertToObject(value))
     await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
   }
