@@ -25,7 +25,7 @@ Caching queries is a good way to improve performance of your application
 
 ```json
 {
-  "node": "16.x || 18.x || 20.x",
+  "node": "18.x || 20.x || 22.x",
   "mongoose": "6.6.x || 7.x || 8.x",
 }
 ```
@@ -57,20 +57,20 @@ bun add ts-cache-mongoose
 
 ```bash
 # For mongoose 6
-npm install mongoose@6.12.2
-yarn add mongoose@6.12.2
-pnpm add mongoose@6.12.2
-bun add mongoose@6.12.2
+npm install mongoose@6.12.8
+yarn add mongoose@6.12.8
+pnpm add mongoose@6.12.8
+bun add mongoose@6.12.8
 # For mongoose 7
-npm install mongoose@7.6.4
-yarn add mongoose@7.6.4
-pnpm add mongoose@7.6.4
-bun add mongoose@7.6.4
+npm install mongoose@7.6.11
+yarn add mongoose@7.6.11
+pnpm add mongoose@7.6.11
+bun add mongoose@7.6.11
 # For mongoose 8
-npm install mongoose@8.0.0
-yarn add mongoose@8.0.0
-pnpm add mongoose@8.0.0
-bun add mongoose@8.0.0
+npm install mongoose@8.3.4
+yarn add mongoose@8.3.4
+pnpm add mongoose@8.3.4
+bun add mongoose@8.3.4
 ```
 
 ## Example
