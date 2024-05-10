@@ -1,3 +1,49 @@
+<a name="v1.6.0"></a>
+# [v1.6.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.0) - 10 May 2024
+
+- Merge pull request [#200](https://github.com/ilovepixelart/ts-cache-mongoose/issues/200) from ilovepixelart/feature/test  de2f1d1
+- Test for populated  766d766
+- Merge pull request [#199](https://github.com/ilovepixelart/ts-cache-mongoose/issues/199) from ilovepixelart/feature/tests  9a28de6
+- More tests  81dfdd8
+- Merge pull request [#198](https://github.com/ilovepixelart/ts-cache-mongoose/issues/198) from ilovepixelart/feature/serializer  12ea7f8
+- Import order  42dd7a4
+- Fallback to db in case serialization fails  5e95320
+- Node 22  1f9798c
+- Dep  aba8c01
+- Types  26e8a4b
+- Dep  72e2ae5
+- Latest major versions  d171775
+- Try parallel again  239419d
+- Dep  62691c0
+- Sequential + bson versions  4041200
+- Pipeline  ffc9994
+- Check for all versions  a9486cb
+- Dep  5564204
+- Dep  c43e7e2
+- Lint  2ff3b04
+- Corner case for mongoose 6  a3341e4
+- Dep  5215a13
+- Dep  d794831
+- Serializer  b146f59
+- Merge pull request [#193](https://github.com/ilovepixelart/ts-cache-mongoose/issues/193) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-7.8.0  2c29a03
+- Bump @typescript-eslint/eslint-plugin from 7.7.0 to 7.8.0  c369e18
+- Merge pull request [#194](https://github.com/ilovepixelart/ts-cache-mongoose/issues/194) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/parser-7.8.0  dbc3837
+- Merge pull request [#195](https://github.com/ilovepixelart/ts-cache-mongoose/issues/195) from ilovepixelart/dependabot/npm_and_yarn/eslint-plugin-jest-28.3.0  1e342fd
+- Merge pull request [#196](https://github.com/ilovepixelart/ts-cache-mongoose/issues/196) from ilovepixelart/dependabot/npm_and_yarn/swc/helpers-0.5.11  aefc0d3
+- Merge pull request [#197](https://github.com/ilovepixelart/ts-cache-mongoose/issues/197) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.12.7  934d890
+- Bump @types/node from 20.12.2 to 20.12.7  25a8db9
+- Bump @swc/helpers from 0.5.10 to 0.5.11  e62b766
+- Bump eslint-plugin-jest from 28.2.0 to 28.3.0  2299342
+- Bump @typescript-eslint/parser from 7.7.0 to 7.8.0  7723e23
+- Merge pull request [#192](https://github.com/ilovepixelart/ts-cache-mongoose/issues/192) from ilovepixelart/feature/dep  13eed72
+- Dep  44a924e
+- Update changelog for v1.5.0  aa9177b
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.5.0...v1.6.0
+
+[Changes][v1.6.0]
+
+
 <a name="v1.5.0"></a>
 # [v1.5.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.5.0) - 01 Apr 2024
 
@@ -555,6 +601,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.6.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.7...v1.5.0
 [v1.4.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.6...v1.4.7
 [v1.4.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.5...v1.4.6
