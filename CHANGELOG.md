@@ -1,3 +1,26 @@
+<a name="v1.6.2"></a>
+# [v1.6.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.2) - 15 Jun 2024
+
+- Merge pull request [#208](https://github.com/ilovepixelart/ts-cache-mongoose/issues/208) from ilovepixelart/feature/dep  81bbd44
+- Doc  6fad2db
+- Dep  75a5b37
+- Merge pull request [#207](https://github.com/ilovepixelart/ts-cache-mongoose/issues/207) from ilovepixelart/feature/upgrade-actions  65e97a7
+- Upgrade actions  49c732b
+- Merge pull request [#206](https://github.com/ilovepixelart/ts-cache-mongoose/issues/206) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/parser-7.11.0  8781ae1
+- Bump @typescript-eslint/parser from 7.9.0 to 7.11.0  a299c97
+- Merge pull request [#202](https://github.com/ilovepixelart/ts-cache-mongoose/issues/202) from ilovepixelart/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-7.11.0  24183e9
+- Merge pull request [#205](https://github.com/ilovepixelart/ts-cache-mongoose/issues/205) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.4.1  dad5623
+- Merge pull request [#204](https://github.com/ilovepixelart/ts-cache-mongoose/issues/204) from ilovepixelart/dependabot/npm_and_yarn/types/node-20.13.0  56dce3d
+- Bump mongoose from 8.4.0 to 8.4.1  ed0fc49
+- Bump @types/node from 20.12.7 to 20.13.0  3614288
+- Bump @typescript-eslint/eslint-plugin from 7.9.0 to 7.11.0  23417ad
+- Update changelog for v1.6.1  66bec2f
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.1...v1.6.2
+
+[Changes][v1.6.2]
+
+
 <a name="v1.6.1"></a>
 # [v1.6.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.1) - 18 May 2024
 
@@ -613,6 +636,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.6.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.1...v1.6.2
 [v1.6.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.0...v1.6.1
 [v1.6.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.7...v1.5.0
