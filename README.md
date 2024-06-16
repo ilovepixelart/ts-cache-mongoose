@@ -48,8 +48,8 @@ Caching queries is a good way to improve performance of your application
 
 ```bash
 npm install ts-cache-mongoose
-yarn add ts-cache-mongoose
 pnpm add ts-cache-mongoose
+yarn add ts-cache-mongoose
 bun add ts-cache-mongoose
 ```
 
@@ -58,18 +58,18 @@ bun add ts-cache-mongoose
 ```bash
 # For latest mongoose 6
 npm install mongoose@6
-yarn add mongoose@6
 pnpm add mongoose@6
+yarn add mongoose@6
 bun add mongoose@6
 # For latest mongoose 7
 npm install mongoose@7
-yarn add mongoose@7
 pnpm add mongoose@7
+yarn add mongoose@7
 bun add mongoose@7
 # For latest mongoose 8
 npm install mongoose@8
-yarn add mongoose@8
 pnpm add mongoose@8
+yarn add mongoose@8
 bun add mongoose@8
 ```
 
