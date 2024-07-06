@@ -1,3 +1,16 @@
+<a name="v1.6.3"></a>
+# [v1.6.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.3) - 06 Jul 2024
+
+- Merge pull request [#214](https://github.com/ilovepixelart/ts-cache-mongoose/issues/214) from ilovepixelart/feature/dep  d34c8fc
+- Dep  ed45048
+- Doc  42649db
+- Update changelog for v1.6.2  a25949e
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.2...v1.6.3
+
+[Changes][v1.6.3]
+
+
 <a name="v1.6.2"></a>
 # [v1.6.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.2) - 15 Jun 2024
 
@@ -636,6 +649,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.6.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.2...v1.6.3
 [v1.6.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.1...v1.6.2
 [v1.6.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.0...v1.6.1
 [v1.6.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.5.0...v1.6.0
