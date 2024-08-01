@@ -91,7 +91,7 @@
     "@swc/register": "0.1.10",
     "@types/jest": "29.5.12",
     "@types/ms": "0.7.34",
-    "@types/node": "20",
+    "@types/node": "22",
     "@types/semver": "7.5.8",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
