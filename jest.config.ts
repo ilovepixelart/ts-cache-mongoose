@@ -19,7 +19,7 @@ const config = recursive(mongo, {
     '<rootDir>/tests/**/*.test.ts',
   ],
   transform: {
-    '^.+\\.(t|j)sx?$': '@swc/jest',
+    '^.+\\.(t|j)sx?$': '@swc-node/jest',
   },
   testPathIgnorePatterns: [
     'node_modules',
