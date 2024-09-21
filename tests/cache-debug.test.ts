@@ -2,7 +2,6 @@ import mongoose, { model } from 'mongoose'
 import CacheMongoose from '../src/plugin'
 
 import UserSchema from './schemas/UserSchema'
-import exp from 'constants'
 
 describe('CacheMongoose', () => {
   const uri = `${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`
