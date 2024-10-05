@@ -3,9 +3,9 @@ import ms from 'ms'
 import MemoryCacheEngine from './engine/MemoryCacheEngine'
 import RedisCacheEngine from './engine/RedisCacheEngine'
 
-import type IData from '../interfaces/IData'
 import type ICacheEngine from '../interfaces/ICacheEngine'
 import type ICacheOptions from '../interfaces/ICacheOptions'
+import type IData from '../interfaces/IData'
 
 class CacheEngine {
   #engine!: ICacheEngine
@@ -38,7 +38,7 @@ class CacheEngine {
   async get(key: string): Promise<IData> {
     const cacheEntry = await this.#engine.get(key)
     if (this.#debug) {
-      const cacheHit = (cacheEntry != undefined) ? 'HIT' : 'MISS'
+      const cacheHit = cacheEntry != null ? 'HIT' : 'MISS'
       console.log(`[ts-cache-mongoose] GET '${key}' - ${cacheHit}`)
     }
     return cacheEntry
@@ -62,7 +62,7 @@ class CacheEngine {
   async clear(): Promise<void> {
     await this.#engine.clear()
     if (this.#debug) {
-      console.log(`[ts-cache-mongoose] CLEAR`)
+      console.log('[ts-cache-mongoose] CLEAR')
     }
   }
 
