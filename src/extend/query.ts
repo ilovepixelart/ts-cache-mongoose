@@ -4,10 +4,8 @@ import type { Mongoose } from 'mongoose'
 import type Cache from '../cache/Cache'
 
 export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   const mongooseExec = mongoose.Query.prototype.exec
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Query.prototype.getCacheKey = function () {
     if (this._key != null) return this._key
 
@@ -30,19 +28,16 @@ export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Query.prototype.getCacheTTL = function () {
     return this._ttl
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   mongoose.Query.prototype.cache = function (ttl?: string, customKey?: string) {
     this._ttl = ttl ?? null
     this._key = customKey ?? null
     return this
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, sonarjs/cognitive-complexity
   mongoose.Query.prototype.exec = async function (...args: []) {
     if (!Object.prototype.hasOwnProperty.call(this, '_ttl')) {
       return mongooseExec.apply(this, args)
@@ -65,18 +60,17 @@ export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
         return resultCache
       }
 
-      const constructor = mongoose.model<unknown>(model)
+      const modelConstructor = mongoose.model<unknown>(model)
 
       if (Array.isArray(resultCache)) {
         return resultCache.map((item) => {
-          return constructor.hydrate(item)
+          return modelConstructor.hydrate(item)
         })
-      } else {
-        return constructor.hydrate(resultCache)
       }
+      return modelConstructor.hydrate(resultCache)
     }
 
-    const result = await mongooseExec.call(this) as Record<string, unknown>[] | Record<string, unknown>
+    const result = (await mongooseExec.call(this)) as Record<string, unknown>[] | Record<string, unknown>
     await cache.set(key, result, ttl).catch((err: unknown) => {
       console.error(err)
     })

@@ -1,8 +1,8 @@
-import type IData from '../../interfaces/IData'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
+import type IData from '../../interfaces/IData'
 
 class MemoryCacheEngine implements ICacheEngine {
-  #cache: Map<string, { value: IData, expiresAt: number } | undefined>
+  #cache: Map<string, { value: IData; expiresAt: number } | undefined>
 
   constructor() {
     this.#cache = new Map()
@@ -17,7 +17,7 @@ class MemoryCacheEngine implements ICacheEngine {
     return item.value
   }
 
-  set(key: string, value: IData, ttl = Infinity): void {
+  set(key: string, value: IData, ttl = Number.POSITIVE_INFINITY): void {
     this.#cache.set(key, {
       value,
       expiresAt: Date.now() + ttl,

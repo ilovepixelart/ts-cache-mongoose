@@ -121,17 +121,15 @@ describe('CacheMongoose', () => {
         { name: 'Alice', role: 'user' },
       ])
 
-      const cache1 = await User.aggregate([
-        { $match: { role: 'admin' } },
-        { $group: { _id: '$role', count: { $sum: 1 } } },
-      ]).cache().exec()
+      const cache1 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+        .cache()
+        .exec()
 
       await User.create({ name: 'Mark', role: 'admin' })
 
-      const cache2 = await User.aggregate([
-        { $match: { role: 'admin' } },
-        { $group: { _id: '$role', count: { $sum: 1 } } },
-      ]).cache().exec()
+      const cache2 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+        .cache()
+        .exec()
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
@@ -168,7 +166,13 @@ describe('CacheMongoose', () => {
     it('findOne', async () => {
       const user = await User.findOne({ name: 'John', age: 30, role: 'admin' }).cache('1 minute').exec()
       await User.create({ name: 'Steve', age: 30, role: 'admin' })
-      const cachedUser = await User.findOne({ name: 'John', age: 30, role: 'admin' }).cache('1 minute').exec()
+      const cachedUser = await User.findOne({
+        name: 'John',
+        age: 30,
+        role: 'admin',
+      })
+        .cache('1 minute')
+        .exec()
 
       expect(user?._id).toEqual(cachedUser?._id)
       expect(user?.name).toEqual(cachedUser?.name)
@@ -177,17 +181,25 @@ describe('CacheMongoose', () => {
     })
 
     it('find', async () => {
-      const users = await User.find({ age: { $gte: 30 } }).cache('1 minute').exec()
+      const users = await User.find({ age: { $gte: 30 } })
+        .cache('1 minute')
+        .exec()
       await User.create({ name: 'Steve', age: 30, role: 'admin' })
-      const cachedUsers = await User.find({ age: { $gte: 30 } }).cache('1 minute').exec()
+      const cachedUsers = await User.find({ age: { $gte: 30 } })
+        .cache('1 minute')
+        .exec()
 
       expect(users).toHaveLength(cachedUsers.length)
     })
 
     it('count', async () => {
-      const count = await User.countDocuments({ age: { $gte: 30 } }).cache('1 minute').exec()
+      const count = await User.countDocuments({ age: { $gte: 30 } })
+        .cache('1 minute')
+        .exec()
       await User.create({ name: 'Steve', age: 30, role: 'admin' })
-      const cachedCount = await User.countDocuments({ age: { $gte: 30 } }).cache('1 minute').exec()
+      const cachedCount = await User.countDocuments({ age: { $gte: 30 } })
+        .cache('1 minute')
+        .exec()
 
       expect(count).toEqual(cachedCount)
     })

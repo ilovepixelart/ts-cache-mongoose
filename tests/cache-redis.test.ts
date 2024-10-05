@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 import plugin from '../src/plugin'
 
-import User from './models/User'
 import Story from './models/Story'
+import User from './models/User'
 
 describe('cache redis', () => {
   const uri = `${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`
@@ -142,17 +142,15 @@ describe('cache redis', () => {
       { name: 'Alice', role: 'user' },
     ])
 
-    const cache1 = await User.aggregate([
-      { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } },
-    ]).cache('30 seconds').exec()
+    const cache1 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+      .cache('30 seconds')
+      .exec()
 
     await User.create({ name: 'Mark', role: 'admin' })
 
-    const cache2 = await User.aggregate([
-      { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } },
-    ]).cache('30 seconds').exec()
+    const cache2 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+      .cache('30 seconds')
+      .exec()
 
     expect(cache1).not.toBeNull()
     expect(cache2).not.toBeNull()
@@ -166,23 +164,18 @@ describe('cache redis', () => {
       { name: 'Alice', role: 'user' },
     ])
 
-    const cache1 = await User.aggregate([
-      { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } },
-    ]).cache('30 seconds', 'aggregate-custom-key').exec()
+    const cache1 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+      .cache('30 seconds', 'aggregate-custom-key')
+      .exec()
 
     await User.create({ name: 'Mark', role: 'admin' })
 
-    const cache2 = await User.aggregate([
-      { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } },
-    ]).cache('30 seconds', 'aggregate-custom-key').exec()
+    const cache2 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+      .cache('30 seconds', 'aggregate-custom-key')
+      .exec()
 
     // Don't use cache key
-    const cache3 = await User.aggregate([
-      { $match: { role: 'admin' } },
-      { $group: { _id: '$role', count: { $sum: 1 } } },
-    ]).exec()
+    const cache3 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }]).exec()
 
     expect(cache1).not.toBeNull()
     expect(cache2).not.toBeNull()
@@ -357,7 +350,10 @@ describe('cache redis', () => {
     // ObjectId.isValid will return true for multiple scenarios.
     // A string being a potentially valid objectId should not be the
     // determining factor on wether or not deserialize it as objectId.
-    const user = await User.create({ name: '12CharString', role: '660ef695677786928202dc1f' })
+    const user = await User.create({
+      name: '12CharString',
+      role: '660ef695677786928202dc1f',
+    })
     const pureLean = await User.findOne({ _id: user._id }).lean()
 
     const miss = await User.findOne({ _id: user._id }).lean().cache('30 seconds')

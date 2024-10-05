@@ -1,11 +1,11 @@
-import IORedis from 'ioredis'
 import { EJSON } from 'bson'
+import IORedis from 'ioredis'
 
 import { convertToObject } from '../../version'
 
 import type { Redis, RedisOptions } from 'ioredis'
-import type IData from '../../interfaces/IData'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
+import type IData from '../../interfaces/IData'
 
 class RedisCacheEngine implements ICacheEngine {
   #client: Redis
@@ -30,7 +30,7 @@ class RedisCacheEngine implements ICacheEngine {
     }
   }
 
-  async set(key: string, value: IData, ttl = Infinity): Promise<void> {
+  async set(key: string, value: IData, ttl = Number.POSITIVE_INFINITY): Promise<void> {
     try {
       const serializedValue = EJSON.stringify(convertToObject(value))
       await this.#client.setex(key, Math.ceil(ttl / 1000), serializedValue)
