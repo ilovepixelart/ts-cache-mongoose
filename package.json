@@ -72,7 +72,7 @@
     "build": "npm run clean && npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc -p config/tsconfig.cjs.json",
     "build:esm": "tsc -p config/tsconfig.esm.json && bash/esm.sh",
-    "release": "npm run biome && npm run build && np"
+    "release": "npm install && npm run biome && npm run build && np"
   },
   "dependencies": {
     "ioredis": "5.4.1",
