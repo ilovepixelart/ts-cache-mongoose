@@ -10,8 +10,8 @@ on:
       - feature*
 
   pull_request:
-      types: [opened, synchronize, reopened]
-      
+    types: [opened, synchronize, reopened]
+
 jobs:
   tests:
     name: Coverage
@@ -36,20 +36,25 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x]
-        mongoose-version: [[mongoose@6.12.8, bson@^4.7.2], [mongoose@7.6.11, bson@^5.5.0], [mongoose@latest, bson@^6.5.0]]
+        mongoose-version:
+          [
+            [mongoose@6.12.8, bson@^4.7.2],
+            [mongoose@7.6.11, bson@^5.5.0],
+            [mongoose@latest, bson@^6.5.0],
+          ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
-  
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-  
+
       - name: Installing dependencies
         run: npm ci
 
@@ -63,9 +68,9 @@ jobs:
           REDIS_HOST: localhost
           # The default Redis port
           REDIS_PORT: 6379
-  
+
   sonar:
-    name: Coverage & Sonar
+    name: Biome, Coverage & Sonar
     runs-on: ubuntu-latest
 
     # Service containers to run with `container-job`
@@ -83,7 +88,7 @@ jobs:
         ports:
           # Maps port 6379 on service container to the host
           - 6379:6379
-          
+
     strategy:
       matrix:
         node-version: [22.x]
@@ -103,8 +108,8 @@ jobs:
       - name: Installing dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      - name: Biome
+        run: npm run biome
 
       - name: Coverage
         run: npm run test
@@ -130,4 +135,3 @@ jobs:
             -Dsonar.tests=tests
             -Dsonar.test.exclusions=tests/**
             -Dsonar.coverage.exclusions=tests/**
-
