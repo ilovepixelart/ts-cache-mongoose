@@ -93,7 +93,7 @@
     "merge": "2.1.1",
     "mongoose": "8.7.0",
     "open-cli": "8.0.0",
-    "typescript": "5.6.2"
+    "typescript": "5.6.3"
   },
   "peerDependencies": {
     "bson": ">=4.7.2 < 7",
