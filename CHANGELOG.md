@@ -1,5 +1,36 @@
-<a name="v1.6.5"></a>
-# [v1.6.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.5) - 21 Sep 2024
+<a id="v1.6.6"></a>
+# [v1.6.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.6) - 2024-10-26
+
+- Merge pull request [#246](https://github.com/ilovepixelart/ts-cache-mongoose/issues/246) from ilovepixelart/feature/dep  37a0af2
+- Dep  d8c0a00
+- Merge pull request [#243](https://github.com/ilovepixelart/ts-cache-mongoose/issues/243) from ilovepixelart/dependabot/npm_and_yarn/biomejs/biome-1.9.4  8ef3716
+- Merge pull request [#244](https://github.com/ilovepixelart/ts-cache-mongoose/issues/244) from ilovepixelart/dependabot/npm_and_yarn/types/node-22.7.7  89805b9
+- Bump @types/node from 22.7.5 to 22.7.7  dd5d7bf
+- Bump @biomejs/biome from 1.9.3 to 1.9.4  e19eedb
+- Merge pull request [#242](https://github.com/ilovepixelart/ts-cache-mongoose/issues/242) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.7.2  e264412
+- Bump mongoose from 8.7.1 to 8.7.2  c9e36ed
+- Merge pull request [#239](https://github.com/ilovepixelart/ts-cache-mongoose/issues/239) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.7.1  3e93949
+- Merge pull request [#241](https://github.com/ilovepixelart/ts-cache-mongoose/issues/241) from ilovepixelart/dependabot/npm_and_yarn/types/node-22.7.5  00729a3
+- Merge pull request [#240](https://github.com/ilovepixelart/ts-cache-mongoose/issues/240) from ilovepixelart/dependabot/npm_and_yarn/typescript-5.6.3  9dd411e
+- Bump @types/node from 22.7.4 to 22.7.5  1cf6f88
+- Bump typescript from 5.6.2 to 5.6.3  693b60b
+- Bump mongoose from 8.7.0 to 8.7.1  b31da83
+- Merge pull request [#238](https://github.com/ilovepixelart/ts-cache-mongoose/issues/238) from ilovepixelart/feature/switch-to-biome  8deb6a1
+- Command  f761f98
+- Simplify biome config to required rules  ecf033b
+- Merge pull request [#237](https://github.com/ilovepixelart/ts-cache-mongoose/issues/237) from ilovepixelart/feature/switch-to-biome  24f7b4f
+- Switch to biome  d1bf328
+- Cleanup  66d2087
+- Test for debug logs in cache  4a98e25
+- Update changelog for v1.6.5  f74152c
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.5...v1.6.6
+
+[Changes][v1.6.6]
+
+
+<a id="v1.6.5"></a>
+# [v1.6.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.5) - 2024-09-21
 
 - Merge pull request [#231](https://github.com/ilovepixelart/ts-cache-mongoose/issues/231) from ilovepixelart/feature/dep  1886957
 - Dep  a1937c6
@@ -10,8 +41,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.4...v1.6.5
 [Changes][v1.6.5]
 
 
-<a name="v1.6.4"></a>
-# [v1.6.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.4) - 01 Aug 2024
+<a id="v1.6.4"></a>
+# [v1.6.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.4) - 2024-08-01
 
 - Merge pull request [#224](https://github.com/ilovepixelart/ts-cache-mongoose/issues/224) from ilovepixelart/feature/dep  dc8b560
 - Dep  900009d
@@ -22,8 +53,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.3...v1.6.4
 [Changes][v1.6.4]
 
 
-<a name="v1.6.3"></a>
-# [v1.6.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.3) - 06 Jul 2024
+<a id="v1.6.3"></a>
+# [v1.6.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.3) - 2024-07-06
 
 - Merge pull request [#214](https://github.com/ilovepixelart/ts-cache-mongoose/issues/214) from ilovepixelart/feature/dep  d34c8fc
 - Dep  ed45048
@@ -35,8 +66,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.2...v1.6.3
 [Changes][v1.6.3]
 
 
-<a name="v1.6.2"></a>
-# [v1.6.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.2) - 15 Jun 2024
+<a id="v1.6.2"></a>
+# [v1.6.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.2) - 2024-06-15
 
 - Merge pull request [#208](https://github.com/ilovepixelart/ts-cache-mongoose/issues/208) from ilovepixelart/feature/dep  81bbd44
 - Doc  6fad2db
@@ -58,8 +89,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.1...v1.6.2
 [Changes][v1.6.2]
 
 
-<a name="v1.6.1"></a>
-# [v1.6.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.1) - 18 May 2024
+<a id="v1.6.1"></a>
+# [v1.6.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.1) - 2024-05-18
 
 - Merge pull request [#201](https://github.com/ilovepixelart/ts-cache-mongoose/issues/201) from ilovepixelart/feature/dep  708483f
 - Dep  331728b
@@ -70,8 +101,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.0...v1.6.1
 [Changes][v1.6.1]
 
 
-<a name="v1.6.0"></a>
-# [v1.6.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.0) - 10 May 2024
+<a id="v1.6.0"></a>
+# [v1.6.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.0) - 2024-05-10
 
 - Merge pull request [#200](https://github.com/ilovepixelart/ts-cache-mongoose/issues/200) from ilovepixelart/feature/test  de2f1d1
 - Test for populated  766d766
@@ -116,8 +147,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.5.0...v1.6.0
 [Changes][v1.6.0]
 
 
-<a name="v1.5.0"></a>
-# [v1.5.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.5.0) - 01 Apr 2024
+<a id="v1.5.0"></a>
+# [v1.5.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.5.0) - 2024-04-01
 
 - Eslint  6f4aea2
 - Merge pull request [#183](https://github.com/ilovepixelart/ts-cache-mongoose/issues/183) from PfisterFactor/main  e1da1f1
@@ -146,8 +177,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.7...v1.5.0
 [Changes][v1.5.0]
 
 
-<a name="v1.4.7"></a>
-# [v1.4.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.7) - 14 Mar 2024
+<a id="v1.4.7"></a>
+# [v1.4.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.7) - 2024-03-14
 
 - Merge pull request [#181](https://github.com/ilovepixelart/ts-cache-mongoose/issues/181) from ilovepixelart/feature/dep  9b6afae
 - tsconfig  196a371
@@ -175,8 +206,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.6...v1.4.7
 [Changes][v1.4.7]
 
 
-<a name="v1.4.6"></a>
-# [v1.4.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.6) - 24 Feb 2024
+<a id="v1.4.6"></a>
+# [v1.4.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.6) - 2024-02-24
 
 - Lock  a389447
 - Merge pull request [#169](https://github.com/ilovepixelart/ts-cache-mongoose/issues/169) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.2.0  752171b
@@ -203,8 +234,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.5...v1.4.6
 [Changes][v1.4.6]
 
 
-<a name="v1.4.5"></a>
-# [v1.4.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.5) - 20 Jan 2024
+<a id="v1.4.5"></a>
+# [v1.4.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.5) - 2024-01-20
 
 - Merge pull request [#154](https://github.com/ilovepixelart/ts-cache-mongoose/issues/154) from ilovepixelart/feature/dep  450ff32
 - Dep  e49aa31
@@ -215,8 +246,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.4...v1.4.5
 [Changes][v1.4.5]
 
 
-<a name="v1.4.4"></a>
-# [v1.4.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.4) - 09 Jan 2024
+<a id="v1.4.4"></a>
+# [v1.4.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.4) - 2024-01-09
 
 - Merge pull request [#152](https://github.com/ilovepixelart/ts-cache-mongoose/issues/152) from ilovepixelart/feature/esm-bash-and-dep  5ea3ecb
 - Audit  e98d515
@@ -228,8 +259,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.3...v1.4.4
 [Changes][v1.4.4]
 
 
-<a name="v1.4.3"></a>
-# [v1.4.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.3) - 06 Dec 2023
+<a id="v1.4.3"></a>
+# [v1.4.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.3) - 2023-12-06
 
 - Doc  ae2fee9
 - Merge pull request [#143](https://github.com/ilovepixelart/ts-cache-mongoose/issues/143) from ilovepixelart/feature/esm-support  9cdaa4a
@@ -245,8 +276,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.2...v1.4.3
 [Changes][v1.4.3]
 
 
-<a name="v1.4.2"></a>
-# [v1.4.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.2) - 28 Nov 2023
+<a id="v1.4.2"></a>
+# [v1.4.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.2) - 2023-11-28
 
 - Merge pull request [#135](https://github.com/ilovepixelart/ts-cache-mongoose/issues/135) from ilovepixelart/feature/dep  9823556
 - Dep  73c0524
@@ -257,8 +288,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.1...v1.4.2
 [Changes][v1.4.2]
 
 
-<a name="v1.4.1"></a>
-# [v1.4.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.1) - 15 Nov 2023
+<a id="v1.4.1"></a>
+# [v1.4.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.1) - 2023-11-15
 
 - Merge pull request [#134](https://github.com/ilovepixelart/ts-cache-mongoose/issues/134) from ilovepixelart/feature/custom-key-for-aggregate  bd4cd95
 - Enable custom cache key for aggregate  ff4151c
@@ -271,8 +302,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.4.0...v1.4.1
 [Changes][v1.4.1]
 
 
-<a name="v1.4.0"></a>
-# [v1.4.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.0) - 12 Nov 2023
+<a id="v1.4.0"></a>
+# [v1.4.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.4.0) - 2023-11-12
 
 - Merge pull request [#131](https://github.com/ilovepixelart/ts-cache-mongoose/issues/131) from ilovepixelart/feature/tsconfig-eslint  df15116
 - Dep  9a8e813
@@ -285,8 +316,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.3.0...v1.4.0
 [Changes][v1.4.0]
 
 
-<a name="v1.3.0"></a>
-# [v1.3.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.3.0) - 06 Nov 2023
+<a id="v1.3.0"></a>
+# [v1.3.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.3.0) - 2023-11-06
 
 - Merge pull request [#130](https://github.com/ilovepixelart/ts-cache-mongoose/issues/130) from ilovepixelart/feature/mongoose-8  682d868
 - Latest  7a5bcd8
@@ -304,8 +335,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.1...v1.3.0
 [Changes][v1.3.0]
 
 
-<a name="v1.2.1"></a>
-# [v1.2.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.2.1) - 16 Oct 2023
+<a id="v1.2.1"></a>
+# [v1.2.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.2.1) - 2023-10-16
 
 - Merge pull request [#122](https://github.com/ilovepixelart/ts-cache-mongoose/issues/122) from ilovepixelart/feature/dep  43c9973
 - Dep  fc808db
@@ -318,8 +349,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.2.0...v1.2.1
 [Changes][v1.2.1]
 
 
-<a name="v1.2.0"></a>
-# [v1.2.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.2.0) - 02 Oct 2023
+<a id="v1.2.0"></a>
+# [v1.2.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.2.0) - 2023-10-02
 
 - Merge pull request [#118](https://github.com/ilovepixelart/ts-cache-mongoose/issues/118) from ilovepixelart/feature/dep  4541bc3
 - Dep  e805e09
@@ -333,8 +364,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.2...v1.2.0
 [Changes][v1.2.0]
 
 
-<a name="v1.1.2"></a>
-# [v1.1.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.2) - 01 Sep 2023
+<a id="v1.1.2"></a>
+# [v1.1.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.2) - 2023-09-01
 
 - Merge pull request [#102](https://github.com/ilovepixelart/ts-cache-mongoose/issues/102) from ilovepixelart/feature/dep  916df05
 - NodeNext  66dbe4d
@@ -354,8 +385,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.1...v1.1.2
 [Changes][v1.1.2]
 
 
-<a name="v1.1.1"></a>
-# [v1.1.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.1) - 14 Aug 2023
+<a id="v1.1.1"></a>
+# [v1.1.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.1) - 2023-08-14
 
 - Merge pull request [#85](https://github.com/ilovepixelart/ts-cache-mongoose/issues/85) from ilovepixelart/feature/dep  59009f3
 - Dep - Update dependencies  8999ac0
@@ -366,8 +397,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.1.0...v1.1.1
 [Changes][v1.1.1]
 
 
-<a name="v1.1.0"></a>
-# [v1.1.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.0) - 05 Aug 2023
+<a id="v1.1.0"></a>
+# [v1.1.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.1.0) - 2023-08-05
 
 - Merge pull request [#79](https://github.com/ilovepixelart/ts-cache-mongoose/issues/79) from ilovepixelart/feature/dep  189e3f4
 - Dep + new version of swc - Remove env use target in .swcrc  47d040e
@@ -382,8 +413,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.9...v1.1.0
 [Changes][v1.1.0]
 
 
-<a name="v1.0.9"></a>
-# [v1.0.9](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.9) - 24 Jul 2023
+<a id="v1.0.9"></a>
+# [v1.0.9](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.9) - 2023-07-24
 
 - Merge pull request [#72](https://github.com/ilovepixelart/ts-cache-mongoose/issues/72) from ilovepixelart/feature/dep  c39c013
 - Dep  4350ab8
@@ -396,8 +427,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.8...v1.0.9
 [Changes][v1.0.9]
 
 
-<a name="v1.0.8"></a>
-# [v1.0.8](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.8) - 20 Jul 2023
+<a id="v1.0.8"></a>
+# [v1.0.8](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.8) - 2023-07-20
 
 - Merge pull request [#68](https://github.com/ilovepixelart/ts-cache-mongoose/issues/68) from ilovepixelart/feature/dep  f4fec16
 - Dep  a852dcf
@@ -413,8 +444,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.7...v1.0.8
 [Changes][v1.0.8]
 
 
-<a name="v1.0.7"></a>
-# [v1.0.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.7) - 16 Jul 2023
+<a id="v1.0.7"></a>
+# [v1.0.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.7) - 2023-07-16
 
 - Merge pull request [#63](https://github.com/ilovepixelart/ts-cache-mongoose/issues/63) from ilovepixelart/feature/dep  daf6776
 - Ts node  aa08a17
@@ -428,8 +459,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.6...v1.0.7
 [Changes][v1.0.7]
 
 
-<a name="v1.0.6"></a>
-# [v1.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.6) - 04 Jul 2023
+<a id="v1.0.6"></a>
+# [v1.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.6) - 2023-07-04
 
 - Merge pull request [#57](https://github.com/ilovepixelart/ts-cache-mongoose/issues/57) from ilovepixelart/feature/dep  06e9cb2
 - Dep  3d3876f
@@ -466,8 +497,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.5...v1.0.6
 [Changes][v1.0.6]
 
 
-<a name="v1.0.5"></a>
-# [v1.0.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.5) - 09 Jun 2023
+<a id="v1.0.5"></a>
+# [v1.0.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.5) - 2023-06-09
 
 - Merge pull request [#36](https://github.com/ilovepixelart/ts-cache-mongoose/issues/36) from ilovepixelart/feature/dep  723a84b
 - Sonar cloud latest version, settings for vscode  fdffdf1
@@ -503,8 +534,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.4...v1.0.5
 [Changes][v1.0.5]
 
 
-<a name="v1.0.4"></a>
-# [v1.0.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.4) - 17 May 2023
+<a id="v1.0.4"></a>
+# [v1.0.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.4) - 2023-05-17
 
 - Merge pull request [#17](https://github.com/ilovepixelart/ts-cache-mongoose/issues/17) from ilovepixelart/feature/dep  c13843f
 - Dep  370436d
@@ -525,8 +556,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.3...v1.0.4
 [Changes][v1.0.4]
 
 
-<a name="v1.0.3"></a>
-# [v1.0.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.3) - 03 May 2023
+<a id="v1.0.3"></a>
+# [v1.0.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.3) - 2023-05-03
 
 ```
 - Type for simplicity
@@ -547,8 +578,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.2...v1.0.3
 [Changes][v1.0.3]
 
 
-<a name="v1.0.2"></a>
-# [v1.0.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.2) - 02 May 2023
+<a id="v1.0.2"></a>
+# [v1.0.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.2) - 2023-05-02
 
 - Release  36e67ed
 - Merge pull request [#9](https://github.com/ilovepixelart/ts-cache-mongoose/issues/9) from ilovepixelart/feature/test  4b850da
@@ -565,8 +596,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.1...v1.0.2
 [Changes][v1.0.2]
 
 
-<a name="v1.0.1"></a>
-# [v1.0.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.1) - 30 Apr 2023
+<a id="v1.0.1"></a>
+# [v1.0.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.1) - 2023-04-30
 
 - Dep  e67c1e3
 - Dep  cc8ebd2
@@ -582,8 +613,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.0.0...v1.0.1
 [Changes][v1.0.1]
 
 
-<a name="v1.0.0"></a>
-# [v1.0.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.0) - 29 Apr 2023
+<a id="v1.0.0"></a>
+# [v1.0.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.0.0) - 2023-04-29
 
 - Doc  dcaa81f
 - Cleanup  bd95d5e
@@ -602,8 +633,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.6...v1.0.0
 [Changes][v1.0.0]
 
 
-<a name="v0.0.6"></a>
-# [v0.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.6) - 28 Apr 2023
+<a id="v0.0.6"></a>
+# [v0.0.6](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.6) - 2023-04-28
 
 - Key  b27f663
 - Hydration cases  aec2d0b
@@ -614,8 +645,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.5...v0.0.6
 [Changes][v0.0.6]
 
 
-<a name="v0.0.5"></a>
-# [v0.0.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.5) - 27 Apr 2023
+<a id="v0.0.5"></a>
+# [v0.0.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.5) - 2023-04-27
 
 - Doc  11f0282
 - Doc  6dc537d
@@ -625,8 +656,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.4...v0.0.5
 [Changes][v0.0.5]
 
 
-<a name="v0.0.4"></a>
-# [v0.0.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.4) - 27 Apr 2023
+<a id="v0.0.4"></a>
+# [v0.0.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.4) - 2023-04-27
 
 - Merge pull request [#2](https://github.com/ilovepixelart/ts-cache-mongoose/issues/2) from ilovepixelart/feature/aggregate  40ed36b
 - Test  5af6586
@@ -640,8 +671,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.3...v0.0.4
 [Changes][v0.0.4]
 
 
-<a name="v0.0.3"></a>
-# [v0.0.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.3) - 27 Apr 2023
+<a id="v0.0.3"></a>
+# [v0.0.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.3) - 2023-04-27
 
 - Doc  796d8ae
 
@@ -650,8 +681,8 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.2...v0.0.3
 [Changes][v0.0.3]
 
 
-<a name="v0.0.2"></a>
-# [v0.0.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.2) - 27 Apr 2023
+<a id="v0.0.2"></a>
+# [v0.0.2](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v0.0.2) - 2023-04-27
 
 - Doc  3a1a96e
 - Features  546f96d
@@ -673,6 +704,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.6.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.5...v1.6.6
 [v1.6.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.4...v1.6.5
 [v1.6.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.3...v1.6.4
 [v1.6.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.2...v1.6.3
@@ -710,4 +742,4 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [v0.0.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.2...v0.0.3
 [v0.0.2]: https://github.com/ilovepixelart/ts-cache-mongoose/tree/v0.0.2
 
-<!-- Generated by https://github.com/rhysd/changelog-from-release v3.7.2 -->
+<!-- Generated by https://github.com/rhysd/changelog-from-release v3.8.0 -->
