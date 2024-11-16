@@ -84,6 +84,7 @@ import cache from 'ts-cache-mongoose'
 const instance = cache.init(mongoose, {
   defaultTTL: '60 seconds',
   engine: 'memory',
+  debug: true, // Debug mode enables hit/miss logs in console, not for production use
 })
 
 // OR
@@ -96,6 +97,7 @@ const instance = cache.init(mongoose, {
     host: 'localhost',
     port: 6379,
   },
+  debug: true, // Debug mode enables hit/miss logs in console, not for production use
 })
 
 // Connect to your database
