@@ -1,46 +1,27 @@
-import fs from 'node:fs'
-import { MongoMemoryServer } from 'mongodb-memory-server'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
-import mongoose, { model } from 'mongoose'
+import mongoose from 'mongoose'
 import CacheMongoose from '../src/plugin'
+import server from './mongo/server'
 
 import User from './models/User'
 
 describe('cache-memory', async () => {
-  let mongo: MongoMemoryServer
+  const instance = server('cache-memory')
   let cache: CacheMongoose
-  const dbName = 'cache-memory'
-  const dbPath = `./tests/mongo/${dbName}`
 
   beforeAll(async () => {
     cache = CacheMongoose.init(mongoose, {
       engine: 'memory',
     })
 
-    fs.mkdirSync(dbPath, { recursive: true })
-    mongo = await MongoMemoryServer.create({
-      instance: {
-        dbName,
-        dbPath,
-      },
-    })
-
-    const uri = mongo.getUri()
-    await mongoose.connect(uri)
-    await cache.clear()
+    await instance.create()
   })
 
   afterAll(async () => {
+    await cache.clear()
     await cache.close()
-    await mongoose.connection.dropDatabase()
-    await mongoose.connection.close()
-    await mongo.stop({ doCleanup: true, force: true })
-    try {
-      fs.rmdirSync(dbPath, { recursive: true })
-    } catch {
-      // Folder is already deleted
-    }
+    await instance.destroy()
   })
 
   beforeEach(async () => {

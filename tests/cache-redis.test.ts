@@ -4,6 +4,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import mongoose from 'mongoose'
 import plugin from '../src/plugin'
+import server from './mongo/server'
 
 import Story from './models/Story'
 import User from './models/User'
@@ -14,10 +15,8 @@ import { Types } from 'mongoose'
 import type CacheMongoose from '../src/plugin'
 
 describe('cache-redis', async () => {
-  let mongo: MongoMemoryServer
+  const instance = server('cache-redis')
   let cache: CacheMongoose
-  const dbName = 'cache-redis'
-  const dbPath = `./tests/mongo/${dbName}`
 
   beforeAll(async () => {
     cache = plugin.init(mongoose, {
@@ -29,28 +28,13 @@ describe('cache-redis', async () => {
       defaultTTL: '10 seconds',
     })
 
-    fs.mkdirSync(dbPath, { recursive: true })
-    mongo = await MongoMemoryServer.create({
-      instance: {
-        dbName,
-        dbPath,
-      },
-    })
-    const uri = mongo.getUri()
-    await mongoose.connect(uri)
-    await cache.clear()
+    await instance.create()
   })
 
   afterAll(async () => {
+    await cache.clear()
     await cache.close()
-    await mongoose.connection.dropDatabase()
-    await mongoose.connection.close()
-    await mongo.stop({ doCleanup: true })
-    try {
-      fs.rmdirSync(dbPath, { recursive: true })
-    } catch {
-      // Folder is already deleted
-    }
+    await instance.destroy()
   })
 
   beforeEach(async () => {
