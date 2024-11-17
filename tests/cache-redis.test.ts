@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
@@ -10,24 +11,32 @@ import User from './models/User'
 import { ObjectId } from 'bson'
 import { Types } from 'mongoose'
 
-describe('cache-redis', async () => {
-  const mongod = await MongoMemoryServer.create({
-    instance: {
-      dbName: 'cache-redis',
-    },
-  })
+import type CacheMongoose from '../src/plugin'
 
-  const cache = plugin.init(mongoose, {
-    engine: 'redis',
-    engineOptions: {
-      host: 'localhost',
-      port: 6379,
-    },
-    defaultTTL: '10 seconds',
-  })
+describe('cache-redis', async () => {
+  let mongo: MongoMemoryServer
+  let cache: CacheMongoose
+  const dbName = 'cache-redis'
+  const dbPath = `./tests/mongo/${dbName}`
 
   beforeAll(async () => {
-    const uri = mongod.getUri()
+    cache = plugin.init(mongoose, {
+      engine: 'redis',
+      engineOptions: {
+        host: 'localhost',
+        port: 6379,
+      },
+      defaultTTL: '10 seconds',
+    })
+  
+    fs.mkdirSync(dbPath, { recursive: true })
+    mongo = await MongoMemoryServer.create({
+      instance: {
+        dbName,
+        dbPath,
+      },
+    })
+    const uri = mongo.getUri()
     await mongoose.connect(uri)
     await cache.clear()
   })
@@ -36,7 +45,12 @@ describe('cache-redis', async () => {
     await cache.close()
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
-    await mongod.stop({ doCleanup: true })
+    await mongo.stop({ doCleanup: true })
+    try {
+      fs.rmdirSync(dbPath, { recursive: true })
+    } catch {
+      // Folder is already deleted
+    }
   })
 
   beforeEach(async () => {
