@@ -258,7 +258,7 @@ describe('cache-redis', async () => {
     expect(hit?._id instanceof ObjectId).toBeTruthy()
 
     expect(hit).toHaveProperty('name', 'G')
-  
+
     expect(miss?._id.toString()).toBe(hit?._id.toString())
     expect(miss?.name).toEqual(hit?.name)
     expect(miss?.role).toEqual(hit?.role)
