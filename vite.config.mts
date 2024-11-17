@@ -7,6 +7,6 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       reporter: ['lcov'],
-    }
-  }
+    },
+  },
 })

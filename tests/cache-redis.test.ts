@@ -1,5 +1,5 @@
-import { describe, beforeAll, beforeEach, afterAll, it, expect } from 'vitest'
 import { MongoMemoryServer } from 'mongodb-memory-server'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import mongoose from 'mongoose'
 import plugin from '../src/plugin'
@@ -339,7 +339,7 @@ describe('cache redis', async () => {
 
     expect(typeof miss?.stories?.[0].createdAt).toBe('object')
     expect(miss?.stories?.[0].createdAt instanceof Date).toBeTruthy()
-    
+
     expect(miss?.stories?.[1]._id).toEqual(story2._id)
 
     expect(typeof miss?.stories?.[1]._id).toBe('object')
@@ -347,7 +347,7 @@ describe('cache redis', async () => {
 
     expect(typeof miss?.stories?.[1].createdAt).toBe('object')
     expect(miss?.stories?.[1].createdAt instanceof Date).toBeTruthy()
-    
+
     expect(hit).not.toBeNull()
 
     expect(typeof hit?._id).toBe('object')
@@ -455,7 +455,7 @@ describe('cache redis', async () => {
 
     expect(typeof populatedOriginal?.stories?.[0].createdAt).toBe('object')
     expect(populatedOriginal?.stories?.[0].createdAt instanceof Date).toBeTruthy()
-    
+
     expect(populatedOriginal?.stories?.[1]._id).toEqual(story2._id)
 
     expect(typeof populatedOriginal?.stories?.[1]._id).toBe('object')

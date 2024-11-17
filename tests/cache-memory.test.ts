@@ -1,5 +1,5 @@
-import { describe, beforeAll, beforeEach, afterAll, it, expect } from 'vitest'
 import { MongoMemoryServer } from 'mongodb-memory-server'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import mongoose, { model } from 'mongoose'
 import CacheMongoose from '../src/plugin'
