@@ -28,7 +28,7 @@ describe('cache-redis', async () => {
       },
       defaultTTL: '10 seconds',
     })
-  
+
     fs.mkdirSync(dbPath, { recursive: true })
     mongo = await MongoMemoryServer.create({
       instance: {
