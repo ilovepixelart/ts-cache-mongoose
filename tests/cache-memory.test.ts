@@ -44,7 +44,7 @@ describe('CacheMongoose', async () => {
 
       expect(user1).not.toBeNull()
       expect(user2).not.toBeNull()
-      expect(user1?._id).toEqual(user2?._id)
+      expect(user1?._id.toString()).toBe(user2?._id.toString())
       expect(user1?.name).toEqual(user2?.name)
     })
 
@@ -61,7 +61,7 @@ describe('CacheMongoose', async () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).not.toEqual(cache2?.name)
     })
 
@@ -77,7 +77,7 @@ describe('CacheMongoose', async () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).toEqual(cache2?.name)
     })
 
@@ -94,7 +94,7 @@ describe('CacheMongoose', async () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).not.toEqual(cache2?.name)
     })
 
@@ -110,13 +110,13 @@ describe('CacheMongoose', async () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).toEqual(cache2?.name)
 
       await cache.clear('')
       const cache3 = await User.findById(user._id).cache('1 minute', '').exec()
       expect(cache3).not.toBeNull()
-      expect(cache2?._id).toEqual(cache3?._id)
+      expect(cache2?._id.toString()).toBe(cache3?._id.toString())
       expect(cache2?.name).not.toEqual(cache3?.name)
     })
 
@@ -163,7 +163,7 @@ describe('CacheMongoose', async () => {
       const user = await User.findById(john._id).cache('1 minute').exec()
       const cachedUser = await User.findById(john._id).cache('1 minute').exec()
 
-      expect(user?._id).toEqual(cachedUser?._id)
+      expect(user?._id.toString()).toBe(cachedUser?._id.toString())
       expect(user?.name).toEqual(cachedUser?.name)
       expect(user?.createdAt).toEqual(cachedUser?.createdAt)
       expect(user?.updatedAt).toEqual(cachedUser?.updatedAt)
@@ -180,7 +180,7 @@ describe('CacheMongoose', async () => {
         .cache('1 minute')
         .exec()
 
-      expect(user?._id).toEqual(cachedUser?._id)
+      expect(user?._id.toString()).toBe(cachedUser?._id.toString())
       expect(user?.name).toEqual(cachedUser?.name)
       expect(user?.createdAt).toEqual(cachedUser?.createdAt)
       expect(user?.updatedAt).toEqual(cachedUser?.updatedAt)

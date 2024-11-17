@@ -51,7 +51,7 @@ describe('cache redis', async () => {
 
     expect(user1).not.toBeNull()
     expect(user2).not.toBeNull()
-    expect(user1?._id).toEqual(user2?._id)
+    expect(user1?._id.toString()).toBe(user2?._id.toString())
     expect(user1?.name).toEqual(user2?.name)
   })
 
@@ -68,7 +68,7 @@ describe('cache redis', async () => {
 
     expect(cache1).not.toBeNull()
     expect(cache2).not.toBeNull()
-    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?._id.toString()).toBe(cache2?._id.toString())
     expect(cache1?.name).not.toEqual(cache2?.name)
   })
 
@@ -84,7 +84,7 @@ describe('cache redis', async () => {
 
     expect(cache1).not.toBeNull()
     expect(cache2).not.toBeNull()
-    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?._id.toString()).toBe(cache2?._id.toString())
     expect(cache1?.name).toEqual(cache2?.name)
   })
 
@@ -101,7 +101,7 @@ describe('cache redis', async () => {
 
     expect(cache1).not.toBeNull()
     expect(cache2).not.toBeNull()
-    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?._id.toString()).toBe(cache2?._id.toString())
     expect(cache1?.name).not.toEqual(cache2?.name)
   })
 
@@ -119,7 +119,7 @@ describe('cache redis', async () => {
 
     expect(cache1).not.toBeNull()
     expect(cache2).not.toBeNull()
-    expect(cache1?._id).toEqual(cache2?._id)
+    expect(cache1?._id.toString()).toBe(cache2?._id.toString())
     expect(cache1?.name).toEqual(cache2?.name)
 
     await User.create([
@@ -332,7 +332,7 @@ describe('cache redis', async () => {
     expect(miss?.stories).not.toBeNull()
     expect(miss?.stories?.length).toBe(2)
 
-    expect(miss?.stories?.[0]._id).toEqual(story1._id)
+    expect(miss?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof miss?.stories?.[0]._id).toBe('object')
     expect(miss?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
@@ -340,7 +340,7 @@ describe('cache redis', async () => {
     expect(typeof miss?.stories?.[0].createdAt).toBe('object')
     expect(miss?.stories?.[0].createdAt instanceof Date).toBeTruthy()
 
-    expect(miss?.stories?.[1]._id).toEqual(story2._id)
+    expect(miss?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof miss?.stories?.[1]._id).toBe('object')
     expect(miss?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
@@ -357,7 +357,7 @@ describe('cache redis', async () => {
     expect(hit?.stories).not.toBeNull()
     expect(hit?.stories?.length).toBe(2)
 
-    expect(hit?.stories?.[0]._id).toEqual(story1._id)
+    expect(hit?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof hit?.stories?.[0]._id).toBe('object')
     expect(hit?.stories?.[0]._id instanceof ObjectId).toBeTruthy()
@@ -365,7 +365,7 @@ describe('cache redis', async () => {
     expect(hit?.stories?.[0].createdAt instanceof Date).toBeTruthy()
     expect(typeof hit?.stories?.[0].createdAt).toBe('object')
 
-    expect(hit?.stories?.[1]._id).toEqual(story2._id)
+    expect(hit?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof hit?.stories?.[1]._id).toBe('object')
     expect(hit?.stories?.[1]._id instanceof ObjectId).toBeTruthy()
@@ -401,7 +401,7 @@ describe('cache redis', async () => {
     expect(typeof hit?._id).toBe('object')
     expect(typeof hit?.createdAt).toBe('object')
 
-    expect(miss?._id).toEqual(hit?._id)
+    expect(miss?._id.toString()).toBe(hit?._id.toString())
     expect(miss?.role).toEqual(hit?.role)
     expect(miss?.createdAt).toEqual(hit?.createdAt)
 
@@ -448,7 +448,7 @@ describe('cache redis', async () => {
     expect(populatedOriginal?.stories).not.toBeNull()
     expect(populatedOriginal?.stories?.length).toBe(2)
 
-    expect(populatedOriginal?.stories?.[0]._id).toEqual(story1._id)
+    expect(populatedOriginal?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof populatedOriginal?.stories?.[0]._id).toBe('object')
     expect(populatedOriginal?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
@@ -456,7 +456,7 @@ describe('cache redis', async () => {
     expect(typeof populatedOriginal?.stories?.[0].createdAt).toBe('object')
     expect(populatedOriginal?.stories?.[0].createdAt instanceof Date).toBeTruthy()
 
-    expect(populatedOriginal?.stories?.[1]._id).toEqual(story2._id)
+    expect(populatedOriginal?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof populatedOriginal?.stories?.[1]._id).toBe('object')
     expect(populatedOriginal?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
@@ -479,7 +479,7 @@ describe('cache redis', async () => {
     expect(populatedCache?.stories).not.toBeNull()
     expect(populatedCache?.stories?.length).toBe(2)
 
-    expect(populatedCache?.stories?.[0]._id).toEqual(story1._id)
+    expect(populatedCache?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof populatedCache?.stories?.[0]._id).toBe('object')
     expect(populatedCache?.stories?.[0]._id instanceof ObjectId).toBeTruthy()
@@ -487,7 +487,7 @@ describe('cache redis', async () => {
     expect(typeof populatedCache?.stories?.[0].createdAt).toBe('object')
     expect(populatedCache?.stories?.[0].createdAt instanceof Date).toBeTruthy()
 
-    expect(populatedCache?.stories?.[1]._id).toEqual(story2._id)
+    expect(populatedCache?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof populatedCache?.stories?.[1]._id).toBe('object')
     expect(populatedCache?.stories?.[1]._id instanceof ObjectId).toBeTruthy()

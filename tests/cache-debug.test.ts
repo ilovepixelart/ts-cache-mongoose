@@ -55,7 +55,7 @@ describe('CacheMongoose', async () => {
       const userCacheMiss = await User.findById(user._id).cache(ttl, key).exec()
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheMissRegExp))
       expect(userCacheMiss).not.toBeNull()
-      expect(userCacheMiss?._id).toEqual(user._id)
+      expect(userCacheMiss?._id.toString()).toBe(user._id.toString())
       expect(userCacheMiss?.name).toEqual(user.name)
       expect(userCacheMiss?.role).toEqual(user.role)
 
@@ -63,7 +63,7 @@ describe('CacheMongoose', async () => {
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheSetRegExp))
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheHitRegExp))
       expect(userCacheHit).not.toBeNull()
-      expect(userCacheHit?._id).toEqual(user._id)
+      expect(userCacheHit?._id.toString()).toBe(user._id.toString())
       expect(userCacheHit?.name).toEqual(user.name)
       expect(userCacheHit?.role).toEqual(user.role)
 
