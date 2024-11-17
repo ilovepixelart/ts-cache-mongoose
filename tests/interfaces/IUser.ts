@@ -1,7 +1,8 @@
-import type { HydratedDocument } from 'mongoose'
+import type { HydratedDocument, ObjectId } from 'mongoose'
 import type IStory from './IStory'
 
 interface IUser {
+  _id: ObjectId
   name: string
   role: string
   age?: number

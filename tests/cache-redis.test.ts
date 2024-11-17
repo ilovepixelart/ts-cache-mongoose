@@ -12,7 +12,7 @@ import { ObjectId } from 'bson'
 describe('cache-redis', async () => {
   const mongod = await MongoMemoryServer.create({
     instance: {
-      dbName: 'redis-cache',
+      dbName: 'cache-redis',
     },
   })
 
