@@ -8,6 +8,7 @@ import Story from './models/Story'
 import User from './models/User'
 
 import { ObjectId } from 'bson'
+import { Types } from 'mongoose'
 
 describe('cache-redis', async () => {
   const mongod = await MongoMemoryServer.create({
@@ -247,7 +248,7 @@ describe('cache-redis', async () => {
     expect(miss).not.toBeNull()
 
     expect(typeof miss?._id).toBe('object')
-    expect(miss?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(miss?._id instanceof Types.ObjectId).toBeTruthy()
 
     expect(miss).toHaveProperty('name', 'G')
 
@@ -276,7 +277,7 @@ describe('cache-redis', async () => {
     expect(miss?.length).toBe(3)
 
     expect(typeof miss?.[0]).toBe('object')
-    expect(miss?.[0] instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(miss?.[0] instanceof Types.ObjectId).toBeTruthy()
 
     const hit = await User.distinct('_id').cache('30 seconds').exec()
     expect(hit).not.toBeNull()
@@ -319,7 +320,7 @@ describe('cache-redis', async () => {
     expect(miss).not.toBeNull()
 
     expect(typeof miss?._id).toBe('object')
-    expect(miss?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(miss?._id instanceof Types.ObjectId).toBeTruthy()
 
     expect(miss?.name).toBe('i')
     expect(miss?.stories).not.toBeNull()
@@ -328,7 +329,7 @@ describe('cache-redis', async () => {
     expect(miss?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof miss?.stories?.[0]._id).toBe('object')
-    expect(miss?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(miss?.stories?.[0]._id instanceof Types.ObjectId).toBeTruthy()
 
     expect(typeof miss?.stories?.[0].createdAt).toBe('object')
     expect(miss?.stories?.[0].createdAt instanceof Date).toBeTruthy()
@@ -336,7 +337,7 @@ describe('cache-redis', async () => {
     expect(miss?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof miss?.stories?.[1]._id).toBe('object')
-    expect(miss?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(miss?.stories?.[1]._id instanceof Types.ObjectId).toBeTruthy()
 
     expect(typeof miss?.stories?.[1].createdAt).toBe('object')
     expect(miss?.stories?.[1].createdAt instanceof Date).toBeTruthy()
@@ -455,7 +456,7 @@ describe('cache-redis', async () => {
     expect(populatedOriginal).not.toBeNull()
 
     expect(typeof populatedOriginal?._id).toBe('object')
-    expect(populatedOriginal?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(populatedOriginal?._id instanceof Types.ObjectId).toBeTruthy()
 
     expect(populatedOriginal?.name).toBe('Alex')
     expect(populatedOriginal?.stories).not.toBeNull()
@@ -464,7 +465,7 @@ describe('cache-redis', async () => {
     expect(populatedOriginal?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof populatedOriginal?.stories?.[0]._id).toBe('object')
-    expect(populatedOriginal?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(populatedOriginal?.stories?.[0]._id instanceof Types.ObjectId).toBeTruthy()
 
     expect(typeof populatedOriginal?.stories?.[0].createdAt).toBe('object')
     expect(populatedOriginal?.stories?.[0].createdAt instanceof Date).toBeTruthy()
@@ -472,7 +473,7 @@ describe('cache-redis', async () => {
     expect(populatedOriginal?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof populatedOriginal?.stories?.[1]._id).toBe('object')
-    expect(populatedOriginal?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(populatedOriginal?.stories?.[1]._id instanceof Types.ObjectId).toBeTruthy()
 
     expect(typeof populatedOriginal?.stories?.[1].createdAt).toBe('object')
     expect(populatedOriginal?.stories?.[1].createdAt instanceof Date).toBeTruthy()

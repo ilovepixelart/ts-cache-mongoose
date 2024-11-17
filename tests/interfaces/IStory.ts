@@ -1,8 +1,8 @@
-import type { ObjectId } from 'mongoose'
+import type { Types } from 'mongoose'
 
 interface IStory {
-  _id: ObjectId
-  userId: ObjectId
+  _id: Types.ObjectId
+  userId: Types.ObjectId
   title: string
   createdAt: Date
   updatedAt: Date

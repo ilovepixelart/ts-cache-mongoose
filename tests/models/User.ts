@@ -4,6 +4,6 @@ import UserSchema from '../schemas/UserSchema'
 import type { Model } from 'mongoose'
 import type IUser from '../interfaces/IUser'
 
-const Story = (models.Story as Model<IUser> | undefined) || model<IUser>('Story', UserSchema)
+const Story = (models.User as Model<IUser> | undefined) ?? model<IUser>('User', UserSchema)
 
 export default Story
