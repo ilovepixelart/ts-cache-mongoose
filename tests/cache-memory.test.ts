@@ -21,10 +21,10 @@ describe('CacheMongoose', async () => {
   })
 
   afterAll(async () => {
+    await cache.close()
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
     await mongod.stop()
-    await cache.close()
   })
 
   beforeEach(async () => {

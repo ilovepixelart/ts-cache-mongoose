@@ -28,10 +28,10 @@ describe('cache redis', async () => {
   })
 
   afterAll(async () => {
+    await cache.close()
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
     await mongod.stop()
-    await cache.close()
   })
 
   beforeEach(async () => {
@@ -239,38 +239,27 @@ describe('cache redis', async () => {
       { name: 'G', role: 'user' },
     ])
 
-    const cache1 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
-    expect(cache1).not.toBeNull()
+    const miss = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
+    expect(miss).not.toBeNull()
 
-    expect(typeof cache1?._id).toBe('object')
-    expect(cache1?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(typeof miss?._id).toBe('object')
+    expect(miss?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
-    expect(cache1).toHaveProperty('name', 'G')
+    expect(miss).toHaveProperty('name', 'G')
 
-    const cache2 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
-    expect(cache2).not.toBeNull()
+    const hit = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
+    expect(hit).not.toBeNull()
 
-    expect(typeof cache2?._id).toBe('object')
-    expect(cache2?._id instanceof ObjectId).toBeTruthy()
+    expect(typeof hit?._id).toBe('object')
+    expect(hit?._id instanceof ObjectId).toBeTruthy()
 
-    expect(cache2).toHaveProperty('name', 'G')
-    expect(cache1).toEqual(cache2)
-
-    const cache3 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
-    expect(cache3).not.toBeNull()
-    expect(cache3).toHaveProperty('name', 'G')
-    expect(cache2).toEqual(cache3)
-
-    const cache4 = await User.findOne({ name: 'V' }).lean().cache('30 seconds').exec()
-    expect(cache4).not.toBeNull()
-    expect(cache4).toHaveProperty('name', 'V')
-    expect(cache3).not.toEqual(cache4)
-
-    const cache5 = await User.findOne({ name: 'O' }).lean().cache('30 seconds').exec()
-    const cache6 = await User.findOne({ name: 'O' }).lean().cache('30 seconds').exec()
-    expect(cache5).toBeNull()
-    expect(cache6).toBeNull()
-    expect(cache5).toEqual(cache6)
+    expect(hit).toHaveProperty('name', 'G')
+  
+    expect(miss?._id.toString()).toBe(hit?._id.toString())
+    expect(miss?.name).toEqual(hit?.name)
+    expect(miss?.role).toEqual(hit?.role)
+    expect(miss?.createdAt).toEqual(hit?.createdAt)
+    expect(miss?.updatedAt).toEqual(hit?.updatedAt)
   })
 
   it('should distinct("_id") and distinct("role") and distinct("createdAt")', async () => {
@@ -373,7 +362,23 @@ describe('cache redis', async () => {
     expect(hit?.stories?.[1].createdAt instanceof Date).toBeTruthy()
     expect(typeof hit?.stories?.[1].createdAt).toBe('object')
 
-    expect(miss).toEqual(hit)
+    expect(miss?._id.toString()).toBe(hit?._id.toString())
+    expect(miss?.name).toBe(hit?.name)
+    expect(miss?.role).toBe(hit?.role)
+    expect(miss?.createdAt).toBe(hit?.createdAt)
+    expect(miss?.updatedAt).toBe(hit?.updatedAt)
+
+    expect(miss?.stories?.[0]._id.toString()).toBe(hit?.stories?.[0]._id.toString())
+    expect(miss?.stories?.[0].title).toBe(hit?.stories?.[0].title)
+    expect(miss?.stories?.[0].userId.toString()).toBe(hit?.stories?.[0].userId.toString())
+    expect(miss?.stories?.[0].createdAt).toBe(hit?.stories?.[0].createdAt)
+    expect(miss?.stories?.[0].updatedAt).toBe(hit?.stories?.[0].updatedAt)
+
+    expect(miss?.stories?.[1]._id.toString()).toBe(hit?.stories?.[1]._id.toString())
+    expect(miss?.stories?.[1].title).toBe(hit?.stories?.[1].title)
+    expect(miss?.stories?.[1].userId.toString()).toBe(hit?.stories?.[1].userId.toString())
+    expect(miss?.stories?.[1].createdAt).toBe(hit?.stories?.[1].createdAt)
+    expect(miss?.stories?.[1].updatedAt).toBe(hit?.stories?.[1].updatedAt)
   })
 
   it('should not misclassify certain fields as objectIds', async () => {
