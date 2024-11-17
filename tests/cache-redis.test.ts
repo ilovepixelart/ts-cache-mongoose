@@ -1,11 +1,16 @@
+import { describe, beforeAll, beforeEach, afterAll, it, expect } from 'vitest'
+import { MongoMemoryServer } from 'mongodb-memory-server'
+
 import mongoose from 'mongoose'
 import plugin from '../src/plugin'
 
 import Story from './models/Story'
 import User from './models/User'
 
-describe('cache redis', () => {
-  const uri = `${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`
+import { ObjectId } from 'bson'
+
+describe('cache redis', async () => {
+  const mongod = await MongoMemoryServer.create()
 
   const cache = plugin.init(mongoose, {
     engine: 'redis',
@@ -17,12 +22,15 @@ describe('cache redis', () => {
   })
 
   beforeAll(async () => {
+    const uri = mongod.getUri()
     await mongoose.connect(uri)
     await cache.clear()
   })
 
   afterAll(async () => {
+    await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
+    await mongod.stop()
     await cache.close()
   })
 
@@ -233,12 +241,18 @@ describe('cache redis', () => {
 
     const cache1 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
     expect(cache1).not.toBeNull()
+
+    expect(typeof cache1?._id).toBe('object')
     expect(cache1?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(cache1).toHaveProperty('name', 'G')
 
     const cache2 = await User.findOne({ name: 'G' }).lean().cache('30 seconds').exec()
     expect(cache2).not.toBeNull()
-    expect(cache2?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
+    expect(typeof cache2?._id).toBe('object')
+    expect(cache2?._id instanceof ObjectId).toBeTruthy()
+
     expect(cache2).toHaveProperty('name', 'G')
     expect(cache1).toEqual(cache2)
 
@@ -267,14 +281,16 @@ describe('cache redis', () => {
     const miss = await User.distinct('_id').cache('30 seconds').exec()
     expect(miss).not.toBeNull()
     expect(miss?.length).toBe(3)
+
     expect(typeof miss?.[0]).toBe('object')
     expect(miss?.[0] instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     const hit = await User.distinct('_id').cache('30 seconds').exec()
     expect(hit).not.toBeNull()
     expect(hit?.length).toBe(3)
+
     expect(typeof hit?.[0]).toBe('object')
-    expect(hit?.[0] instanceof mongoose.Types.ObjectId).toBeTruthy()
+    expect(hit?.[0] instanceof ObjectId).toBeTruthy()
 
     const cache4 = await User.distinct('role').cache('30 seconds').exec()
     expect(cache4).not.toBeNull()
@@ -308,38 +324,52 @@ describe('cache redis', () => {
     const hit = await User.findOne({ name: 'i' }).populate({ path: 'stories' }).lean().cache('30 seconds').exec()
 
     expect(miss).not.toBeNull()
+
+    expect(typeof miss?._id).toBe('object')
     expect(miss?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(miss?.name).toBe('i')
     expect(miss?.stories).not.toBeNull()
     expect(miss?.stories?.length).toBe(2)
 
     expect(miss?.stories?.[0]._id).toEqual(story1._id)
-    expect(miss?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof miss?.stories?.[0]._id).toBe('object')
-    expect(miss?.stories?.[0].createdAt instanceof Date).toBeTruthy()
+    expect(miss?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof miss?.stories?.[0].createdAt).toBe('object')
-
+    expect(miss?.stories?.[0].createdAt instanceof Date).toBeTruthy()
+    
     expect(miss?.stories?.[1]._id).toEqual(story2._id)
-    expect(miss?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    expect(typeof miss?.stories?.[1]._id).toBe('object')
-    expect(miss?.stories?.[1].createdAt instanceof Date).toBeTruthy()
-    expect(typeof miss?.stories?.[1].createdAt).toBe('object')
 
+    expect(typeof miss?.stories?.[1]._id).toBe('object')
+    expect(miss?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
+    expect(typeof miss?.stories?.[1].createdAt).toBe('object')
+    expect(miss?.stories?.[1].createdAt instanceof Date).toBeTruthy()
+    
     expect(hit).not.toBeNull()
-    expect(hit?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
+    expect(typeof hit?._id).toBe('object')
+    expect(hit?._id instanceof ObjectId).toBeTruthy()
+
     expect(hit?.name).toBe('i')
     expect(hit?.stories).not.toBeNull()
     expect(hit?.stories?.length).toBe(2)
 
     expect(hit?.stories?.[0]._id).toEqual(story1._id)
-    expect(hit?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof hit?.stories?.[0]._id).toBe('object')
+    expect(hit?.stories?.[0]._id instanceof ObjectId).toBeTruthy()
+
     expect(hit?.stories?.[0].createdAt instanceof Date).toBeTruthy()
     expect(typeof hit?.stories?.[0].createdAt).toBe('object')
 
     expect(hit?.stories?.[1]._id).toEqual(story2._id)
-    expect(hit?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof hit?.stories?.[1]._id).toBe('object')
+    expect(hit?.stories?.[1]._id instanceof ObjectId).toBeTruthy()
+
     expect(hit?.stories?.[1].createdAt instanceof Date).toBeTruthy()
     expect(typeof hit?.stories?.[1].createdAt).toBe('object')
 
@@ -410,22 +440,29 @@ describe('cache redis', () => {
     const populatedOriginal = await User.findOne({ name: 'Alex' }).populate('stories').lean().cache('1 minute').exec()
 
     expect(populatedOriginal).not.toBeNull()
+
+    expect(typeof populatedOriginal?._id).toBe('object')
     expect(populatedOriginal?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(populatedOriginal?.name).toBe('Alex')
     expect(populatedOriginal?.stories).not.toBeNull()
     expect(populatedOriginal?.stories?.length).toBe(2)
 
     expect(populatedOriginal?.stories?.[0]._id).toEqual(story1._id)
-    expect(populatedOriginal?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    expect(typeof populatedOriginal?.stories?.[0]._id).toBe('object')
-    expect(populatedOriginal?.stories?.[0].createdAt instanceof Date).toBeTruthy()
-    expect(typeof populatedOriginal?.stories?.[0].createdAt).toBe('object')
 
+    expect(typeof populatedOriginal?.stories?.[0]._id).toBe('object')
+    expect(populatedOriginal?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
+    expect(typeof populatedOriginal?.stories?.[0].createdAt).toBe('object')
+    expect(populatedOriginal?.stories?.[0].createdAt instanceof Date).toBeTruthy()
+    
     expect(populatedOriginal?.stories?.[1]._id).toEqual(story2._id)
-    expect(populatedOriginal?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof populatedOriginal?.stories?.[1]._id).toBe('object')
-    expect(populatedOriginal?.stories?.[1].createdAt instanceof Date).toBeTruthy()
+    expect(populatedOriginal?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof populatedOriginal?.stories?.[1].createdAt).toBe('object')
+    expect(populatedOriginal?.stories?.[1].createdAt instanceof Date).toBeTruthy()
 
     // Deleting user and stories, to ensure that the cache is used
     await User.deleteOne({ _id: user._id }).exec()
@@ -434,22 +471,29 @@ describe('cache redis', () => {
     const populatedCache = await User.findOne({ name: 'Alex' }).populate('stories').lean().cache('1 minute').exec()
 
     expect(populatedCache).not.toBeNull()
-    expect(populatedCache?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
+    expect(typeof populatedCache?._id).toBe('object')
+    expect(populatedCache?._id instanceof ObjectId).toBeTruthy()
+
     expect(populatedCache?.name).toBe('Alex')
     expect(populatedCache?.stories).not.toBeNull()
     expect(populatedCache?.stories?.length).toBe(2)
 
     expect(populatedCache?.stories?.[0]._id).toEqual(story1._id)
-    expect(populatedCache?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof populatedCache?.stories?.[0]._id).toBe('object')
-    expect(populatedCache?.stories?.[0].createdAt instanceof Date).toBeTruthy()
+    expect(populatedCache?.stories?.[0]._id instanceof ObjectId).toBeTruthy()
+
     expect(typeof populatedCache?.stories?.[0].createdAt).toBe('object')
+    expect(populatedCache?.stories?.[0].createdAt instanceof Date).toBeTruthy()
 
     expect(populatedCache?.stories?.[1]._id).toEqual(story2._id)
-    expect(populatedCache?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
+
     expect(typeof populatedCache?.stories?.[1]._id).toBe('object')
-    expect(populatedCache?.stories?.[1].createdAt instanceof Date).toBeTruthy()
+    expect(populatedCache?.stories?.[1]._id instanceof ObjectId).toBeTruthy()
+
     expect(typeof populatedCache?.stories?.[1].createdAt).toBe('object')
+    expect(populatedCache?.stories?.[1].createdAt instanceof Date).toBeTruthy()
 
     expect(populatedOriginal).toEqual(populatedCache)
 

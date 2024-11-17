@@ -1,10 +1,13 @@
+import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect, vi } from 'vitest'
+import { MongoMemoryServer } from 'mongodb-memory-server'
+
 import mongoose, { model } from 'mongoose'
 import CacheMongoose from '../src/plugin'
 
 import UserSchema from './schemas/UserSchema'
 
-describe('CacheMongoose', () => {
-  const uri = `${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`
+describe('CacheMongoose', async () => {
+  const mongod = await MongoMemoryServer.create()
   const User = model('User', UserSchema)
 
   const cache = CacheMongoose.init(mongoose, {
@@ -13,22 +16,25 @@ describe('CacheMongoose', () => {
   })
 
   beforeAll(async () => {
+    const uri = mongod.getUri()
     await mongoose.connect(uri)
     await cache.clear()
   })
 
   afterAll(async () => {
+    await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
+    await mongod.stop()
     await cache.close()
   })
 
   beforeEach(async () => {
-    jest.spyOn(global.console, 'log')
+    vi.spyOn(global.console, 'log')
     await mongoose.connection.collection('users').deleteMany({})
   })
 
   afterEach(async () => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   describe('debug scenarios', () => {

@@ -1,3 +1,5 @@
+import { describe, it, expect, vi } from 'vitest'
+
 import Cache from '../src/cache/Cache'
 
 import type ICacheOptions from '../src/interfaces/ICacheOptions'
@@ -68,7 +70,7 @@ describe('Cache class tests', () => {
     const clearJohn = await cache.get('john')
     expect(clearJohn).toBeUndefined()
 
-    const mockSet = jest.fn()
+    const mockSet = vi.fn()
     cache.set = mockSet
 
     await cache.set('bob', { test: 'bob' })
