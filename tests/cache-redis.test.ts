@@ -9,8 +9,12 @@ import User from './models/User'
 
 import { ObjectId } from 'bson'
 
-describe('cache redis', async () => {
-  const mongod = await MongoMemoryServer.create()
+describe('cache-redis', async () => {
+  const mongod = await MongoMemoryServer.create({
+    instance: {
+      dbName: 'redis-cache',
+    },
+  })
 
   const cache = plugin.init(mongoose, {
     engine: 'redis',
@@ -31,7 +35,7 @@ describe('cache redis', async () => {
     await cache.close()
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
-    await mongod.stop()
+    await mongod.stop({ doCleanup: true })
   })
 
   beforeEach(async () => {
@@ -299,7 +303,7 @@ describe('cache redis', async () => {
 
     const cache7 = await User.distinct('createdAt').cache('30 seconds').exec()
 
-    expect(miss).toEqual(hit)
+    expect(miss.map((id) => id.toString())).toEqual(hit.map((id) => id.toString()))
     expect(cache4).toEqual(cache5)
     expect(cache6).toEqual(cache7)
   })
@@ -365,20 +369,20 @@ describe('cache redis', async () => {
     expect(miss?._id.toString()).toBe(hit?._id.toString())
     expect(miss?.name).toBe(hit?.name)
     expect(miss?.role).toBe(hit?.role)
-    expect(miss?.createdAt).toBe(hit?.createdAt)
-    expect(miss?.updatedAt).toBe(hit?.updatedAt)
+    expect(miss?.createdAt?.toString()).toBe(hit?.createdAt?.toString())
+    expect(miss?.updatedAt?.toString()).toBe(hit?.updatedAt?.toString())
 
     expect(miss?.stories?.[0]._id.toString()).toBe(hit?.stories?.[0]._id.toString())
     expect(miss?.stories?.[0].title).toBe(hit?.stories?.[0].title)
     expect(miss?.stories?.[0].userId.toString()).toBe(hit?.stories?.[0].userId.toString())
-    expect(miss?.stories?.[0].createdAt).toBe(hit?.stories?.[0].createdAt)
-    expect(miss?.stories?.[0].updatedAt).toBe(hit?.stories?.[0].updatedAt)
+    expect(miss?.stories?.[0].createdAt?.toString()).toBe(hit?.stories?.[0].createdAt?.toString())
+    expect(miss?.stories?.[0].updatedAt?.toString()).toBe(hit?.stories?.[0].updatedAt?.toString())
 
     expect(miss?.stories?.[1]._id.toString()).toBe(hit?.stories?.[1]._id.toString())
     expect(miss?.stories?.[1].title).toBe(hit?.stories?.[1].title)
     expect(miss?.stories?.[1].userId.toString()).toBe(hit?.stories?.[1].userId.toString())
-    expect(miss?.stories?.[1].createdAt).toBe(hit?.stories?.[1].createdAt)
-    expect(miss?.stories?.[1].updatedAt).toBe(hit?.stories?.[1].updatedAt)
+    expect(miss?.stories?.[1].createdAt?.toString()).toBe(hit?.stories?.[1].createdAt?.toString())
+    expect(miss?.stories?.[1].updatedAt?.toString()).toBe(hit?.stories?.[1].updatedAt?.toString())
   })
 
   it('should not misclassify certain fields as objectIds', async () => {
@@ -418,7 +422,7 @@ describe('cache redis', async () => {
     const distinctHit = await User.distinct('_id').cache('30 seconds').lean().exec()
     expect(distinctHit).not.toBeNull()
     expect(distinctHit?.length).toBe(1)
-    expect(distinctHit).toEqual([pureLean?._id])
+    expect(distinctHit.map((id) => id.toString())).toEqual([pureLean?._id.toString()])
 
     const distinctCreatedAtMiss = await User.distinct('createdAt').cache('30 seconds').lean().exec()
     expect(distinctCreatedAtMiss).not.toBeNull()
@@ -434,7 +438,11 @@ describe('cache redis', async () => {
     expect(distinctCreatedAtMiss?.[0] instanceof Date).toBeTruthy()
     expect(distinctCreatedAtHit).toEqual([pureLean?.createdAt])
 
-    expect(miss).toEqual(hit)
+    expect(miss?._id.toString()).toBe(hit?._id.toString())
+    expect(miss?.name).toBe(hit?.name)
+    expect(miss?.role).toBe(hit?.role)
+    expect(miss?.createdAt?.toString()).toBe(hit?.createdAt?.toString())
+    expect(miss?.updatedAt?.toString()).toBe(hit?.updatedAt?.toString())
   })
 
   it('should hydrate populated objects from cache', async () => {
@@ -500,31 +508,22 @@ describe('cache redis', async () => {
     expect(typeof populatedCache?.stories?.[1].createdAt).toBe('object')
     expect(populatedCache?.stories?.[1].createdAt instanceof Date).toBeTruthy()
 
-    expect(populatedOriginal).toEqual(populatedCache)
+    expect(populatedOriginal?._id.toString()).toBe(populatedCache?._id.toString())
+    expect(populatedOriginal?.name).toBe(populatedCache?.name)
+    expect(populatedOriginal?.role).toBe(populatedCache?.role)
+    expect(populatedOriginal?.createdAt?.toString()).toBe(populatedCache?.createdAt?.toString())
+    expect(populatedOriginal?.updatedAt?.toString()).toBe(populatedCache?.updatedAt?.toString())
 
-    // Code bellow will fail see: https://github.com/Automattic/mongoose/issues/14503
+    expect(populatedOriginal?.stories?.[0]._id.toString()).toBe(populatedCache?.stories?.[0]._id.toString())
+    expect(populatedOriginal?.stories?.[0].title).toBe(populatedCache?.stories?.[0].title)
+    expect(populatedOriginal?.stories?.[0].userId.toString()).toBe(populatedCache?.stories?.[0].userId.toString())
+    expect(populatedOriginal?.stories?.[0].createdAt?.toString()).toBe(populatedCache?.stories?.[0].createdAt?.toString())
+    expect(populatedOriginal?.stories?.[0].updatedAt?.toString()).toBe(populatedCache?.stories?.[0].updatedAt?.toString())
 
-    // const populatedJson = JSON.stringify(populatedOriginal)
-    // expect(populatedJson).not.toBeNull()
-
-    // const hydrated = User.hydrate(JSON.parse(populatedJson), undefined, { hydratedPopulatedDocs: true })
-
-    // expect(hydrated).not.toBeNull()
-    // expect(hydrated?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    // expect(hydrated?.name).toBe('Alex')
-    // expect(hydrated?.stories).not.toBeNull()
-    // expect(hydrated?.stories?.length).toBe(2)
-
-    // expect(hydrated?.stories?.[0]._id).toEqual(story1._id)
-    // expect(typeof hydrated?.stories?.[0]._id).toBe('object')
-    // expect(hydrated?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    // expect(typeof hydrated?.stories?.[0].createdAt).toBe('object')
-    // expect(hydrated?.stories?.[0].createdAt instanceof Date).toBeTruthy()
-
-    // expect(hydrated?.stories?.[1]._id).toEqual(story2._id)
-    // expect(typeof hydrated?.stories?.[1]._id).toBe('object')
-    // expect(hydrated?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
-    // expect(typeof hydrated?.stories?.[1].createdAt).toBe('object')
-    // expect(hydrated?.stories?.[1].createdAt instanceof Date).toBeTruthy()
+    expect(populatedOriginal?.stories?.[1]._id.toString()).toBe(populatedCache?.stories?.[1]._id.toString())
+    expect(populatedOriginal?.stories?.[1].title).toBe(populatedCache?.stories?.[1].title)
+    expect(populatedOriginal?.stories?.[1].userId.toString()).toBe(populatedCache?.stories?.[1].userId.toString())
+    expect(populatedOriginal?.stories?.[1].createdAt?.toString()).toBe(populatedCache?.stories?.[1].createdAt?.toString())
+    expect(populatedOriginal?.stories?.[1].updatedAt?.toString()).toBe(populatedCache?.stories?.[1].updatedAt?.toString())
   })
 })

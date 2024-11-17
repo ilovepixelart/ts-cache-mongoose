@@ -6,8 +6,12 @@ import CacheMongoose from '../src/plugin'
 
 import UserSchema from './schemas/UserSchema'
 
-describe('CacheMongoose', async () => {
-  const mongod = await MongoMemoryServer.create()
+describe('cache-debug', async () => {
+  const mongod = await MongoMemoryServer.create({
+    instance: {
+      dbName: 'cache-debug',
+    },
+  })
   const User = model('User', UserSchema)
 
   const cache = CacheMongoose.init(mongoose, {
@@ -25,7 +29,7 @@ describe('CacheMongoose', async () => {
     await cache.close()
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
-    await mongod.stop()
+    await mongod.stop({ doCleanup: true, force: true })
   })
 
   beforeEach(async () => {
