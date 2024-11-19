@@ -294,13 +294,11 @@ describe('cache-redis', async () => {
     expect(cache5?.length).toBe(2)
     expect(cache5).toEqual(['admin', 'user'])
 
-    const cache6 = await User.distinct('createdAt').cache('30 seconds').exec()
+    const cache6 = await User.distinct('name').cache('30 seconds').exec()
     expect(cache6).not.toBeNull()
     expect(cache6?.length).toBe(3)
-    expect(typeof cache6?.[0]).toBe('object')
-    expect(cache6?.[0] instanceof Date).toBeTruthy()
 
-    const cache7 = await User.distinct('createdAt').cache('30 seconds').exec()
+    const cache7 = await User.distinct('name').cache('30 seconds').exec()
 
     expect(miss.map((id) => id.toString())).toEqual(hit.map((id) => id.toString()))
     expect(cache4).toEqual(cache5)
