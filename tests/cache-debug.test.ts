@@ -1,34 +1,37 @@
-import mongoose, { model } from 'mongoose'
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+
+import mongoose from 'mongoose'
 import CacheMongoose from '../src/plugin'
+import server from './mongo/server'
 
-import UserSchema from './schemas/UserSchema'
+import User from './models/User'
 
-describe('CacheMongoose', () => {
-  const uri = `${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`
-  const User = model('User', UserSchema)
-
-  const cache = CacheMongoose.init(mongoose, {
-    engine: 'memory',
-    debug: true,
-  })
+describe('cache-debug', async () => {
+  const instance = server('cache-debug')
+  let cache: CacheMongoose
 
   beforeAll(async () => {
-    await mongoose.connect(uri)
-    await cache.clear()
+    cache = CacheMongoose.init(mongoose, {
+      engine: 'memory',
+      debug: true,
+    })
+
+    await instance.create()
   })
 
   afterAll(async () => {
-    await mongoose.connection.close()
+    await cache.clear()
     await cache.close()
+    await instance.destroy()
   })
 
   beforeEach(async () => {
-    jest.spyOn(global.console, 'log')
+    vi.spyOn(global.console, 'log')
     await mongoose.connection.collection('users').deleteMany({})
   })
 
   afterEach(async () => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   describe('debug scenarios', () => {
@@ -49,7 +52,7 @@ describe('CacheMongoose', () => {
       const userCacheMiss = await User.findById(user._id).cache(ttl, key).exec()
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheMissRegExp))
       expect(userCacheMiss).not.toBeNull()
-      expect(userCacheMiss?._id).toEqual(user._id)
+      expect(userCacheMiss?._id.toString()).toBe(user._id.toString())
       expect(userCacheMiss?.name).toEqual(user.name)
       expect(userCacheMiss?.role).toEqual(user.role)
 
@@ -57,7 +60,7 @@ describe('CacheMongoose', () => {
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheSetRegExp))
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheHitRegExp))
       expect(userCacheHit).not.toBeNull()
-      expect(userCacheHit?._id).toEqual(user._id)
+      expect(userCacheHit?._id.toString()).toBe(user._id.toString())
       expect(userCacheHit?.name).toEqual(user.name)
       expect(userCacheHit?.role).toEqual(user.role)
 

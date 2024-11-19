@@ -1,24 +1,27 @@
-import mongoose, { model } from 'mongoose'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
+
+import mongoose from 'mongoose'
 import CacheMongoose from '../src/plugin'
+import server from './mongo/server'
 
-import UserSchema from './schemas/UserSchema'
+import User from './models/User'
 
-describe('CacheMongoose', () => {
-  const uri = `${globalThis.__MONGO_URI__}${globalThis.__MONGO_DB_NAME__}`
-  const User = model('User', UserSchema)
-
-  const cache = CacheMongoose.init(mongoose, {
-    engine: 'memory',
-  })
+describe('cache-memory', async () => {
+  const instance = server('cache-memory')
+  let cache: CacheMongoose
 
   beforeAll(async () => {
-    await mongoose.connect(uri)
-    await cache.clear()
+    cache = CacheMongoose.init(mongoose, {
+      engine: 'memory',
+    })
+
+    await instance.create()
   })
 
   afterAll(async () => {
-    await mongoose.connection.close()
+    await cache.clear()
     await cache.close()
+    await instance.destroy()
   })
 
   beforeEach(async () => {
@@ -38,7 +41,7 @@ describe('CacheMongoose', () => {
 
       expect(user1).not.toBeNull()
       expect(user2).not.toBeNull()
-      expect(user1?._id).toEqual(user2?._id)
+      expect(user1?._id.toString()).toBe(user2?._id.toString())
       expect(user1?.name).toEqual(user2?.name)
     })
 
@@ -55,7 +58,7 @@ describe('CacheMongoose', () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).not.toEqual(cache2?.name)
     })
 
@@ -71,7 +74,7 @@ describe('CacheMongoose', () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).toEqual(cache2?.name)
     })
 
@@ -88,7 +91,7 @@ describe('CacheMongoose', () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).not.toEqual(cache2?.name)
     })
 
@@ -104,13 +107,13 @@ describe('CacheMongoose', () => {
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
-      expect(cache1?._id).toEqual(cache2?._id)
+      expect(cache1?._id.toString()).toBe(cache2?._id.toString())
       expect(cache1?.name).toEqual(cache2?.name)
 
       await cache.clear('')
       const cache3 = await User.findById(user._id).cache('1 minute', '').exec()
       expect(cache3).not.toBeNull()
-      expect(cache2?._id).toEqual(cache3?._id)
+      expect(cache2?._id.toString()).toBe(cache3?._id.toString())
       expect(cache2?.name).not.toEqual(cache3?.name)
     })
 
@@ -157,7 +160,7 @@ describe('CacheMongoose', () => {
       const user = await User.findById(john._id).cache('1 minute').exec()
       const cachedUser = await User.findById(john._id).cache('1 minute').exec()
 
-      expect(user?._id).toEqual(cachedUser?._id)
+      expect(user?._id.toString()).toBe(cachedUser?._id.toString())
       expect(user?.name).toEqual(cachedUser?.name)
       expect(user?.createdAt).toEqual(cachedUser?.createdAt)
       expect(user?.updatedAt).toEqual(cachedUser?.updatedAt)
@@ -174,7 +177,7 @@ describe('CacheMongoose', () => {
         .cache('1 minute')
         .exec()
 
-      expect(user?._id).toEqual(cachedUser?._id)
+      expect(user?._id.toString()).toBe(cachedUser?._id.toString())
       expect(user?.name).toEqual(cachedUser?.name)
       expect(user?.createdAt).toEqual(cachedUser?.createdAt)
       expect(user?.updatedAt).toEqual(cachedUser?.updatedAt)

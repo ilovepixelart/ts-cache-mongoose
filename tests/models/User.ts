@@ -1,4 +1,9 @@
-import { model } from 'mongoose'
+import { model, models } from 'mongoose'
 import UserSchema from '../schemas/UserSchema'
 
-export default model('User', UserSchema)
+import type { Model } from 'mongoose'
+import type IUser from '../interfaces/IUser'
+
+const Story = (models.User as Model<IUser> | undefined) ?? model<IUser>('User', UserSchema)
+
+export default Story

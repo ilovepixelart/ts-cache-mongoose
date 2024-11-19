@@ -1,3 +1,5 @@
+import { describe, expect, it, vi } from 'vitest'
+
 import Cache from '../src/cache/Cache'
 
 import type ICacheOptions from '../src/interfaces/ICacheOptions'
@@ -19,6 +21,7 @@ describe('Cache class tests', () => {
 
   it('should throw an error if the cache engine is not supported', () => {
     const cacheOptions: ICacheOptions = {
+      // @ts-expect-error Testing invalid engine name
       engine: 'not-supported',
     }
 
@@ -51,7 +54,7 @@ describe('Cache class tests', () => {
     expect(cache).toHaveProperty('clear')
     expect(cache).toHaveProperty('close')
 
-    await cache.set('bob', { test: 'bob' })
+    await cache.set('bob', { test: 'bob' }, null)
     await cache.set('john', { test: 'john' }, '1 minute')
 
     const value = await cache.get('bob')
@@ -68,12 +71,12 @@ describe('Cache class tests', () => {
     const clearJohn = await cache.get('john')
     expect(clearJohn).toBeUndefined()
 
-    const mockSet = jest.fn()
+    const mockSet = vi.fn()
     cache.set = mockSet
 
-    await cache.set('bob', { test: 'bob' })
+    await cache.set('bob', { test: 'bob' }, null)
     expect(mockSet).toHaveBeenCalled()
-    expect(mockSet).toHaveBeenCalledWith('bob', { test: 'bob' })
+    expect(mockSet).toHaveBeenCalledWith('bob', { test: 'bob' }, null)
 
     await cache.close()
   })
