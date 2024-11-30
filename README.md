@@ -13,8 +13,6 @@ Cache query and aggregate in mongoose using in-memory or redis
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ilovepixelart_ts-cache-mongoose&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ilovepixelart_ts-cache-mongoose)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ilovepixelart_ts-cache-mongoose&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ilovepixelart_ts-cache-mongoose)
 
-[![npm](https://nodei.co/npm/ts-cache-mongoose.png)](https://www.npmjs.com/package/ts-cache-mongoose)
-
 ## Motivation
 
 ts-cache-mongoose is a plugin for mongoose
