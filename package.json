@@ -88,7 +88,7 @@
     "bson": "^6.9.0",
     "merge": "2.1.1",
     "mongodb-memory-server": "10.1.2",
-    "mongoose": "8.9.0",
+    "mongoose": "8.9.2",
     "open-cli": "8.0.0",
     "typescript": "5.7.2",
     "vitest": "2.1.8"
