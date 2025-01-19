@@ -9,6 +9,14 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+      day: "monday"
     ignore:
       - dependency-name: "sort-keys"
-        versions: ["5.x"]
+    commit-message:
+      prefix: "Update dependencies"
+    pull-request-branch-name:
+      separator: "-"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
