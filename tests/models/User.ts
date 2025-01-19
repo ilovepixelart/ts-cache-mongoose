@@ -1,4 +1,4 @@
-import { model, models, Schema } from 'mongoose'
+import { Schema, model, models } from 'mongoose'
 
 import type { HydratedDocument, Model, Types } from 'mongoose'
 import type { Story } from './Story'
