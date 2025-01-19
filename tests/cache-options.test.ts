@@ -2,11 +2,11 @@ import { describe, expect, it, vi } from 'vitest'
 
 import Cache from '../src/cache/Cache'
 
-import type ICacheOptions from '../src/interfaces/ICacheOptions'
+import type { CacheOptions } from '../src/types'
 
 describe('Cache class tests', () => {
   it('should create a new instance of Cache', () => {
-    const cacheOptions: ICacheOptions = {
+    const cacheOptions: CacheOptions = {
       engine: 'memory',
     }
 
@@ -20,7 +20,7 @@ describe('Cache class tests', () => {
   })
 
   it('should throw an error if the cache engine is not supported', () => {
-    const cacheOptions: ICacheOptions = {
+    const cacheOptions: CacheOptions = {
       // @ts-expect-error Testing invalid engine name
       engine: 'not-supported',
     }
@@ -29,7 +29,7 @@ describe('Cache class tests', () => {
   })
 
   it('should throw an error if the cache engine is redis and no engine options are provided', () => {
-    const cacheOptions: ICacheOptions = {
+    const cacheOptions: CacheOptions = {
       engine: 'redis',
     }
 
@@ -37,7 +37,7 @@ describe('Cache class tests', () => {
   })
 
   it('should create a new instance of Cache with redis engine', async () => {
-    const cacheOptions: ICacheOptions = {
+    const cacheOptions: CacheOptions = {
       engine: 'redis',
       engineOptions: {
         host: 'localhost',

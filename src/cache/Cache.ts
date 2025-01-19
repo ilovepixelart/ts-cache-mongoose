@@ -3,18 +3,15 @@ import ms from 'ms'
 import MemoryCacheEngine from './engine/MemoryCacheEngine'
 import RedisCacheEngine from './engine/RedisCacheEngine'
 
-import type { StringValue } from 'ms'
-import type ICacheEngine from '../interfaces/ICacheEngine'
-import type ICacheOptions from '../interfaces/ICacheOptions'
-import type IData from '../interfaces/IData'
+import type { CacheData, CacheEngine, CacheOptions, CacheTTL } from '../types'
 
-class CacheEngine {
-  #engine!: ICacheEngine
-  #defaultTTL: number
-  #debug: boolean
+class Cache {
+  readonly #engine!: CacheEngine
+  readonly #defaultTTL: number
+  readonly #debug: boolean
   readonly #engines = ['memory', 'redis'] as const
 
-  constructor(cacheOptions: ICacheOptions) {
+  constructor(cacheOptions: CacheOptions) {
     if (!this.#engines.includes(cacheOptions.engine)) {
       throw new Error(`Invalid engine name: ${cacheOptions.engine}`)
     }
@@ -40,7 +37,7 @@ class CacheEngine {
     this.#debug = cacheOptions.debug === true
   }
 
-  async get(key: string): Promise<IData> {
+  async get(key: string): Promise<CacheData> {
     const cacheEntry = await this.#engine.get(key)
     if (this.#debug) {
       const cacheHit = cacheEntry != null ? 'HIT' : 'MISS'
@@ -49,7 +46,7 @@ class CacheEngine {
     return cacheEntry
   }
 
-  async set(key: string, value: IData, ttl: number | StringValue | null): Promise<void> {
+  async set(key: string, value: CacheData, ttl: CacheTTL | null): Promise<void> {
     const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
     const actualTTL = givenTTL ?? this.#defaultTTL
     await this.#engine.set(key, value, actualTTL)
@@ -77,4 +74,4 @@ class CacheEngine {
   }
 }
 
-export default CacheEngine
+export default Cache

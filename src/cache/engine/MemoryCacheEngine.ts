@@ -1,17 +1,15 @@
 import ms from 'ms'
 
-import type { StringValue } from 'ms'
-import type ICacheEngine from '../../interfaces/ICacheEngine'
-import type IData from '../../interfaces/IData'
+import type { CacheData, CacheEngine, CacheTTL } from '../../types'
 
-class MemoryCacheEngine implements ICacheEngine {
-  #cache: Map<string, { value: IData; expiresAt: number } | undefined>
+class MemoryCacheEngine implements CacheEngine {
+  readonly #cache: Map<string, { value: CacheData; expiresAt: number } | undefined>
 
   constructor() {
     this.#cache = new Map()
   }
 
-  get(key: string): IData {
+  get(key: string): CacheData {
     const item = this.#cache.get(key)
     if (!item || item.expiresAt < Date.now()) {
       this.del(key)
@@ -20,7 +18,7 @@ class MemoryCacheEngine implements ICacheEngine {
     return item.value
   }
 
-  set(key: string, value: IData, ttl?: number | StringValue): void {
+  set(key: string, value: CacheData, ttl?: CacheTTL): void {
     const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
     const actualTTL = givenTTL ?? Number.POSITIVE_INFINITY
     this.#cache.set(key, {
