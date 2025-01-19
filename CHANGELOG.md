@@ -1,3 +1,20 @@
+<a id="v1.7.0"></a>
+# [v1.7.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.0) - 2025-01-19
+
+- Merge pull request [#273](https://github.com/ilovepixelart/ts-cache-mongoose/issues/273) from ilovepixelart/feature/move-all-types-to-one-file  c169849
+- Sort imports  dc45b11
+- Refactor import, export, test models  84508bf
+- Convert cache options to type  1a90719
+- Move all types to one file and renamed: - type IData -&gt; CacheData - type ICacheOptions -&gt; CacheOptions - type ICacheEngine -&gt; CacheEngine - class CacheEngine -&gt; Cache  8851b9a
+- Update changelog for v1.6.8  8d56584
+
+---
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.8...v1.7.0
+
+[Changes][v1.7.0]
+
+
 <a id="v1.6.8"></a>
 # [v1.6.8](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.8) - 2025-01-19
 
@@ -795,6 +812,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.7.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.8...v1.7.0
 [v1.6.8]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.7...v1.6.8
 [v1.6.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.6...v1.6.7
 [v1.6.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.5...v1.6.6
