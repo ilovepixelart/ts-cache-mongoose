@@ -1,3 +1,41 @@
+<a id="v1.6.8"></a>
+# [v1.6.8](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.8) - 2025-01-19
+
+- Merge pull request [#272](https://github.com/ilovepixelart/ts-cache-mongoose/issues/272) from ilovepixelart/feature/better-types-for-ttl  c61d9e1
+- Better types for TTL  85454ca
+- Merge pull request [#271](https://github.com/ilovepixelart/ts-cache-mongoose/issues/271) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-0bc38f1f4e  cdb5fee
+- Update dependencies: Bump the all-dependencies group with 5 updates  5f78453
+- Dependabot  a135c4e
+- Update settings  f1e2765
+- Merge pull request [#270](https://github.com/ilovepixelart/ts-cache-mongoose/issues/270) from ilovepixelart/feature/update-action-and-dep  6f3f7d3
+- Action and Dep  3e003dc
+- Merge pull request [#267](https://github.com/ilovepixelart/ts-cache-mongoose/issues/267) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.9.3  bbbac03
+- Bump mongoose from 8.9.2 to 8.9.3  55bd4fa
+- Merge pull request [#268](https://github.com/ilovepixelart/ts-cache-mongoose/issues/268) from ilovepixelart/dependabot/npm_and_yarn/types/node-22.10.5  823c518
+- Merge pull request [#269](https://github.com/ilovepixelart/ts-cache-mongoose/issues/269) from ilovepixelart/dependabot/npm_and_yarn/mongodb-memory-server-10.1.3  14d27bc
+- Bump mongodb-memory-server from 10.1.2 to 10.1.3  0071236
+- Bump @types/node from 22.10.2 to 22.10.5  411c9ae
+- Merge pull request [#265](https://github.com/ilovepixelart/ts-cache-mongoose/issues/265) from ilovepixelart/dependabot/npm_and_yarn/ioredis-5.4.2  7facf90
+- Merge pull request [#266](https://github.com/ilovepixelart/ts-cache-mongoose/issues/266) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.9.2  9ee8e8d
+- Bump mongoose from 8.9.0 to 8.9.2  2db95e8
+- Bump ioredis from 5.4.1 to 5.4.2  85bec09
+- Merge pull request [#263](https://github.com/ilovepixelart/ts-cache-mongoose/issues/263) from ilovepixelart/dependabot/npm_and_yarn/types/node-22.10.2  562a9fe
+- Merge pull request [#264](https://github.com/ilovepixelart/ts-cache-mongoose/issues/264) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.9.0  5e99298
+- Bump mongoose from 8.8.4 to 8.9.0  817c968
+- Bump @types/node from 22.10.1 to 22.10.2  cd0b7f1
+- Merge pull request [#262](https://github.com/ilovepixelart/ts-cache-mongoose/issues/262) from ilovepixelart/dependabot/npm_and_yarn/bson-6.10.1  0fd4eac
+- Merge pull request [#261](https://github.com/ilovepixelart/ts-cache-mongoose/issues/261) from ilovepixelart/dependabot/npm_and_yarn/mongoose-8.8.4  8b30004
+- Bump bson from 6.10.0 to 6.10.1  dd15d78
+- Bump mongoose from 8.8.3 to 8.8.4  12a09cf
+- Update changelog for v1.6.7  3c2df91
+
+---
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.7...v1.6.8
+
+[Changes][v1.6.8]
+
+
 <a id="v1.6.7"></a>
 # [v1.6.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.6.7) - 2024-12-03
 
@@ -757,6 +795,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.6.8]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.7...v1.6.8
 [v1.6.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.6...v1.6.7
 [v1.6.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.5...v1.6.6
 [v1.6.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.4...v1.6.5
