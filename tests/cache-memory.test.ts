@@ -2,9 +2,9 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import mongoose from 'mongoose'
 import CacheMongoose from '../src/plugin'
-import server from './mongo/server'
+import { server } from './mongo/server'
 
-import User from './models/User'
+import { UserModel } from './models/User'
 
 describe('cache-memory', async () => {
   const instance = server('cache-memory')
@@ -30,14 +30,14 @@ describe('cache-memory', async () => {
 
   describe('memory scenarios', () => {
     it('should use memory cache', async () => {
-      const user = await User.create({
+      const user = await UserModel.create({
         name: 'John Doe',
         role: 'admin',
       })
 
-      const user1 = await User.findById(user._id).cache().exec()
-      await User.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' }).exec()
-      const user2 = await User.findById(user._id).cache().exec()
+      const user1 = await UserModel.findById(user._id).cache().exec()
+      await UserModel.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' }).exec()
+      const user2 = await UserModel.findById(user._id).cache().exec()
 
       expect(user1).not.toBeNull()
       expect(user2).not.toBeNull()
@@ -46,15 +46,15 @@ describe('cache-memory', async () => {
     })
 
     it('should not use cache', async () => {
-      const user = await User.create({
+      const user = await UserModel.create({
         name: 'John Doe',
         role: 'admin',
       })
 
-      const cache1 = await User.findById(user._id).cache().exec()
-      await User.findByIdAndUpdate(user._id, { name: 'John Doe 2' }).exec()
+      const cache1 = await UserModel.findById(user._id).cache().exec()
+      await UserModel.findByIdAndUpdate(user._id, { name: 'John Doe 2' }).exec()
       await cache.clear()
-      const cache2 = await User.findById(user._id).cache().exec()
+      const cache2 = await UserModel.findById(user._id).cache().exec()
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
@@ -63,14 +63,14 @@ describe('cache-memory', async () => {
     })
 
     it('should use memory cache with custom key', async () => {
-      const user = await User.create({
+      const user = await UserModel.create({
         name: 'John Doe',
         role: 'admin',
       })
 
-      const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key').exec()
-      await User.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' }).exec()
-      const cache2 = await User.findById(user._id).cache('1 minute', 'test-custom-key').exec()
+      const cache1 = await UserModel.findById(user._id).cache('1 minute', 'test-custom-key').exec()
+      await UserModel.findOneAndUpdate({ _id: user._id }, { name: 'John Doe 2' }).exec()
+      const cache2 = await UserModel.findById(user._id).cache('1 minute', 'test-custom-key').exec()
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
@@ -79,15 +79,15 @@ describe('cache-memory', async () => {
     })
 
     it('should use memory cache and clear custom key', async () => {
-      const user = await User.create({
+      const user = await UserModel.create({
         name: 'John Doe',
         role: 'admin',
       })
 
-      const cache1 = await User.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
-      await User.updateOne({ _id: user._id }, { name: 'John Doe 2' }).exec()
+      const cache1 = await UserModel.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
+      await UserModel.updateOne({ _id: user._id }, { name: 'John Doe 2' }).exec()
       await cache.clear('test-custom-key-second')
-      const cache2 = await User.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
+      const cache2 = await UserModel.findById(user._id).cache('1 minute', 'test-custom-key-second').exec()
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
@@ -96,14 +96,14 @@ describe('cache-memory', async () => {
     })
 
     it('should use memory cache and custom key with an empty string', async () => {
-      const user = await User.create({
+      const user = await UserModel.create({
         name: 'John Doe',
         role: 'admin',
       })
 
-      const cache1 = await User.findById(user._id).cache('1 minute', '').exec()
-      await User.updateOne({ _id: user._id }, { name: 'John Doe 2' }).exec()
-      const cache2 = await User.findById(user._id).cache('1 minute', '').exec()
+      const cache1 = await UserModel.findById(user._id).cache('1 minute', '').exec()
+      await UserModel.updateOne({ _id: user._id }, { name: 'John Doe 2' }).exec()
+      const cache2 = await UserModel.findById(user._id).cache('1 minute', '').exec()
 
       expect(cache1).not.toBeNull()
       expect(cache2).not.toBeNull()
@@ -111,26 +111,26 @@ describe('cache-memory', async () => {
       expect(cache1?.name).toEqual(cache2?.name)
 
       await cache.clear('')
-      const cache3 = await User.findById(user._id).cache('1 minute', '').exec()
+      const cache3 = await UserModel.findById(user._id).cache('1 minute', '').exec()
       expect(cache3).not.toBeNull()
       expect(cache2?._id.toString()).toBe(cache3?._id.toString())
       expect(cache2?.name).not.toEqual(cache3?.name)
     })
 
     it('should use memory cache and aggregate', async () => {
-      await User.create([
+      await UserModel.create([
         { name: 'John', role: 'admin' },
         { name: 'Bob', role: 'admin' },
         { name: 'Alice', role: 'user' },
       ])
 
-      const cache1 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+      const cache1 = await UserModel.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
         .cache()
         .exec()
 
-      await User.create({ name: 'Mark', role: 'admin' })
+      await UserModel.create({ name: 'Mark', role: 'admin' })
 
-      const cache2 = await User.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
+      const cache2 = await UserModel.aggregate([{ $match: { role: 'admin' } }, { $group: { _id: '$role', count: { $sum: 1 } } }])
         .cache()
         .exec()
 
@@ -149,16 +149,16 @@ describe('cache-memory', async () => {
 
     beforeEach(async () => {
       // Delete all users before each test
-      await User.deleteMany().exec()
+      await UserModel.deleteMany().exec()
 
       // Create new users
-      await User.create(users)
+      await UserModel.create(users)
     })
 
     it('findById', async () => {
-      const john = await User.create({ name: 'John', age: 30, role: 'admin' })
-      const user = await User.findById(john._id).cache('1 minute').exec()
-      const cachedUser = await User.findById(john._id).cache('1 minute').exec()
+      const john = await UserModel.create({ name: 'John', age: 30, role: 'admin' })
+      const user = await UserModel.findById(john._id).cache('1 minute').exec()
+      const cachedUser = await UserModel.findById(john._id).cache('1 minute').exec()
 
       expect(user?._id.toString()).toBe(cachedUser?._id.toString())
       expect(user?.name).toEqual(cachedUser?.name)
@@ -167,9 +167,9 @@ describe('cache-memory', async () => {
     })
 
     it('findOne', async () => {
-      const user = await User.findOne({ name: 'John', age: 30, role: 'admin' }).cache('1 minute').exec()
-      await User.create({ name: 'Steve', age: 30, role: 'admin' })
-      const cachedUser = await User.findOne({
+      const user = await UserModel.findOne({ name: 'John', age: 30, role: 'admin' }).cache('1 minute').exec()
+      await UserModel.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedUser = await UserModel.findOne({
         name: 'John',
         age: 30,
         role: 'admin',
@@ -184,11 +184,11 @@ describe('cache-memory', async () => {
     })
 
     it('find', async () => {
-      const users = await User.find({ age: { $gte: 30 } })
+      const users = await UserModel.find({ age: { $gte: 30 } })
         .cache('1 minute')
         .exec()
-      await User.create({ name: 'Steve', age: 30, role: 'admin' })
-      const cachedUsers = await User.find({ age: { $gte: 30 } })
+      await UserModel.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedUsers = await UserModel.find({ age: { $gte: 30 } })
         .cache('1 minute')
         .exec()
 
@@ -196,11 +196,11 @@ describe('cache-memory', async () => {
     })
 
     it('count', async () => {
-      const count = await User.countDocuments({ age: { $gte: 30 } })
+      const count = await UserModel.countDocuments({ age: { $gte: 30 } })
         .cache('1 minute')
         .exec()
-      await User.create({ name: 'Steve', age: 30, role: 'admin' })
-      const cachedCount = await User.countDocuments({ age: { $gte: 30 } })
+      await UserModel.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedCount = await UserModel.countDocuments({ age: { $gte: 30 } })
         .cache('1 minute')
         .exec()
 
@@ -208,9 +208,9 @@ describe('cache-memory', async () => {
     })
 
     it('distinct', async () => {
-      const emails = await User.distinct('name').cache('1 minute').exec()
-      await User.create({ name: 'Steve', age: 30, role: 'admin' })
-      const cachedEmails = await User.distinct('name').cache('1 minute').exec()
+      const emails = await UserModel.distinct('name').cache('1 minute').exec()
+      await UserModel.create({ name: 'Steve', age: 30, role: 'admin' })
+      const cachedEmails = await UserModel.distinct('name').cache('1 minute').exec()
 
       expect(emails).toEqual(cachedEmails)
     })

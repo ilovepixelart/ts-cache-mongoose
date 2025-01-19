@@ -2,7 +2,7 @@ import ms from 'ms'
 
 import type { CacheData, CacheEngine, CacheTTL } from '../../types'
 
-class MemoryCacheEngine implements CacheEngine {
+export class MemoryCacheEngine implements CacheEngine {
   readonly #cache: Map<string, { value: CacheData; expiresAt: number } | undefined>
 
   constructor() {
@@ -39,5 +39,3 @@ class MemoryCacheEngine implements CacheEngine {
     // do nothing
   }
 }
-
-export default MemoryCacheEngine

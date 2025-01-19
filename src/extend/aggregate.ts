@@ -1,10 +1,10 @@
 import { getKey } from '../key'
 
 import type { Mongoose } from 'mongoose'
-import type Cache from '../cache/Cache'
+import type { Cache } from '../cache/Cache'
 import type { CacheTTL } from '../types'
 
-export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
+export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
   const mongooseExec = mongoose.Aggregate.prototype.exec
 
   mongoose.Aggregate.prototype.getCacheKey = function () {

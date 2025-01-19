@@ -7,7 +7,7 @@ import { convertToObject } from '../../version'
 import type { Redis, RedisOptions } from 'ioredis'
 import type { CacheData, CacheEngine, CacheTTL } from '../../types'
 
-class RedisCacheEngine implements CacheEngine {
+export class RedisCacheEngine implements CacheEngine {
   readonly #client: Redis
 
   constructor(options: RedisOptions) {
@@ -53,5 +53,3 @@ class RedisCacheEngine implements CacheEngine {
     await this.#client.quit()
   }
 }
-
-export default RedisCacheEngine

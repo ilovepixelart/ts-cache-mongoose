@@ -1,6 +1,6 @@
-import Cache from './cache/Cache'
-import extendAggregate from './extend/aggregate'
-import extendQuery from './extend/query'
+import { Cache } from './cache/Cache'
+import { extendAggregate } from './extend/aggregate'
+import { extendQuery } from './extend/query'
 
 import type { Mongoose } from 'mongoose'
 import type { CacheOptions, CacheTTL } from './types'

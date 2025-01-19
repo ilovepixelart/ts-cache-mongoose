@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import Cache from '../src/cache/Cache'
+import { Cache } from '../src/cache/Cache'
 
 import type { CacheOptions } from '../src/types'
 

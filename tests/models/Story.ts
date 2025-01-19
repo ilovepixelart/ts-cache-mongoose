@@ -1,9 +1,29 @@
-import { model, models } from 'mongoose'
-import StorySchema from '../schemas/StorySchema'
+import { model, models, Schema } from 'mongoose'
 
-import type { Model } from 'mongoose'
-import type IStory from '../interfaces/IStory'
+import type { Model, Types } from 'mongoose'
 
-const Story = (models.Story as Model<IStory> | undefined) ?? model<IStory>('Story', StorySchema)
+export interface Story {
+  _id: Types.ObjectId
+  userId: Types.ObjectId
+  title: string
+  createdAt: Date
+  updatedAt: Date
+}
 
-export default Story
+export const StorySchema = new Schema<Story>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true },
+)
+
+export const StoryModel = (models.Story as Model<Story> | undefined) ?? model<Story>('Story', StorySchema)

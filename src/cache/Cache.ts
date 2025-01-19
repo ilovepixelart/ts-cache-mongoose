@@ -1,11 +1,11 @@
 import ms from 'ms'
 
-import MemoryCacheEngine from './engine/MemoryCacheEngine'
-import RedisCacheEngine from './engine/RedisCacheEngine'
+import { MemoryCacheEngine } from './engine/MemoryCacheEngine'
+import { RedisCacheEngine } from './engine/RedisCacheEngine'
 
 import type { CacheData, CacheEngine, CacheOptions, CacheTTL } from '../types'
 
-class Cache {
+export class Cache {
   readonly #engine!: CacheEngine
   readonly #defaultTTL: number
   readonly #debug: boolean
@@ -73,5 +73,3 @@ class Cache {
     return this.#engine.close()
   }
 }
-
-export default Cache

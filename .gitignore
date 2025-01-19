@@ -14,5 +14,5 @@ npm-debug.log
 .idea
 .env
 
-# Inmemmory mongo config
+# In-memory mongo config
 /globalConfig.json
