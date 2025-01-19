@@ -2,9 +2,9 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 
 import mongoose from 'mongoose'
 import CacheMongoose from '../src/plugin'
-import server from './mongo/server'
+import { server } from './mongo/server'
 
-import User from './models/User'
+import { UserModel } from './models/User'
 
 describe('cache-debug', async () => {
   const instance = server('cache-debug')
@@ -36,7 +36,7 @@ describe('cache-debug', async () => {
 
   describe('debug scenarios', () => {
     it('should create a use and and query it two time first is cache miss second is hit, also clear by key and global', async () => {
-      const user = await User.create({
+      const user = await UserModel.create({
         name: 'John Doe',
         role: 'admin',
       })
@@ -49,14 +49,14 @@ describe('cache-debug', async () => {
       const cacheClearRegExp = /\[ts-cache-mongoose\] CLEAR/
       const cacheDelRegExp = /\[ts-cache-mongoose\] DEL '.*?'/
 
-      const userCacheMiss = await User.findById(user._id).cache(ttl, key).exec()
+      const userCacheMiss = await UserModel.findById(user._id).cache(ttl, key).exec()
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheMissRegExp))
       expect(userCacheMiss).not.toBeNull()
       expect(userCacheMiss?._id.toString()).toBe(user._id.toString())
       expect(userCacheMiss?.name).toEqual(user.name)
       expect(userCacheMiss?.role).toEqual(user.role)
 
-      const userCacheHit = await User.findById(user._id).cache(ttl, key).exec()
+      const userCacheHit = await UserModel.findById(user._id).cache(ttl, key).exec()
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheSetRegExp))
       expect(console.log).toHaveBeenCalledWith(expect.stringMatching(cacheHitRegExp))
       expect(userCacheHit).not.toBeNull()

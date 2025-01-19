@@ -5,12 +5,10 @@ import ms from 'ms'
 import { convertToObject } from '../../version'
 
 import type { Redis, RedisOptions } from 'ioredis'
-import type { StringValue } from 'ms'
-import type ICacheEngine from '../../interfaces/ICacheEngine'
-import type IData from '../../interfaces/IData'
+import type { CacheData, CacheEngine, CacheTTL } from '../../types'
 
-class RedisCacheEngine implements ICacheEngine {
-  #client: Redis
+export class RedisCacheEngine implements CacheEngine {
+  readonly #client: Redis
 
   constructor(options: RedisOptions) {
     if (!options.keyPrefix) {
@@ -19,20 +17,20 @@ class RedisCacheEngine implements ICacheEngine {
     this.#client = new IORedis(options)
   }
 
-  async get(key: string): Promise<IData> {
+  async get(key: string): Promise<CacheData> {
     try {
       const value = await this.#client.get(key)
       if (value === null) {
         return undefined
       }
-      return EJSON.parse(value) as IData
+      return EJSON.parse(value) as CacheData
     } catch (err) {
       console.error(err)
       return undefined
     }
   }
 
-  async set(key: string, value: IData, ttl?: number | StringValue): Promise<void> {
+  async set(key: string, value: CacheData, ttl?: CacheTTL): Promise<void> {
     try {
       const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
       const actualTTL = givenTTL ?? Number.POSITIVE_INFINITY
@@ -55,5 +53,3 @@ class RedisCacheEngine implements ICacheEngine {
     await this.#client.quit()
   }
 }
-
-export default RedisCacheEngine

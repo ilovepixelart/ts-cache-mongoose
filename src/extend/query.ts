@@ -1,10 +1,10 @@
 import { getKey } from '../key'
 
 import type { Mongoose } from 'mongoose'
-import type { StringValue } from 'ms'
-import type Cache from '../cache/Cache'
+import type { Cache } from '../cache/Cache'
+import type { CacheTTL } from '../types'
 
-export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
+export function extendQuery(mongoose: Mongoose, cache: Cache): void {
   const mongooseExec = mongoose.Query.prototype.exec
 
   mongoose.Query.prototype.getCacheKey = function () {
@@ -33,7 +33,7 @@ export default function extendQuery(mongoose: Mongoose, cache: Cache): void {
     return this._ttl
   }
 
-  mongoose.Query.prototype.cache = function (ttl?: number | StringValue, customKey?: string) {
+  mongoose.Query.prototype.cache = function (ttl?: CacheTTL, customKey?: string) {
     this._ttl = ttl ?? null
     this._key = customKey ?? null
     return this

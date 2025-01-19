@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
-const server = (dbName: string) => {
+export const server = (dbName: string) => {
   let mongo: MongoMemoryServer
   const dbPath = `./tests/mongo/${dbName}`
 
@@ -28,5 +28,3 @@ const server = (dbName: string) => {
 
   return { create, destroy }
 }
-
-export default server
