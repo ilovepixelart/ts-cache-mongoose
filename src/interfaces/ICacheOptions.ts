@@ -1,9 +1,10 @@
 import type { RedisOptions } from 'ioredis'
+import type { StringValue } from 'ms'
 
 interface ICacheOptions {
   engine: 'memory' | 'redis'
   engineOptions?: RedisOptions
-  defaultTTL?: string
+  defaultTTL?: number | StringValue
   debug?: boolean
 }
 

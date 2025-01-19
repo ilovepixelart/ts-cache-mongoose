@@ -3,6 +3,7 @@ import ms from 'ms'
 import MemoryCacheEngine from './engine/MemoryCacheEngine'
 import RedisCacheEngine from './engine/RedisCacheEngine'
 
+import type { StringValue } from 'ms'
 import type ICacheEngine from '../interfaces/ICacheEngine'
 import type ICacheOptions from '../interfaces/ICacheOptions'
 import type IData from '../interfaces/IData'
@@ -22,7 +23,11 @@ class CacheEngine {
       throw new Error(`Engine options are required for ${cacheOptions.engine} engine`)
     }
 
-    this.#defaultTTL = ms(cacheOptions.defaultTTL ?? '1 minute')
+    if (!cacheOptions.defaultTTL) {
+      cacheOptions.defaultTTL = '1 minute'
+    }
+
+    this.#defaultTTL = typeof cacheOptions.defaultTTL === 'string' ? ms(cacheOptions.defaultTTL) : cacheOptions.defaultTTL
 
     if (cacheOptions.engine === 'redis' && cacheOptions.engineOptions) {
       this.#engine = new RedisCacheEngine(cacheOptions.engineOptions)
@@ -44,8 +49,9 @@ class CacheEngine {
     return cacheEntry
   }
 
-  async set(key: string, value: IData, ttl: string | null): Promise<void> {
-    const actualTTL = ttl ? ms(ttl) : this.#defaultTTL
+  async set(key: string, value: IData, ttl: number | StringValue | null): Promise<void> {
+    const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
+    const actualTTL = givenTTL ?? this.#defaultTTL
     await this.#engine.set(key, value, actualTTL)
     if (this.#debug) {
       console.log(`[ts-cache-mongoose] SET '${key}' - ttl: ${actualTTL.toFixed(0)} ms`)

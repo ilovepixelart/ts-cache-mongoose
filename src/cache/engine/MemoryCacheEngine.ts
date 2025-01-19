@@ -1,3 +1,6 @@
+import ms from 'ms'
+
+import type { StringValue } from 'ms'
 import type ICacheEngine from '../../interfaces/ICacheEngine'
 import type IData from '../../interfaces/IData'
 
@@ -17,10 +20,12 @@ class MemoryCacheEngine implements ICacheEngine {
     return item.value
   }
 
-  set(key: string, value: IData, ttl = Number.POSITIVE_INFINITY): void {
+  set(key: string, value: IData, ttl?: number | StringValue): void {
+    const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
+    const actualTTL = givenTTL ?? Number.POSITIVE_INFINITY
     this.#cache.set(key, {
       value,
-      expiresAt: Date.now() + ttl,
+      expiresAt: Date.now() + actualTTL,
     })
   }
 
