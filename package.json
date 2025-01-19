@@ -26,7 +26,6 @@
     "nosql",
     "ts",
     "typescript",
-    "swc",
     "cache",
     "redis",
     "store",
@@ -42,7 +41,6 @@
     "dist",
     "src",
     "tests",
-    ".swcrc",
     "tsconfig.json",
     "vite.config.mts",
     "biome.json"
