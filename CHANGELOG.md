@@ -1,3 +1,18 @@
+<a id="v1.7.1"></a>
+# [v1.7.1](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.1) - 2025-01-19
+
+- Biome  afbb41d
+- Remove unused  bffab0d
+- Remove unused  16fbb85
+- Update changelog for v1.7.0  6b47229
+
+---
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.0...v1.7.1
+
+[Changes][v1.7.1]
+
+
 <a id="v1.7.0"></a>
 # [v1.7.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.0) - 2025-01-19
 
@@ -812,6 +827,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.7.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.8...v1.7.0
 [v1.6.8]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.7...v1.6.8
 [v1.6.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.6.6...v1.6.7
