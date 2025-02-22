@@ -1,14 +1,14 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import mongoose from 'mongoose'
-import plugin from '../src'
+import plugin from '../src/index'
 import { server } from './mongo/server'
 
 import { ObjectId } from 'bson'
 import { StoryModel } from './models/Story'
 import { UserModel } from './models/User'
 
-import type CacheMongoose from '../src'
+import type CacheMongoose from '../src/index'
 
 describe('cache-redis', async () => {
   const instance = server('cache-redis')

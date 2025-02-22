@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import mongoose from 'mongoose'
-import CacheMongoose from '../src'
+import CacheMongoose from '../src/index'
 import { UserModel } from './models/User'
 import { server } from './mongo/server'
 
