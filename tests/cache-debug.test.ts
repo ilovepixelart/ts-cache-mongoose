@@ -1,10 +1,9 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import mongoose from 'mongoose'
-import CacheMongoose from '../src/plugin'
-import { server } from './mongo/server'
-
+import CacheMongoose from '../src'
 import { UserModel } from './models/User'
+import { server } from './mongo/server'
 
 describe('cache-debug', async () => {
   const instance = server('cache-debug')

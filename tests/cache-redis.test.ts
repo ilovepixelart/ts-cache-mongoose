@@ -1,16 +1,14 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import mongoose from 'mongoose'
-import plugin from '../src/plugin'
+import plugin from '../src'
 import { server } from './mongo/server'
 
+import { ObjectId } from 'bson'
 import { StoryModel } from './models/Story'
 import { UserModel } from './models/User'
 
-import { ObjectId } from 'bson'
-import { Types } from 'mongoose'
-
-import type CacheMongoose from '../src/plugin'
+import type CacheMongoose from '../src'
 
 describe('cache-redis', async () => {
   const instance = server('cache-redis')
@@ -244,7 +242,7 @@ describe('cache-redis', async () => {
     expect(miss).not.toBeNull()
 
     expect(typeof miss?._id).toBe('object')
-    expect(miss?._id instanceof Types.ObjectId).toBeTruthy()
+    expect(miss?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     expect(miss).toHaveProperty('name', 'G')
 
@@ -273,7 +271,7 @@ describe('cache-redis', async () => {
     expect(miss?.length).toBe(3)
 
     expect(typeof miss?.[0]).toBe('object')
-    expect(miss?.[0] instanceof Types.ObjectId).toBeTruthy()
+    expect(miss?.[0] instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     const hit = await UserModel.distinct('_id').cache('30 seconds').exec()
     expect(hit).not.toBeNull()
@@ -314,7 +312,7 @@ describe('cache-redis', async () => {
     expect(miss).not.toBeNull()
 
     expect(typeof miss?._id).toBe('object')
-    expect(miss?._id instanceof Types.ObjectId).toBeTruthy()
+    expect(miss?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     expect(miss?.name).toBe('i')
     expect(miss?.stories).not.toBeNull()
@@ -323,7 +321,7 @@ describe('cache-redis', async () => {
     expect(miss?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof miss?.stories?.[0]._id).toBe('object')
-    expect(miss?.stories?.[0]._id instanceof Types.ObjectId).toBeTruthy()
+    expect(miss?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     expect(typeof miss?.stories?.[0].createdAt).toBe('object')
     expect(miss?.stories?.[0].createdAt instanceof Date).toBeTruthy()
@@ -331,7 +329,7 @@ describe('cache-redis', async () => {
     expect(miss?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof miss?.stories?.[1]._id).toBe('object')
-    expect(miss?.stories?.[1]._id instanceof Types.ObjectId).toBeTruthy()
+    expect(miss?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     expect(typeof miss?.stories?.[1].createdAt).toBe('object')
     expect(miss?.stories?.[1].createdAt instanceof Date).toBeTruthy()
@@ -450,7 +448,7 @@ describe('cache-redis', async () => {
     expect(populatedOriginal).not.toBeNull()
 
     expect(typeof populatedOriginal?._id).toBe('object')
-    expect(populatedOriginal?._id instanceof Types.ObjectId).toBeTruthy()
+    expect(populatedOriginal?._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     expect(populatedOriginal?.name).toBe('Alex')
     expect(populatedOriginal?.stories).not.toBeNull()
@@ -459,7 +457,7 @@ describe('cache-redis', async () => {
     expect(populatedOriginal?.stories?.[0]._id.toString()).toBe(story1._id.toString())
 
     expect(typeof populatedOriginal?.stories?.[0]._id).toBe('object')
-    expect(populatedOriginal?.stories?.[0]._id instanceof Types.ObjectId).toBeTruthy()
+    expect(populatedOriginal?.stories?.[0]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     expect(typeof populatedOriginal?.stories?.[0].createdAt).toBe('object')
     expect(populatedOriginal?.stories?.[0].createdAt instanceof Date).toBeTruthy()
@@ -467,7 +465,7 @@ describe('cache-redis', async () => {
     expect(populatedOriginal?.stories?.[1]._id.toString()).toBe(story2._id.toString())
 
     expect(typeof populatedOriginal?.stories?.[1]._id).toBe('object')
-    expect(populatedOriginal?.stories?.[1]._id instanceof Types.ObjectId).toBeTruthy()
+    expect(populatedOriginal?.stories?.[1]._id instanceof mongoose.Types.ObjectId).toBeTruthy()
 
     expect(typeof populatedOriginal?.stories?.[1].createdAt).toBe('object')
     expect(populatedOriginal?.stories?.[1].createdAt instanceof Date).toBeTruthy()

@@ -7,6 +7,7 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       reporter: ['lcov'],
+      include: ['src/**/*.ts'],
     },
   },
 })
