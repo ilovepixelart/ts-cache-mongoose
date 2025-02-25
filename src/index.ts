@@ -5,6 +5,8 @@ import { extendQuery } from './extend/query'
 import type { Mongoose } from 'mongoose'
 import type { CacheOptions, CacheTTL } from './types'
 
+export * from './types'
+
 declare module 'mongoose' {
   interface Query<ResultType, DocType, THelpers, RawDocType> {
     cache: (this: Query<ResultType, DocType, THelpers, RawDocType>, ttl?: CacheTTL, customKey?: string) => this
