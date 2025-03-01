@@ -7,7 +7,7 @@ import type { CacheTTL } from '../types'
 export function extendQuery(mongoose: Mongoose, cache: Cache): void {
   const mongooseExec = mongoose.Query.prototype.exec
 
-  mongoose.Query.prototype.getCacheKey = function () {
+  mongoose.Query.prototype.getCacheKey = function (): string {
     if (this._key != null) return this._key
 
     const filter = this.getFilter()
@@ -29,7 +29,7 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
     })
   }
 
-  mongoose.Query.prototype.getCacheTTL = function () {
+  mongoose.Query.prototype.getCacheTTL = function (): CacheTTL | null {
     return this._ttl
   }
 
