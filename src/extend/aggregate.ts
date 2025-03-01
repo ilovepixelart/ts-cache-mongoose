@@ -7,7 +7,7 @@ import type { CacheTTL } from '../types'
 export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
   const mongooseExec = mongoose.Aggregate.prototype.exec
 
-  mongoose.Aggregate.prototype.getCacheKey = function () {
+  mongoose.Aggregate.prototype.getCacheKey = function (): string {
     if (this._key != null) return this._key
 
     return getKey({
@@ -15,7 +15,7 @@ export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
     })
   }
 
-  mongoose.Aggregate.prototype.getCacheTTL = function () {
+  mongoose.Aggregate.prototype.getCacheTTL = function (): CacheTTL | null {
     return this._ttl
   }
 
