@@ -30,15 +30,15 @@ Caching queries is a good way to improve performance of your application
 
 ## Features
 
-- [x] In-memory caching
-- [x] Redis caching
-- [x] Cache expiration
-- [x] Cache invalidation
-- [x] Cache key generation
-- [x] Cache key prefix
-- [x] Query caching
-- [x] Aggregate caching
-- [x] Supports ESM and CommonJS
+- In-memory caching
+- Redis caching
+- Cache expiration
+- Cache invalidation
+- Cache key generation
+- Cache key prefix
+- Query caching
+- Aggregate caching
+- Supports ESM and CommonJS
 
 ## Installation
 
