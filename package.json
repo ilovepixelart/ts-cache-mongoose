@@ -68,7 +68,7 @@
     "clean": "rm -rf ./dist",
     "type:check": "tsc --noEmit",
     "build": "pkgroll --clean-dist",
-    "release": "npm install && npm run biome && npm run build && np"
+    "release": "npm install && npm run biome && npm run type:check && npm run build && np"
   },
   "dependencies": {
     "@types/ms": "2.1.0",
