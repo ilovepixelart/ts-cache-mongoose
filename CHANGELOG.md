@@ -1,3 +1,35 @@
+<a id="v1.7.4"></a>
+# [v1.7.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.4) - 2025-06-14
+
+- Merge pull request [#297](https://github.com/ilovepixelart/ts-cache-mongoose/issues/297) from ilovepixelart/feature/dep  ec3ceea
+- Dep and Node 24.x  486958e
+- Merge pull request [#296](https://github.com/ilovepixelart/ts-cache-mongoose/issues/296) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-ceee436914  719dce3
+- Update dependencies: Bump the all-dependencies group with 4 updates  e91e5b4
+- Merge pull request [#295](https://github.com/ilovepixelart/ts-cache-mongoose/issues/295) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-faef09be9f  ed4f85b
+- Update dependencies: Bump the all-dependencies group with 2 updates  2df76ae
+- Merge pull request [#294](https://github.com/ilovepixelart/ts-cache-mongoose/issues/294) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-0507da1a39  1618898
+- Update dependencies: bump the all-dependencies group with 3 updates  b407c14
+- Merge pull request [#293](https://github.com/ilovepixelart/ts-cache-mongoose/issues/293) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-3256147601  144b332
+- Update dependencies: Bump the all-dependencies group with 3 updates  207c361
+- Merge pull request [#292](https://github.com/ilovepixelart/ts-cache-mongoose/issues/292) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-33afe67225  0683849
+- Update dependencies: Bump the all-dependencies group with 4 updates  9a052c2
+- Merge pull request [#291](https://github.com/ilovepixelart/ts-cache-mongoose/issues/291) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-f648f400e0  24de6f6
+- Update dependencies: Bump mongoose in the all-dependencies group  05245c3
+- Merge pull request [#290](https://github.com/ilovepixelart/ts-cache-mongoose/issues/290) from ilovepixelart/dependabot-npm_and_yarn-npm_and_yarn-de653eece3  c650c74
+- Update dependencies: Bump vite in the npm_and_yarn group  f1e1c6a
+- Merge pull request [#289](https://github.com/ilovepixelart/ts-cache-mongoose/issues/289) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-55e3a14bfa  4d63a0a
+- Update dependencies: Bump the all-dependencies group with 6 updates  c83c4b5
+- Merge pull request [#288](https://github.com/ilovepixelart/ts-cache-mongoose/issues/288) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-fd555ffafe  9db132f
+- Update dependencies: Bump the all-dependencies group with 2 updates  6b274fb
+- Update changelog for v1.7.3  68714f2
+
+---
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.3...v1.7.4
+
+[Changes][v1.7.4]
+
+
 <a id="v1.7.3"></a>
 # [v1.7.3](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.3) - 2025-04-05
 
@@ -886,6 +918,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.7.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.3...v1.7.4
 [v1.7.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.2...v1.7.3
 [v1.7.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.1...v1.7.2
 [v1.7.1]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.0...v1.7.1
