@@ -1,5 +1,4 @@
 import ms from 'ms'
-
 import { MemoryCacheEngine } from './engine/MemoryCacheEngine'
 import { RedisCacheEngine } from './engine/RedisCacheEngine'
 
@@ -20,9 +19,7 @@ export class Cache {
       throw new Error(`Engine options are required for ${cacheOptions.engine} engine`)
     }
 
-    if (!cacheOptions.defaultTTL) {
-      cacheOptions.defaultTTL = '1 minute'
-    }
+    cacheOptions.defaultTTL ??= '1 minute'
 
     this.#defaultTTL = typeof cacheOptions.defaultTTL === 'string' ? ms(cacheOptions.defaultTTL) : cacheOptions.defaultTTL
 

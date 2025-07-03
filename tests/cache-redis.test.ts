@@ -1,12 +1,11 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
+import { ObjectId } from 'bson'
 import mongoose from 'mongoose'
 import plugin from '../src/index'
-import { server } from './mongo/server'
-
-import { ObjectId } from 'bson'
 import { StoryModel } from './models/Story'
 import { UserModel } from './models/User'
+import { server } from './mongo/server'
 
 import type CacheMongoose from '../src/index'
 

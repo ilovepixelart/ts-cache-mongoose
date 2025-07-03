@@ -1,7 +1,6 @@
 import { EJSON } from 'bson'
 import IORedis from 'ioredis'
 import ms from 'ms'
-
 import { convertToObject } from '../../version'
 
 import type { Redis, RedisOptions } from 'ioredis'
@@ -11,9 +10,7 @@ export class RedisCacheEngine implements CacheEngine {
   readonly #client: Redis
 
   constructor(options: RedisOptions) {
-    if (!options.keyPrefix) {
-      options.keyPrefix = 'cache-mongoose:'
-    }
+    options.keyPrefix ??= 'cache-mongoose:'
     this.#client = new IORedis(options)
   }
 

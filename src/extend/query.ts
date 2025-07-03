@@ -40,6 +40,7 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
   }
 
   mongoose.Query.prototype.exec = async function (...args: []) {
+    // biome-ignore lint/suspicious/noPrototypeBuiltins: to support node 16
     if (!Object.prototype.hasOwnProperty.call(this, '_ttl')) {
       return mongooseExec.apply(this, args)
     }
