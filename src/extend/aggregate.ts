@@ -26,6 +26,7 @@ export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
   }
 
   mongoose.Aggregate.prototype.exec = async function (...args: []) {
+    // biome-ignore lint/suspicious/noPrototypeBuiltins: to support node 16
     if (!Object.prototype.hasOwnProperty.call(this, '_ttl')) {
       return mongooseExec.apply(this, args)
     }

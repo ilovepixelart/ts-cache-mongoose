@@ -1,7 +1,6 @@
 import fs from 'node:fs'
-import mongoose from 'mongoose'
-
 import { MongoMemoryServer } from 'mongodb-memory-server'
+import mongoose from 'mongoose'
 
 export const server = (dbName: string) => {
   let mongo: MongoMemoryServer
