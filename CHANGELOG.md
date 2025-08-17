@@ -1,3 +1,27 @@
+<a id="v1.7.5"></a>
+# [v1.7.5](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.5) - 2025-08-17
+
+- Merge pull request [#306](https://github.com/ilovepixelart/ts-cache-mongoose/issues/306) from ilovepixelart/feature/dep  600e106
+- Dep  43f0072
+- Merge pull request [#304](https://github.com/ilovepixelart/ts-cache-mongoose/issues/304) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-84f607cb73  77aaf1e
+- Update dependencies: Bump the all-dependencies group with 7 updates  ab09d47
+- Merge pull request [#303](https://github.com/ilovepixelart/ts-cache-mongoose/issues/303) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-8b6f0bc0ca  2fa7179
+- Update dependencies: Bump the all-dependencies group with 4 updates  681c6c6
+- Merge pull request [#302](https://github.com/ilovepixelart/ts-cache-mongoose/issues/302) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-02de149aac  aad1047
+- Update dependencies: Bump the all-dependencies group with 4 updates  4c11576
+- Merge pull request [#301](https://github.com/ilovepixelart/ts-cache-mongoose/issues/301) from ilovepixelart/feature/dep  a5f8b16
+- Dep, biome  f1a5346
+- Merge pull request [#298](https://github.com/ilovepixelart/ts-cache-mongoose/issues/298) from ilovepixelart/dependabot-npm_and_yarn-all-dependencies-fc8acf6e79  b81d0f6
+- Update dependencies: Bump pkgroll in the all-dependencies group  92e0022
+- Update changelog for v1.7.4  7234ccb
+
+---
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.4...v1.7.5
+
+[Changes][v1.7.5]
+
+
 <a id="v1.7.4"></a>
 # [v1.7.4](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.4) - 2025-06-14
 
@@ -918,6 +942,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v1.7.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.4...v1.7.5
 [v1.7.4]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.3...v1.7.4
 [v1.7.3]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.2...v1.7.3
 [v1.7.2]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.1...v1.7.2
