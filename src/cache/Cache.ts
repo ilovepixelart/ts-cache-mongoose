@@ -37,7 +37,7 @@ export class Cache {
   async get(key: string): Promise<CacheData> {
     const cacheEntry = await this.#engine.get(key)
     if (this.#debug) {
-      const cacheHit = cacheEntry != null ? 'HIT' : 'MISS'
+      const cacheHit = cacheEntry == null ? 'MISS' : 'HIT'
       console.log(`[ts-cache-mongoose] GET '${key}' - ${cacheHit}`)
     }
     return cacheEntry
