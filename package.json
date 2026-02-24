@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ilovepixelart/ts-cache-mongoose.git"
+    "url": "git+https://github.com/ilovepixelart/ts-cache-mongoose.git"
   },
   "bugs": {
     "url": "https://github.com/ilovepixelart/ts-cache-mongoose/issues"
@@ -68,7 +68,7 @@
     "clean": "rm -rf ./dist",
     "type:check": "tsc --noEmit",
     "build": "pkgroll --clean-dist",
-    "release": "npm install && npm run biome && npm run type:check && npm run build && np"
+    "release": "npm install && npm run biome && npm run type:check && npm run build && np --no-publish"
   },
   "dependencies": {
     "@types/ms": "2.1.0",
@@ -89,7 +89,8 @@
     "pkgroll": "2.26.3",
     "simple-git-hooks": "2.13.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.18"
+    "vitest": "4.0.18",
+    "np": "11.0.2"
   },
   "peerDependencies": {
     "bson": ">=4.7.2 < 8",
@@ -98,6 +99,9 @@
   "simple-git-hooks": {
     "pre-commit": "npm run type:check",
     "pre-push": "npm run biome:fix"
+  },
+  "np": {
+    "publish": false
   },
   "overrides": {
     "esbuild": "0.25.0"
