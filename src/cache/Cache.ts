@@ -1,4 +1,4 @@
-import ms from 'ms'
+import { ms } from '../ms'
 import { MemoryCacheEngine } from './engine/MemoryCacheEngine'
 import { RedisCacheEngine } from './engine/RedisCacheEngine'
 
