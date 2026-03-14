@@ -49,7 +49,7 @@ export const ms = (val: string): number => {
   const match = RE.exec(str)
   if (!match) return 0
 
-  const n = Number.parseFloat(match[1] as string)
-  const type = ((match[2] as string | undefined) ?? 'ms').toLowerCase()
+  const n = Number.parseFloat(match[1] ?? '')
+  const type = (match[2] ?? 'ms').toLowerCase()
   return n * (UNITS[type] ?? 0)
 }
