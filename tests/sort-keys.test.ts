@@ -12,8 +12,14 @@ describe('sortKeys', () => {
   })
 
   it('should sort arrays of objects', () => {
-    const input = [{ b: 1, a: 2 }, { d: 3, c: 4 }]
-    const expected = [{ a: 2, b: 1 }, { c: 4, d: 3 }]
+    const input = [
+      { b: 1, a: 2 },
+      { d: 3, c: 4 },
+    ]
+    const expected = [
+      { a: 2, b: 1 },
+      { c: 4, d: 3 },
+    ]
     expect(sortKeys(input)).toEqual(expected)
   })
 
