@@ -1,3 +1,24 @@
+<a id="v2.0.0"></a>
+# [v2.0.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v2.0.0) - 2026-03-14
+
+- Merge pull request [#336](https://github.com/ilovepixelart/ts-cache-mongoose/issues/336) from ilovepixelart/feature/nest  725b2f5
+- Biome &amp; doc  ba42de3
+- Coverage  67dcf95
+- Add NestJS integration  e055002
+- Merge pull request [#335](https://github.com/ilovepixelart/ts-cache-mongoose/issues/335) from ilovepixelart/feature/drop-dependencies  0ec31d2
+- Cleanup  4f93d28
+- Biome  7f5b124
+- Dep and coverage  412e981
+- Remove ms, semver, sort-keys — use custom implementations  d83ba7c
+- Update changelog for v1.7.7  420a1f1
+
+---
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.7...v2.0.0
+
+[Changes][v2.0.0]
+
+
 <a id="v1.7.7"></a>
 # [v1.7.7](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v1.7.7) - 2026-02-24
 
@@ -996,6 +1017,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v2.0.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.7...v2.0.0
 [v1.7.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.6...v1.7.7
 [v1.7.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.5...v1.7.6
 [v1.7.5]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.4...v1.7.5
