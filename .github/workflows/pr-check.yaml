@@ -2,11 +2,10 @@ name: PR check
 
 on:
   workflow_dispatch:
-  # Trigger analysis when pushing in master or pull requests,
-  # and when creating a pull request.
+  # Trigger on push to main or pull requests
   push:
     branches:
-      - master
+      - main
       - feature*
 
   pull_request:

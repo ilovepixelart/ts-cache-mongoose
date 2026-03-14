@@ -1,6 +1,6 @@
 import { EJSON } from 'bson'
 import IORedis from 'ioredis'
-import ms from 'ms'
+import { ms } from '../../ms'
 import { convertToObject } from '../../version'
 
 import type { Redis, RedisOptions } from 'ioredis'

@@ -1,9 +1,8 @@
 import mongoose from 'mongoose'
-import { satisfies } from 'semver'
 
 import type { CacheData } from './types'
 
-export const isMongooseLessThan7 = satisfies(mongoose.version, '<7')
+export const isMongooseLessThan7 = Number.parseInt(mongoose.version, 10) < 7
 
 export const convertToObject = <T>(value: (T & { toObject?: () => CacheData }) | undefined): CacheData => {
   if (isMongooseLessThan7) {

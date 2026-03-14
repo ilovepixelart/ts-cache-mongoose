@@ -1,7 +1,6 @@
 import type { RedisOptions } from 'ioredis'
-import type { StringValue } from 'ms'
 
-export type CacheTTL = number | StringValue
+export type CacheTTL = number | string
 
 export type CacheData = Record<string, unknown> | Record<string, unknown>[] | unknown[] | number | undefined
 
