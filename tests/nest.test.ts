@@ -45,9 +45,7 @@ describe('CacheModule', () => {
 
     it('should provide CACHE_OPTIONS with useValue', () => {
       const result = CacheModule.forRoot(defaultOptions)
-      const optionsProvider = (result.providers as { provide: symbol; useValue: unknown }[]).find(
-        (p) => p.provide === CACHE_OPTIONS,
-      )
+      const optionsProvider = (result.providers as { provide: symbol; useValue: unknown }[]).find((p) => p.provide === CACHE_OPTIONS)
       expect(optionsProvider).toBeDefined()
       expect(optionsProvider?.useValue).toEqual(defaultOptions)
     })
@@ -87,9 +85,7 @@ describe('CacheModule', () => {
     it('should return empty providers when no factory method', () => {
       const result = CacheModule.forRootAsync({})
       const providers = result.providers as unknown[]
-      const serviceProvider = providers.find(
-        (p) => typeof p === 'object' && p !== null && 'provide' in p && (p as { provide: unknown }).provide === CacheService,
-      )
+      const serviceProvider = providers.find((p) => typeof p === 'object' && p !== null && 'provide' in p && (p as { provide: unknown }).provide === CacheService)
       expect(serviceProvider).toBeDefined()
     })
 

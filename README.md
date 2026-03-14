@@ -62,81 +62,67 @@ bun add mongoose
 
 ## Example
 
+Works with any Node.js framework — Express, Fastify, Koa, Hono, etc:
+
 ```typescript
-// On your application startup
 import mongoose from 'mongoose'
 import cache from 'ts-cache-mongoose'
 
-// In-memory example 
-const instance = cache.init(mongoose, {
+// In-memory
+cache.init(mongoose, {
   defaultTTL: '60 seconds',
   engine: 'memory',
-  debug: true, // Debug mode enables hit/miss logs in console, not for production use
 })
 
-// OR
-
-// Redis example
-const instance = cache.init(mongoose, {
+// Or Redis
+cache.init(mongoose, {
   defaultTTL: '60 seconds',
   engine: 'redis',
   engineOptions: {
     host: 'localhost',
     port: 6379,
   },
-  debug: true, // Debug mode enables hit/miss logs in console, not for production use
 })
 
-// Connect to your database
 mongoose.connect('mongodb://localhost:27017/my-database')
-
-// Somewhere in your code
-const users = await User.find({ role: 'user' }).cache('10 seconds').exec()
-// Cache hit
-const users = await User.find({ role: 'user' }).cache('10 seconds').exec()
-
-const book = await Book.findById(id).cache('1 hour').exec()
-const bookCount = await Book.countDocuments().cache('1 minute').exec()
-const authors = await Book.distinct('author').cache('30 seconds').exec()
-
-const books = await Book.aggregate([
-  {
-    $match: {
-      genre: 'fantasy',
-    },
-  },
-  {
-    $group: {
-      _id: '$author',
-      count: { $sum: 1 },
-    },
-  },
-  {
-    $project: {
-      _id: 0,
-      author: '$_id',
-      count: 1,
-    },
-  }
-]).cache('1 minute').exec()
-
-// Cache invalidation
-
-// To clear all cache, don't use in production unless you know what you are doing
-await instance.clear()
-
-// Instead use custom cache key
-const user = await User.findById('61bb4d6a1786e5123d7f4cf1').cache('1 minute', 'some-custom-key').exec()
-await instance.clear('some-custom-key')
 ```
 
-## NestJS integration
+### Query caching
+
+```typescript
+const users = await User.find({ role: 'user' }).cache('10 seconds').exec()
+const book = await Book.findById(id).cache('1 hour').exec()
+const count = await Book.countDocuments().cache('1 minute').exec()
+const authors = await Book.distinct('author').cache('30 seconds').exec()
+```
+
+### Aggregate caching
+
+```typescript
+const books = await Book.aggregate([
+  { $match: { genre: 'fantasy' } },
+  { $group: { _id: '$author', count: { $sum: 1 } } },
+]).cache('1 minute').exec()
+```
+
+### Cache invalidation
+
+```typescript
+const instance = cache.init(mongoose, { engine: 'memory', defaultTTL: '60 seconds' })
+
+// Clear all cache
+await instance.clear()
+
+// Or use custom cache key
+const user = await User.findById(id).cache('1 minute', 'user-key').exec()
+await instance.clear('user-key')
+```
+
+### NestJS (because it's special)
 
 Import `CacheModule` from `ts-cache-mongoose/nest`:
 
 ```typescript
-import { Module } from '@nestjs/common'
-import { MongooseModule } from '@nestjs/mongoose'
 import { CacheModule } from 'ts-cache-mongoose/nest'
 
 @Module({
@@ -159,18 +145,13 @@ CacheModule.forRootAsync({
   useFactory: (config: ConfigService) => ({
     engine: config.get('CACHE_ENGINE', 'memory'),
     defaultTTL: config.get('CACHE_TTL', '60 seconds'),
-    engineOptions: config.get('CACHE_ENGINE') === 'redis' ? {
-      host: config.get('REDIS_HOST', 'localhost'),
-      port: config.get('REDIS_PORT', 6379),
-    } : undefined,
   }),
 })
 ```
 
-You can inject `CacheService` to clear cache programmatically:
+Inject `CacheService` for programmatic cache clearing:
 
 ```typescript
-import { Injectable } from '@nestjs/common'
 import { CacheService } from 'ts-cache-mongoose/nest'
 
 @Injectable()
