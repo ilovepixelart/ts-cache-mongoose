@@ -2,7 +2,7 @@ import { ms } from '../ms'
 import { MemoryCacheEngine } from './engine/MemoryCacheEngine'
 import { RedisCacheEngine } from './engine/RedisCacheEngine'
 
-import type { CacheData, CacheEngine, CacheOptions, CacheTTL } from '../types'
+import type { CacheData, CacheEngine, CacheOptions, Duration } from '../types'
 
 export class Cache {
   readonly #engine!: CacheEngine
@@ -21,7 +21,7 @@ export class Cache {
 
     cacheOptions.defaultTTL ??= '1 minute'
 
-    this.#defaultTTL = typeof cacheOptions.defaultTTL === 'string' ? ms(cacheOptions.defaultTTL) : cacheOptions.defaultTTL
+    this.#defaultTTL = ms(cacheOptions.defaultTTL)
 
     if (cacheOptions.engine === 'redis' && cacheOptions.engineOptions) {
       this.#engine = new RedisCacheEngine(cacheOptions.engineOptions)
@@ -43,8 +43,8 @@ export class Cache {
     return cacheEntry
   }
 
-  async set(key: string, value: CacheData, ttl: CacheTTL | null): Promise<void> {
-    const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
+  async set(key: string, value: CacheData, ttl: Duration | null): Promise<void> {
+    const givenTTL = ttl == null ? null : ms(ttl)
     const actualTTL = givenTTL ?? this.#defaultTTL
     await this.#engine.set(key, value, actualTTL)
     if (this.#debug) {
