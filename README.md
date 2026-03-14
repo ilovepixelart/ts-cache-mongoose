@@ -130,6 +130,59 @@ const user = await User.findById('61bb4d6a1786e5123d7f4cf1').cache('1 minute', '
 await instance.clear('some-custom-key')
 ```
 
+## NestJS integration
+
+Import `CacheModule` from `ts-cache-mongoose/nest`:
+
+```typescript
+import { Module } from '@nestjs/common'
+import { MongooseModule } from '@nestjs/mongoose'
+import { CacheModule } from 'ts-cache-mongoose/nest'
+
+@Module({
+  imports: [
+    MongooseModule.forRoot(process.env.MONGO_URI),
+    CacheModule.forRoot({
+      engine: 'memory',
+      defaultTTL: '60 seconds',
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+With `ConfigService`:
+
+```typescript
+CacheModule.forRootAsync({
+  inject: [ConfigService],
+  useFactory: (config: ConfigService) => ({
+    engine: config.get('CACHE_ENGINE', 'memory'),
+    defaultTTL: config.get('CACHE_TTL', '60 seconds'),
+    engineOptions: config.get('CACHE_ENGINE') === 'redis' ? {
+      host: config.get('REDIS_HOST', 'localhost'),
+      port: config.get('REDIS_PORT', 6379),
+    } : undefined,
+  }),
+})
+```
+
+You can inject `CacheService` to clear cache programmatically:
+
+```typescript
+import { Injectable } from '@nestjs/common'
+import { CacheService } from 'ts-cache-mongoose/nest'
+
+@Injectable()
+export class SomeService {
+  constructor(private readonly cacheService: CacheService) {}
+
+  async clearUserCache() {
+    await this.cacheService.clear('user-cache-key')
+  }
+}
+```
+
 ## Check my other projects
 
 - [ts-migrate-mongoose](https://github.com/ilovepixelart/ts-migrate-mongoose) - Migration framework for mongoose
