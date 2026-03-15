@@ -1,7 +1,7 @@
 import type { RedisOptions } from 'ioredis'
 import type { Duration } from './ms'
 
-export type { Duration }
+export type { Duration } from './ms'
 
 export type CacheData = Record<string, unknown> | Record<string, unknown>[] | unknown[] | number | undefined
 
