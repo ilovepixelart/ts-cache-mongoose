@@ -1,3 +1,22 @@
+<a id="v2.1.0"></a>
+# [v2.1.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v2.1.0) - 2026-03-15
+
+- Lock  5798d0c
+- Merge pull request [#338](https://github.com/ilovepixelart/ts-cache-mongoose/issues/338) from ilovepixelart/feature/refactor  cf1f3e5
+- Remove Node 18 from supports section (tested on 20+)  c667586
+- Simplify installation section in README  1fbe25c
+- Use export...from for Duration re-export  ace2b0b
+- Remove Node 18.x from CI matrix (vitest coverage requires Node 20+)  8a49f3d
+- Replace CacheTTL with Duration type, bump to Node &gt;=18 ES2022  59e040d
+- Update changelog for v2.0.0  d5bf3e2
+
+---
+
+https://github.com/ilovepixelart/ts-cache-mongoose/compare/v2.0.0...v2.1.0
+
+[Changes][v2.1.0]
+
+
 <a id="v2.0.0"></a>
 # [v2.0.0](https://github.com/ilovepixelart/ts-cache-mongoose/releases/tag/v2.0.0) - 2026-03-14
 
@@ -1017,6 +1036,7 @@ https://github.com/ilovepixelart/ts-cache-mongoose/compare/v0.0.1...v0.0.2
 [Changes][v0.0.2]
 
 
+[v2.1.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v2.0.0...v2.1.0
 [v2.0.0]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.7...v2.0.0
 [v1.7.7]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.6...v1.7.7
 [v1.7.6]: https://github.com/ilovepixelart/ts-cache-mongoose/compare/v1.7.5...v1.7.6
