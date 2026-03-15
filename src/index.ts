@@ -3,17 +3,17 @@ import { extendAggregate } from './extend/aggregate'
 import { extendQuery } from './extend/query'
 
 import type { Mongoose } from 'mongoose'
-import type { CacheOptions, CacheTTL } from './types'
+import type { CacheOptions, Duration } from './types'
 
 export * from './types'
 
 declare module 'mongoose' {
   interface Query<ResultType, DocType, THelpers, RawDocType> {
-    cache: (this: Query<ResultType, DocType, THelpers, RawDocType>, ttl?: CacheTTL, customKey?: string) => this
+    cache: (this: Query<ResultType, DocType, THelpers, RawDocType>, ttl?: Duration, customKey?: string) => this
     _key: string | null
     getCacheKey: (this: Query<ResultType, DocType, THelpers, RawDocType>) => string
-    _ttl: CacheTTL | null
-    getCacheTTL: (this: Query<ResultType, DocType, THelpers, RawDocType>) => CacheTTL | null
+    _ttl: Duration | null
+    getDuration: (this: Query<ResultType, DocType, THelpers, RawDocType>) => Duration | null
     op?: string
     _path?: unknown
     _fields?: unknown
@@ -22,11 +22,11 @@ declare module 'mongoose' {
   }
 
   interface Aggregate<ResultType> {
-    cache: (this: Aggregate<ResultType>, ttl?: CacheTTL, customKey?: string) => this
+    cache: (this: Aggregate<ResultType>, ttl?: Duration, customKey?: string) => this
     _key: string | null
     getCacheKey: (this: Aggregate<ResultType>) => string
-    _ttl: CacheTTL | null
-    getCacheTTL: (this: Aggregate<ResultType>) => CacheTTL | null
+    _ttl: Duration | null
+    getDuration: (this: Aggregate<ResultType>) => Duration | null
   }
 }
 
