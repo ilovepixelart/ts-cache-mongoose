@@ -1,6 +1,6 @@
 import { ms } from '../../ms'
 
-import type { CacheData, CacheEngine, CacheTTL } from '../../types'
+import type { CacheData, CacheEngine, Duration } from '../../types'
 
 export class MemoryCacheEngine implements CacheEngine {
   readonly #cache: Map<string, { value: CacheData; expiresAt: number } | undefined>
@@ -18,8 +18,8 @@ export class MemoryCacheEngine implements CacheEngine {
     return item.value
   }
 
-  set(key: string, value: CacheData, ttl?: CacheTTL): void {
-    const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
+  set(key: string, value: CacheData, ttl?: Duration): void {
+    const givenTTL = ttl == null ? undefined : ms(ttl)
     const actualTTL = givenTTL ?? Number.POSITIVE_INFINITY
     this.#cache.set(key, {
       value,

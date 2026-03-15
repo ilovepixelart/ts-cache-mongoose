@@ -2,7 +2,7 @@ import { getKey } from '../key'
 
 import type { Mongoose } from 'mongoose'
 import type { Cache } from '../cache/Cache'
-import type { CacheTTL } from '../types'
+import type { Duration } from '../types'
 
 export function extendQuery(mongoose: Mongoose, cache: Cache): void {
   const mongooseExec = mongoose.Query.prototype.exec
@@ -29,24 +29,23 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
     })
   }
 
-  mongoose.Query.prototype.getCacheTTL = function (): CacheTTL | null {
+  mongoose.Query.prototype.getDuration = function (): Duration | null {
     return this._ttl
   }
 
-  mongoose.Query.prototype.cache = function (ttl?: CacheTTL, customKey?: string) {
+  mongoose.Query.prototype.cache = function (ttl?: Duration, customKey?: string) {
     this._ttl = ttl ?? null
     this._key = customKey ?? null
     return this
   }
 
   mongoose.Query.prototype.exec = async function (...args: []) {
-    // biome-ignore lint/suspicious/noPrototypeBuiltins: to support node 16
-    if (!Object.prototype.hasOwnProperty.call(this, '_ttl')) {
+    if (!Object.hasOwn(this, '_ttl')) {
       return mongooseExec.apply(this, args)
     }
 
     const key = this.getCacheKey()
-    const ttl = this.getCacheTTL()
+    const ttl = this.getDuration()
     const mongooseOptions = this.mongooseOptions()
 
     const isCount = this.op?.includes('count') ?? false

@@ -17,7 +17,7 @@ Cache query and aggregate in mongoose using in-memory or redis
 
 ts-cache-mongoose is a plugin for mongoose
 \
-Caching queries is a good way to improve performance of your application
+I need a way to cache mongoose queries and aggregations to improve application performance. It should support both in-memory and Redis cache engines, work with all major Node.js frameworks, and be easy to use with a simple `.cache()` method on queries and aggregations.
 
 ## Supports and tested with
 
@@ -42,22 +42,13 @@ Caching queries is a good way to improve performance of your application
 
 ## Installation
 
-- Locally inside your project
+`mongoose` is a peer dependency — install it alongside `ts-cache-mongoose`.
 
 ```bash
-npm install ts-cache-mongoose
-pnpm add ts-cache-mongoose
-yarn add ts-cache-mongoose
-bun add ts-cache-mongoose
-```
-
-- This plugin requires `mongoose` to be installed as a peer dependency
-
-```bash
-npm install mongoose
-pnpm add mongoose
-yarn add mongoose
-bun add mongoose
+npm install ts-cache-mongoose mongoose
+pnpm add ts-cache-mongoose mongoose
+yarn add ts-cache-mongoose mongoose
+bun add ts-cache-mongoose mongoose
 ```
 
 ## Example
@@ -163,6 +154,14 @@ export class SomeService {
   }
 }
 ```
+
+## Contributing
+
+Check [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Check my other projects
 

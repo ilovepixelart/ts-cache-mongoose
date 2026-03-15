@@ -4,7 +4,7 @@ import { ms } from '../../ms'
 import { convertToObject } from '../../version'
 
 import type { Redis, RedisOptions } from 'ioredis'
-import type { CacheData, CacheEngine, CacheTTL } from '../../types'
+import type { CacheData, CacheEngine, Duration } from '../../types'
 
 export class RedisCacheEngine implements CacheEngine {
   readonly #client: Redis
@@ -27,9 +27,9 @@ export class RedisCacheEngine implements CacheEngine {
     }
   }
 
-  async set(key: string, value: CacheData, ttl?: CacheTTL): Promise<void> {
+  async set(key: string, value: CacheData, ttl?: Duration): Promise<void> {
     try {
-      const givenTTL = typeof ttl === 'string' ? ms(ttl) : ttl
+      const givenTTL = ttl == null ? undefined : ms(ttl)
       const actualTTL = givenTTL ?? Number.POSITIVE_INFINITY
       const serializedValue = EJSON.stringify(convertToObject(value))
       await this.#client.setex(key, Math.ceil(actualTTL / 1000), serializedValue)
