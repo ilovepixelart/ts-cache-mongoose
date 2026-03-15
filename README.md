@@ -42,22 +42,13 @@ I need a way to cache mongoose queries and aggregations to improve application p
 
 ## Installation
 
-- Locally inside your project
+`mongoose` is a peer dependency — install it alongside `ts-cache-mongoose`.
 
 ```bash
-npm install ts-cache-mongoose
-pnpm add ts-cache-mongoose
-yarn add ts-cache-mongoose
-bun add ts-cache-mongoose
-```
-
-- This plugin requires `mongoose` to be installed as a peer dependency
-
-```bash
-npm install mongoose
-pnpm add mongoose
-yarn add mongoose
-bun add mongoose
+npm install ts-cache-mongoose mongoose
+pnpm add ts-cache-mongoose mongoose
+yarn add ts-cache-mongoose mongoose
+bun add ts-cache-mongoose mongoose
 ```
 
 ## Example
