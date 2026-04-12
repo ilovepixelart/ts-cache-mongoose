@@ -3,7 +3,14 @@ import { describe, expect, it, vi } from 'vitest'
 import { CacheModule } from '../src/nest/cache.module'
 import { CACHE_OPTIONS, CacheService } from '../src/nest/cache.service'
 
+import type { FactoryProvider, Provider } from '@nestjs/common'
 import type { CacheOptions } from '../src/types'
+
+const findFactoryProvider = (providers: Provider[], token: unknown): FactoryProvider => {
+  const hit = (providers as FactoryProvider[]).find((p) => typeof p === 'object' && p !== null && 'provide' in p && p.provide === token && 'useFactory' in p)
+  if (!hit) throw new Error(`factory provider for ${String(token)} not found`)
+  return hit
+}
 
 vi.mock('@nestjs/common', () => {
   const LoggerMock = class {
@@ -50,6 +57,14 @@ describe('CacheModule', () => {
       const optionsProvider = (result.providers as { provide: symbol; useValue: unknown }[]).find((p) => p.provide === CACHE_OPTIONS)
       expect(optionsProvider).toBeDefined()
       expect(optionsProvider?.useValue).toEqual(defaultOptions)
+    })
+
+    it('CacheService factory constructs a CacheService from CACHE_OPTIONS', () => {
+      const result = CacheModule.forRoot(defaultOptions)
+      const svcProvider = findFactoryProvider(result.providers as Provider[], CacheService)
+      expect(svcProvider.inject).toEqual([CACHE_OPTIONS])
+      const svc = (svcProvider.useFactory as (opts: typeof defaultOptions) => CacheService)(defaultOptions)
+      expect(svc).toBeInstanceOf(CacheService)
     })
   })
 
@@ -105,6 +120,46 @@ describe('CacheModule', () => {
         useFactory: () => defaultOptions,
       })
       expect(result.global).toBe(true)
+    })
+
+    it('CacheService factory constructs a CacheService from CACHE_OPTIONS', () => {
+      const result = CacheModule.forRootAsync({ useFactory: () => defaultOptions })
+      const svcProvider = findFactoryProvider(result.providers as Provider[], CacheService)
+      expect(svcProvider.inject).toEqual([CACHE_OPTIONS])
+      const svc = (svcProvider.useFactory as (opts: typeof defaultOptions) => CacheService)(defaultOptions)
+      expect(svc).toBeInstanceOf(CacheService)
+    })
+
+    it('useClass provider factory calls createCacheOptions on the injected factory instance', () => {
+      class TestFactory {
+        createCacheOptions() {
+          return defaultOptions
+        }
+      }
+      const result = CacheModule.forRootAsync({ useClass: TestFactory })
+      const optionsProvider = findFactoryProvider(result.providers as Provider[], CACHE_OPTIONS)
+      expect(optionsProvider.inject).toEqual([TestFactory])
+      const factory = new TestFactory()
+      const createSpy = vi.spyOn(factory, 'createCacheOptions')
+      const opts = (optionsProvider.useFactory as (f: TestFactory) => unknown)(factory)
+      expect(createSpy).toHaveBeenCalledTimes(1)
+      expect(opts).toEqual(defaultOptions)
+    })
+
+    it('useExisting provider factory calls createCacheOptions on the injected factory instance', () => {
+      class TestFactory {
+        createCacheOptions() {
+          return defaultOptions
+        }
+      }
+      const result = CacheModule.forRootAsync({ useExisting: TestFactory })
+      const optionsProvider = findFactoryProvider(result.providers as Provider[], CACHE_OPTIONS)
+      expect(optionsProvider.inject).toEqual([TestFactory])
+      const factory = new TestFactory()
+      const createSpy = vi.spyOn(factory, 'createCacheOptions')
+      const opts = (optionsProvider.useFactory as (f: TestFactory) => unknown)(factory)
+      expect(createSpy).toHaveBeenCalledTimes(1)
+      expect(opts).toEqual(defaultOptions)
     })
   })
 })

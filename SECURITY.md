@@ -285,12 +285,11 @@ chase:
   structurally unattainable; the score will move organically if external
   contributors join.
 
-- **`Fuzzing`** — `ts-cache-mongoose` has no parser or untrusted input
-  surface that benefits from fuzzing. The cache key generator and
-  engine code operate on mongoose-produced values inside a single
-  trusted Node process; there is no meaningful input corpus to
-  mutate. A continuous fuzzer (CIFuzz, OSS-Fuzz) would have nothing
-  to drive.
+- **`CII-Best-Practices`** — tracked at
+  [bestpractices.dev/projects/12484](https://www.bestpractices.dev/en/projects/12484).
+  The project targets the "passing" tier; "silver" and "gold" require
+  multiple reviewers and documented security-review processes that are
+  out of reach for a single-maintainer project.
 
 - **`Pinned-Dependencies`** — caps at ~8/10 due to a single structural
   exception: the `npm i ${{ matrix.mongoose-version[0] }} ${{ matrix.mongoose-version[1] }}`
