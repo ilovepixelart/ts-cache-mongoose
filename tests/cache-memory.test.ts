@@ -27,6 +27,17 @@ describe('cache-memory', async () => {
     await mongoose.connection.collection('users').deleteMany({})
   })
 
+  describe('singleton behavior', () => {
+    it('init() returns the same CacheMongoose instance on a second call', () => {
+      // First init happened in beforeAll; the second call hits the
+      // early-return branch in `if (!CacheMongoose.#instance)` and
+      // returns the cached instance without re-wiring the mongoose
+      // hooks. Coverage for src/index.ts line 42.
+      const second = CacheMongoose.init(mongoose, { engine: 'memory' })
+      expect(second).toBe(cache)
+    })
+  })
+
   describe('memory scenarios', () => {
     it('should use memory cache', async () => {
       const user = await UserModel.create({
