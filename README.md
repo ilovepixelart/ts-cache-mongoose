@@ -12,6 +12,9 @@ Cache query and aggregate in mongoose using in-memory or redis
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ilovepixelart_ts-cache-mongoose&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ilovepixelart_ts-cache-mongoose)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ilovepixelart_ts-cache-mongoose&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ilovepixelart_ts-cache-mongoose)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ilovepixelart_ts-cache-mongoose&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ilovepixelart_ts-cache-mongoose)
+\
+[![Socket Badge](https://badge.socket.dev/npm/package/ts-cache-mongoose)](https://socket.dev/npm/package/ts-cache-mongoose)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ilovepixelart/ts-cache-mongoose/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ilovepixelart/ts-cache-mongoose)
 
 ## Motivation
 
@@ -24,9 +27,11 @@ I need a way to cache mongoose queries and aggregations to improve application p
 ```json
 {
   "node": "20.x || 22.x || 24.x",
-  "mongoose": ">=6.6.x || 7.x || 8.x || 9.x",
+  "mongoose": ">=6.6.0 <10"
 }
 ```
+
+CI tests against mongoose `6.12.2`, `7.6.4`, `8.23.0`, and `9.4.1`.
 
 ## Features
 

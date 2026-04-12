@@ -29,9 +29,16 @@ export class RedisCacheEngine implements CacheEngine {
 
   async set(key: string, value: CacheData, ttl?: Duration): Promise<void> {
     try {
+      const converted = convertToObject(value)
+      if (converted === undefined) {
+        // Nothing to cache. Redis has no distinct representation of
+        // "undefined" vs "not set", and bson 7's EJSON.stringify types
+        // reject undefined input — so skip the write entirely.
+        return
+      }
       const givenTTL = ttl == null ? undefined : ms(ttl)
       const actualTTL = givenTTL ?? Number.POSITIVE_INFINITY
-      const serializedValue = EJSON.stringify(convertToObject(value))
+      const serializedValue = EJSON.stringify(converted)
       await this.#client.setex(key, Math.ceil(actualTTL / 1000), serializedValue)
     } catch (err) {
       console.error(err)

@@ -6,6 +6,7 @@
     "types": ["node"],
     "module": "Preserve",
     "moduleResolution": "bundler",
+    "rootDir": "src",
     "outDir": "dist",
     "strict": true,
     "allowSyntheticDefaultImports": true,
