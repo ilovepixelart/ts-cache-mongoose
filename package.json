@@ -12,9 +12,6 @@
     "url": "https://github.com/ilovepixelart/ts-cache-mongoose/issues"
   },
   "homepage": "https://github.com/ilovepixelart/ts-cache-mongoose#readme",
-  "directories": {
-    "examples": "examples"
-  },
   "keywords": [
     "backend",
     "mongo",
@@ -35,15 +32,10 @@
     "aggregate"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "files": [
-    "dist",
-    "src",
-    "tests",
-    "tsconfig.json",
-    "vite.config.mts",
-    "biome.json"
+    "dist"
   ],
   "type": "module",
   "exports": {
@@ -78,16 +70,20 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
-    "prepare": "simple-git-hooks",
     "biome": "npx @biomejs/biome check",
     "biome:fix": "npx @biomejs/biome check --write .",
     "test": "vitest run --coverage",
     "test:open": "vitest run --coverage && open-cli coverage/lcov-report/index.html",
     "clean": "rm -rf ./dist",
     "type:check": "tsc --noEmit",
+    "type:check:tests": "tsc --noEmit -p tests/tsconfig.json",
     "build": "pkgroll --clean-dist",
-    "release": "npm install && npm run biome && npm run type:check && npm run build && np --no-publish"
+    "release": "npm install && npm run biome && npm run type:check && npm run type:check:tests && npm run build && np --no-publish"
   },
   "dependencies": {
     "ioredis": "5.10.0"
@@ -108,7 +104,7 @@
     "vitest": "4.1.0"
   },
   "peerDependencies": {
-    "@nestjs/common": ">=9.0.0",
+    "@nestjs/common": ">=9.0.0 < 12",
     "bson": ">=4.7.2 < 8",
     "mongoose": ">=6.6.0 < 10"
   },
@@ -125,7 +121,6 @@
     "publish": false
   },
   "overrides": {
-    "tmp": "0.2.5",
-    "file-type": "21.3.2"
+    "tmp": "0.2.5"
   }
 }

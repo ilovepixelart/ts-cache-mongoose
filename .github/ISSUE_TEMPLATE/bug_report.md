@@ -1,8 +1,8 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report a bug in ts-cache-mongoose
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
@@ -10,32 +10,36 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+**Versions**
+Describe your setup
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+- `ts-cache-mongoose`:
+- `mongoose`:
+- `ioredis`:
+- Node.js:
+- OS:
+
+**Cache engine**
+
+- [ ] in-memory
+- [ ] redis
+
+**Minimal reproduction**
+Schema, plugin options, and the query or aggregate pipeline that triggers the bug.
+
+```typescript
+// schema + plugin options
+```
+
+```typescript
+// query or aggregate that reproduces the issue
+```
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+What you expected to happen (e.g. which result should have been cached, TTL behaviour, invalidation triggering).
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
-
-- OS: [e.g. iOS]
-- Browser [e.g. chrome, safari]
-- Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
-
-- Device: [e.g. iPhone6]
-- OS: [e.g. iOS8.1]
-- Browser [e.g. stock browser, safari]
-- Version [e.g. 22]
+**Actual behavior**
+What happened instead. Include error messages and stack traces.
 
 **Additional context**
-Add any other context about the problem here.
+Anything else that might help — related issues, Redis configuration, TTL specifics, etc.

@@ -3,6 +3,8 @@ import { describe, expect, it, vi } from 'vitest'
 import { CacheModule } from '../src/nest/cache.module'
 import { CACHE_OPTIONS, CacheService } from '../src/nest/cache.service'
 
+import type { CacheOptions } from '../src/types'
+
 vi.mock('@nestjs/common', () => {
   const LoggerMock = class {
     log = vi.fn()
@@ -22,7 +24,7 @@ vi.mock('../src/index', () => ({
   },
 }))
 
-const defaultOptions = { engine: 'memory' as const, defaultTTL: '60 seconds' }
+const defaultOptions = { engine: 'memory', defaultTTL: '60 seconds' } satisfies CacheOptions
 
 describe('CacheModule', () => {
   describe('forRoot', () => {
