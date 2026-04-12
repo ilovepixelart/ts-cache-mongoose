@@ -23,6 +23,7 @@ Describe your setup
 
 - [ ] in-memory
 - [ ] redis
+- [ ] both
 
 **Minimal reproduction**
 Schema, plugin options, and the query or aggregate pipeline that triggers the bug.
