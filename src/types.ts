@@ -11,6 +11,9 @@ export type CacheOptions = {
   defaultTTL?: Duration
   debug?: boolean
   onError?: (error: Error) => void
+  maxEntries?: number
+  maxBytes?: number
+  sizeCalculation?: (value: CacheData) => number
 }
 
 export interface CacheEngine {
