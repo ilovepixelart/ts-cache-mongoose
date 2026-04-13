@@ -15,7 +15,7 @@ Cache query and aggregate in mongoose using in-memory or redis
 \
 [![Socket Badge](https://badge.socket.dev/npm/package/ts-cache-mongoose)](https://socket.dev/npm/package/ts-cache-mongoose)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ilovepixelart/ts-cache-mongoose/badge)](https://securityscorecards.dev/viewer/?uri=github.com/ilovepixelart/ts-cache-mongoose)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12484/badge)](https://www.bestpractices.dev/en/projects/12484)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12484/badge?v=1)](https://www.bestpractices.dev/en/projects/12484)
 
 ## Motivation
 
