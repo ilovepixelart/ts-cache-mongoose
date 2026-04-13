@@ -102,6 +102,23 @@ const books = await Book.aggregate([
 ]).cache('1 minute').exec()
 ```
 
+### Custom error handling
+
+By default, cache engine failures (Redis disconnects, serialization errors, etc.) are logged via `console.error` and the query falls through to the database. Pass an `onError` callback to route them somewhere else — e.g. a structured logger, Sentry, or a metric counter:
+
+```typescript
+cache.init(mongoose, {
+  engine: 'redis',
+  defaultTTL: '60 seconds',
+  engineOptions: { host: 'localhost', port: 6379 },
+  onError: (error) => {
+    logger.warn({ err: error }, 'cache engine failure')
+  },
+})
+```
+
+The callback receives the raw `Error`. Cache reads and writes never throw — a failing engine degrades to a cache miss.
+
 ### Cache invalidation
 
 ```typescript

@@ -10,6 +10,7 @@ export type CacheOptions = {
   engineOptions?: RedisOptions
   defaultTTL?: Duration
   debug?: boolean
+  onError?: (error: Error) => void
 }
 
 export interface CacheEngine {

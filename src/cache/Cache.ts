@@ -8,6 +8,7 @@ export class Cache {
   readonly #engine!: CacheEngine
   readonly #defaultTTL: number
   readonly #debug: boolean
+  readonly #onError: (error: Error) => void
   readonly #engines = ['memory', 'redis'] as const
 
   constructor(cacheOptions: CacheOptions) {
@@ -22,9 +23,10 @@ export class Cache {
     cacheOptions.defaultTTL ??= '1 minute'
 
     this.#defaultTTL = ms(cacheOptions.defaultTTL)
+    this.#onError = cacheOptions.onError ?? console.error
 
     if (cacheOptions.engine === 'redis' && cacheOptions.engineOptions) {
-      this.#engine = new RedisCacheEngine(cacheOptions.engineOptions)
+      this.#engine = new RedisCacheEngine(cacheOptions.engineOptions, this.#onError)
     }
 
     if (cacheOptions.engine === 'memory') {
@@ -32,6 +34,10 @@ export class Cache {
     }
 
     this.#debug = cacheOptions.debug === true
+  }
+
+  get onError(): (error: Error) => void {
+    return this.#onError
   }
 
   async get(key: string): Promise<CacheData> {
