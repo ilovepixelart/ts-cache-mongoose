@@ -102,6 +102,36 @@ const books = await Book.aggregate([
 ]).cache('1 minute').exec()
 ```
 
+### Bounded in-memory cache
+
+The in-memory engine is unbounded by default. For workloads where query keys are driven by user input (search, filters, pagination), cap the cache so a caller generating unique cache keys cannot grow the map without limit. Two bounds are available and can be combined — eviction is LRU, and whichever bound is hit first triggers it:
+
+```typescript
+cache.init(mongoose, {
+  engine: 'memory',
+  defaultTTL: '60 seconds',
+  maxEntries: 10_000,          // cap by entry count
+  maxBytes: 50 * 1024 * 1024,  // cap by serialized bytes (50 MB)
+})
+```
+
+`maxBytes` measures entry size via `node:v8.serialize(value).byteLength` by default — handles circular references (mongoose `populate` parent-refs), single C++ call per `set`, works on Node / Bun / Deno. Provide your own `sizeCalculation` callback if you want an O(1) estimate instead:
+
+```typescript
+cache.init(mongoose, {
+  engine: 'memory',
+  maxBytes: 50 * 1024 * 1024,
+  sizeCalculation: (value) => {
+    if (Array.isArray(value)) return value.length * 512
+    return 512
+  },
+})
+```
+
+Eviction is soft: the just-written entry is never dropped, even if its own size exceeds `maxBytes`. Everything older gets evicted until both bounds are satisfied (or only the new entry remains).
+
+Both options are ignored for the Redis engine — use Redis's own `maxmemory` + `maxmemory-policy` instead.
+
 ### Custom error handling
 
 By default, cache engine failures (Redis disconnects, serialization errors, etc.) are logged via `console.error` and the query falls through to the database. Pass an `onError` callback to route them somewhere else — e.g. a structured logger, Sentry, or a metric counter:

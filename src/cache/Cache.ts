@@ -30,7 +30,11 @@ export class Cache {
     }
 
     if (cacheOptions.engine === 'memory') {
-      this.#engine = new MemoryCacheEngine()
+      this.#engine = new MemoryCacheEngine({
+        maxEntries: cacheOptions.maxEntries,
+        maxBytes: cacheOptions.maxBytes,
+        sizeCalculation: cacheOptions.sizeCalculation,
+      })
     }
 
     this.#debug = cacheOptions.debug === true
@@ -52,6 +56,12 @@ export class Cache {
   async set(key: string, value: CacheData, ttl: Duration | null): Promise<void> {
     const givenTTL = ttl == null ? null : ms(ttl)
     const actualTTL = givenTTL ?? this.#defaultTTL
+    if (Number.isNaN(actualTTL) || actualTTL <= 0) {
+      if (this.#debug) {
+        console.log(`[ts-cache-mongoose] SET '${key}' - skipped (non-positive ttl: ${String(actualTTL)} ms)`)
+      }
+      return
+    }
     await this.#engine.set(key, value, actualTTL)
     if (this.#debug) {
       console.log(`[ts-cache-mongoose] SET '${key}' - ttl: ${actualTTL.toFixed(0)} ms`)
