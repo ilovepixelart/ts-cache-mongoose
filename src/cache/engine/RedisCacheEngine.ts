@@ -8,10 +8,12 @@ import type { CacheData, CacheEngine, Duration } from '../../types'
 
 export class RedisCacheEngine implements CacheEngine {
   readonly #client: Redis
+  readonly #onError: (error: Error) => void
 
-  constructor(options: RedisOptions) {
+  constructor(options: RedisOptions, onError: (error: Error) => void) {
     options.keyPrefix ??= 'cache-mongoose:'
     this.#client = new IORedis(options)
+    this.#onError = onError
   }
 
   async get(key: string): Promise<CacheData> {
@@ -22,7 +24,7 @@ export class RedisCacheEngine implements CacheEngine {
       }
       return EJSON.parse(value) as CacheData
     } catch (err) {
-      console.error(err)
+      this.#onError(err as Error)
       return undefined
     }
   }
@@ -41,7 +43,7 @@ export class RedisCacheEngine implements CacheEngine {
       const serializedValue = EJSON.stringify(converted)
       await this.#client.setex(key, Math.ceil(actualTTL / 1000), serializedValue)
     } catch (err) {
-      console.error(err)
+      this.#onError(err as Error)
     }
   }
 

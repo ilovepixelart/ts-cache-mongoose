@@ -80,4 +80,17 @@ describe('Cache class tests', () => {
 
     await cache.close()
   })
+
+  describe('onError option', () => {
+    it('defaults to console.error when no callback is provided', () => {
+      const cache = new Cache({ engine: 'memory' })
+      expect(cache.onError).toBe(console.error)
+    })
+
+    it('exposes the user-supplied callback via the onError getter', () => {
+      const onError = vi.fn()
+      const cache = new Cache({ engine: 'memory', onError })
+      expect(cache.onError).toBe(onError)
+    })
+  })
 })
