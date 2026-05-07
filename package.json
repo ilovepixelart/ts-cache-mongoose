@@ -89,22 +89,22 @@
     "ioredis": "5.10.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.11",
+    "@biomejs/biome": "2.4.14",
     "@nestjs/common": "11.1.18",
     "@nestjs/core": "11.1.18",
     "@nestjs/testing": "11.1.18",
-    "@types/node": "25.6.0",
-    "@vitest/coverage-v8": "4.1.4",
+    "@types/node": "25.6.1",
+    "@vitest/coverage-v8": "4.1.5",
     "bson": "7.2.0",
-    "fast-check": "4.6.0",
+    "fast-check": "4.7.0",
     "mongodb-memory-server": "11.0.1",
     "mongoose": "9.4.1",
-    "np": "11.0.3",
+    "np": "11.2.0",
     "open-cli": "9.0.0",
     "pkgroll": "2.27.0",
     "simple-git-hooks": "2.13.1",
     "typescript": "5.9.3",
-    "vitest": "4.1.4"
+    "vitest": "4.1.5"
   },
   "peerDependencies": {
     "@nestjs/common": ">=9.0.0 < 12",
