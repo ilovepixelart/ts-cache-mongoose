@@ -99,7 +99,6 @@
     "fast-check": "4.7.0",
     "mongodb-memory-server": "11.0.1",
     "mongoose": "9.4.1",
-    "np": "11.2.0",
     "open-cli": "9.0.0",
     "pkgroll": "2.27.0",
     "simple-git-hooks": "2.13.1",
@@ -122,8 +121,5 @@
   },
   "np": {
     "publish": false
-  },
-  "overrides": {
-    "tmp": "0.2.5"
   }
 }
