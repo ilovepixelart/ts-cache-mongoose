@@ -98,7 +98,7 @@
     "bson": "7.2.0",
     "fast-check": "4.7.0",
     "mongodb-memory-server": "11.0.1",
-    "mongoose": "9.4.1",
+    "mongoose": "9.7.2",
     "open-cli": "9.0.0",
     "pkgroll": "2.27.0",
     "simple-git-hooks": "2.13.1",
