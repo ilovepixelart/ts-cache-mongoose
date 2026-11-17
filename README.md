@@ -95,6 +95,8 @@ const authors = await Book.distinct('author').cache('30 seconds').exec()
 
 A non-lean `find` or `findOne` is cached as document data and rebuilt on a hit as documents of the query's model (or discriminator), with the query's projection, so defaults apply only to selected paths, and with populated paths as populated documents. Query middleware (`pre('find')`, `post('find')`) runs only when the query reaches MongoDB; `init` hooks run on every hit. A result that a hit cannot rebuild exactly is not cached and every call reaches MongoDB: virtual populate, `refPath` or `ref` functions, populate with `options.lean`, a populated array filtered by `match` or `perDocumentLimit`, a reference to a deleted document, a document changed by a `post('find')` hook, and a document whose `_id` mongoose generates on load.
 
+The in-memory engine keeps its own copy of each result and returns a fresh copy on every hit, so changing a returned result (lean or non-lean, aggregate result or distinct list) does not change what later queries get.
+
 ### Aggregate caching
 
 ```typescript
@@ -117,7 +119,7 @@ cache.init(mongoose, {
 })
 ```
 
-`maxBytes` measures entry size via `node:v8.serialize(value).byteLength` by default. It handles circular references (mongoose `populate` parent-refs), takes a single C++ call per `set`, and works on Node / Bun / Deno. Provide your own `sizeCalculation` callback if you want an O(1) estimate instead:
+`maxBytes` measures entry size via `node:v8.serialize(value).byteLength` by default: a single C++ call per `set`, on Node / Bun / Deno. A value it cannot serialize (a non-lean mongoose 7+ document, whose arrays are proxies, or a value nested too deep) is sized by a walk over its data instead, so sizing never stops a result from being cached. Without `maxBytes` the default sizer does not run. Provide your own `sizeCalculation` callback if you want an O(1) estimate instead; it runs on every `set`, with or without `maxBytes`:
 
 ```typescript
 cache.init(mongoose, {
@@ -131,6 +133,8 @@ cache.init(mongoose, {
 ```
 
 Eviction is soft: the just-written entry is never dropped, even if its own size exceeds `maxBytes`. Everything older gets evicted until both bounds are satisfied (or only the new entry remains).
+
+Expired entries are removed when their key is read, and every `set` also examines a few entries (continuing where the previous `set` stopped) and removes the expired ones, so entries for keys that are never read again do not accumulate. There are no timers.
 
 Both options are ignored for the Redis engine; use Redis's own `maxmemory` + `maxmemory-policy` instead.
 

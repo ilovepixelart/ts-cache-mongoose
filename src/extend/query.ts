@@ -63,7 +63,8 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
     const ttl = this.getDuration()
     const mongooseOptions = this.mongooseOptions()
 
-    const isCount = this.op?.includes('count') ?? false
+    // count, countDocuments and estimatedDocumentCount
+    const isCount = this.op?.toLowerCase().includes('count') ?? false
     const isDistinct = this.op === 'distinct'
     const isDocuments = !mongooseOptions.lean && (this.op === 'find' || this.op === 'findOne')
 
@@ -71,11 +72,12 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
       cache.onError(err as Error)
     })
 
-    if (resultCache && isDocuments) {
+    // Every cached value is a hit, null and 0 included; only undefined means not cached.
+    if (resultCache != null && isDocuments) {
       const docs = guard(() => fromCacheData(this, resultCache))
       if (docs !== undefined) return docs
-    } else if (resultCache) {
-      if (isCount || isDistinct || mongooseOptions.lean) {
+    } else if (resultCache !== undefined) {
+      if (resultCache === null || isCount || isDistinct || mongooseOptions.lean) {
         return resultCache
       }
 
