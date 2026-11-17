@@ -204,7 +204,9 @@ const discriminatorOf = (model: ModelLike, data: Plain): ModelLike | undefined =
   if (!mapping?.isRoot || model.discriminators == null) return undefined
   const value = data[mapping.key]
   if (value == null) return undefined
-  return model.discriminators[String(value)] ?? Object.values(model.discriminators).find((discriminator) => discriminator.schema.discriminatorMapping?.value === value)
+  // By discriminator name, then by its value, which can differ from the name.
+  const byName = typeof value === 'string' && Object.hasOwn(model.discriminators, value) ? model.discriminators[value] : undefined
+  return byName ?? Object.values(model.discriminators).find((discriminator) => discriminator.schema.discriminatorMapping?.value === value)
 }
 
 // mongoose's createModel(): the discriminator named by the data, constructed with the selected
