@@ -1,5 +1,6 @@
 import { getKey, getModelScope, omitKeys } from '../key'
 import { runsInSession } from '../session'
+import { fromCacheData, toCacheData } from './hydrate'
 
 import type { Mongoose } from 'mongoose'
 import type { Cache } from '../cache/Cache'
@@ -7,6 +8,17 @@ import type { Duration } from '../types'
 
 export function extendQuery(mongoose: Mongoose, cache: Cache): void {
   const mongooseExec = mongoose.Query.prototype.exec
+
+  // A result that cannot be converted to or from its cached form is reported and served from
+  // MongoDB instead, like an engine failure.
+  const guard = <T>(convert: () => T): T | undefined => {
+    try {
+      return convert()
+    } catch (err) {
+      cache.onError(err as Error)
+      return undefined
+    }
+  }
 
   mongoose.Query.prototype.getCacheKey = function (): string {
     if (this._key != null) return this._key
@@ -53,12 +65,16 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
 
     const isCount = this.op?.includes('count') ?? false
     const isDistinct = this.op === 'distinct'
+    const isDocuments = !mongooseOptions.lean && (this.op === 'find' || this.op === 'findOne')
 
     const resultCache = await cache.get(key).catch((err: unknown) => {
       cache.onError(err as Error)
     })
 
-    if (resultCache) {
+    if (resultCache && isDocuments) {
+      const docs = guard(() => fromCacheData(this, resultCache))
+      if (docs !== undefined) return docs
+    } else if (resultCache) {
       if (isCount || isDistinct || mongooseOptions.lean) {
         return resultCache
       }
@@ -76,7 +92,9 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
     }
 
     const result = (await mongooseExec.call(this)) as Record<string, unknown>[] | Record<string, unknown>
-    await cache.set(key, result, ttl).catch((err: unknown) => {
+    const value = isDocuments ? guard(() => toCacheData(this, result)) : result
+    if (value === undefined && isDocuments) return result
+    await cache.set(key, value, ttl).catch((err: unknown) => {
       cache.onError(err as Error)
     })
 
