@@ -86,7 +86,7 @@
     "release": "npm install && npm run biome && npm run type:check && npm run type:check:tests && npm run build && np --no-publish"
   },
   "dependencies": {
-    "ioredis": "5.10.0"
+    "ioredis": "6.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.8",
