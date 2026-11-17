@@ -2,35 +2,39 @@ name: PR check
 
 on:
   workflow_dispatch:
-  # Trigger on push to main or pull requests
+  # Pull requests, plus the commit each merge lands on main. Feature branches run
+  # through their pull request only.
   push:
     branches:
       - main
-      - feature*
 
   pull_request:
     types: [opened, synchronize, reopened]
 
 # Declare default permissions as read only. No job in this workflow writes to
-# the repo — tests, biome, type-check, coverage, and SonarCloud all run in
+# the repo: tests, biome, type-check, coverage, and SonarCloud all run in
 # read-only mode. SonarCloud PR decorations come from the SonarCloud GitHub
 # App, not GITHUB_TOKEN write scopes.
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tests:
     name: Coverage
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
 
-    # Service containers to run with `container-job`
     services:
       # Label used to access the service container
       redis:
-        # Docker Hub image
-        image: redis
+        # Docker Hub image, pinned to a major
+        image: redis:8-alpine
         # Set health checks to wait until redis has started
         options: >-
           --health-cmd "redis-cli ping"
@@ -42,6 +46,7 @@ jobs:
           - 6379:6379
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [22.x, 24.x]
         mongoose-version:
@@ -65,11 +70,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
 
+      # No dependency install scripts: none is needed, and the MongoDB binary the tests use
+      # (mongodb-memory-server) downloads on first use.
       - name: Installing dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
-      - name: Installing ${{ matrix.mongoose-version[0] }} ${{ matrix.mongoose-version[1] }}
-        run: npm i ${{ matrix.mongoose-version[0] }} ${{ matrix.mongoose-version[1] }}
+      # Deliberately outside the lockfile: each cell swaps in one supported mongoose major.
+      - name: Installing ${{ matrix.mongoose-version[0] }} ${{ matrix.mongoose-version[1] }} # zizmor: ignore[adhoc-packages]
+        env:
+          MONGOOSE: ${{ matrix.mongoose-version[0] }}
+          BSON: ${{ matrix.mongoose-version[1] }}
+        run: npm i --ignore-scripts "$MONGOOSE" "$BSON"
 
       - name: Type check
         run: npm run type:check
@@ -85,15 +96,15 @@ jobs:
   sonar:
     name: Biome, Coverage & Sonar
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
 
-    # Service containers to run with `container-job`
     services:
       # Label used to access the service container
       redis:
-        # Docker Hub image
-        image: redis
+        # Docker Hub image, pinned to a major
+        image: redis:8-alpine
         # Set health checks to wait until redis has started
         options: >-
           --health-cmd "redis-cli ping"
@@ -105,6 +116,7 @@ jobs:
           - 6379:6379
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [26.x]
     steps:
@@ -121,8 +133,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
 
+      # No dependency install scripts: none is needed, and the MongoDB binary the tests use
+      # (mongodb-memory-server) downloads on first use.
       - name: Installing dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Verify provenance signatures
         run: npm audit signatures
@@ -133,6 +147,14 @@ jobs:
       - name: Type check tests
         run: npm run type:check:tests
 
+      - name: Build
+        run: npm run build
+
+      # publint checks package.json against the files it ships; attw resolves the
+      # packed types under every module resolution mode.
+      - name: Package lint
+        run: npm run lint:package
+
       - name: Coverage
         run: npm run test
         env:
@@ -141,6 +163,7 @@ jobs:
           # The default Redis port
           REDIS_PORT: 6379
 
+      # Skipped when SONAR_TOKEN is absent (forks, Dependabot), so the check stays green there.
       - name: Scan
         if: env.SONAR_TOKEN
         uses: SonarSource/sonarqube-scan-action@59202af334b4ba7b5db01b701b8e79f8b3bef0f4 # v8.5.0
@@ -150,10 +173,53 @@ jobs:
         with:
           args: >
             -Dsonar.organization=ilovepixelart
-            -Dsonar.projectName=ts-cache-mongoose
-            -Dsonar.projectKey=ilovepixelart_ts-cache-mongoose
+            -Dsonar.projectName=${{ github.event.repository.name }}
+            -Dsonar.projectKey=ilovepixelart_${{ github.event.repository.name }}
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.sources=src
             -Dsonar.tests=tests
             -Dsonar.test.exclusions=tests/**
             -Dsonar.coverage.exclusions=tests/**
+            -Dsonar.qualitygate.wait=true
+
+  zizmor:
+    name: Workflow audit (zizmor)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          enable-cache: false
+
+      - name: Audit workflows
+        run: uvx zizmor@1.32.0 --format=plain --config .github/zizmor.yml .github/workflows
+
+  # The one check branch rules require: it fails unless every job above succeeded.
+  ci:
+    name: CI
+    needs: [tests, sonar, zizmor]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Require every job to succeed
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          set -euo pipefail
+          failed=$(jq -r 'to_entries[] | select(.value.result != "success") | "\(.key): \(.value.result)"' <<< "$NEEDS")
+          if [ -n "$failed" ]; then
+            echo "Jobs that did not succeed:" >&2
+            echo "$failed" >&2
+            exit 1
+          fi
+          echo "All jobs succeeded."

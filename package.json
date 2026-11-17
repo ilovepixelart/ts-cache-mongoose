@@ -77,6 +77,7 @@
   "scripts": {
     "biome": "npx @biomejs/biome check",
     "biome:fix": "npx @biomejs/biome check --write .",
+    "lint:package": "publint --strict && attw --pack .",
     "test": "vitest run --coverage",
     "test:open": "vitest run --coverage && open-cli coverage/lcov-report/index.html",
     "clean": "rm -rf ./dist",
@@ -89,6 +90,7 @@
     "ioredis": "5.10.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
     "@biomejs/biome": "2.6.8",
     "@nestjs/common": "11.2.10",
     "@nestjs/core": "11.2.10",
@@ -102,6 +104,7 @@
     "mongoose": "9.12.2",
     "open-cli": "9.0.0",
     "pkgroll": "2.29.1",
+    "publint": "0.3.25",
     "simple-git-hooks": "2.14.0",
     "typescript": "7.0.2",
     "vitest": "5.1.0"
@@ -118,7 +121,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npm run type:check",
-    "pre-push": "npm run biome:fix"
+    "pre-push": "npm run biome"
   },
   "np": {
     "publish": false
