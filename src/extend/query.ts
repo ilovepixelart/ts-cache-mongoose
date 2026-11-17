@@ -1,4 +1,5 @@
-import { getKey } from '../key'
+import { getKey, getModelScope, omitKeys } from '../key'
+import { runsInSession } from '../session'
 
 import type { Mongoose } from 'mongoose'
 import type { Cache } from '../cache/Cache'
@@ -12,11 +13,11 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
 
     const filter = this.getFilter()
     const update = this.getUpdate()
-    const options = this.getOptions()
+    const options = omitKeys(this.getOptions(), ['session'])
     const mongooseOptions = this.mongooseOptions()
 
     return getKey({
-      model: this.model.modelName,
+      ...getModelScope(this.model),
       op: this.op,
       filter,
       update,
@@ -40,7 +41,9 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
   }
 
   mongoose.Query.prototype.exec = async function (...args: []) {
-    if (!Object.hasOwn(this, '_ttl')) {
+    // Reads in a session, explicit or from a surrounding transaction (which may still abort),
+    // neither come from nor go to the shared cache.
+    if (!Object.hasOwn(this, '_ttl') || runsInSession(this.getOptions(), this.model)) {
       return mongooseExec.apply(this, args)
     }
 

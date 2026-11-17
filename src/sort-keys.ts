@@ -4,6 +4,10 @@ const isPlainObject = (value: unknown): value is Record<string, unknown> => {
   return proto === Object.prototype || proto === null
 }
 
+// Values whose key order MongoDB honours: a filter (embedded documents match field by field,
+// in order) and sort specifications. They are kept as given.
+const ORDERED_KEYS = new Set(['filter', 'sort', '$sort', 'sortBy'])
+
 export const sortKeys = (input: Record<string, unknown> | Record<string, unknown>[]): Record<string, unknown> | Record<string, unknown>[] => {
   const seen = new WeakSet<object>()
 
@@ -14,7 +18,9 @@ export const sortKeys = (input: Record<string, unknown> | Record<string, unknown
     const sorted: Record<string, unknown> = {}
     for (const key of Object.keys(obj).sort((a, b) => a.localeCompare(b))) {
       const value = obj[key]
-      if (Array.isArray(value)) {
+      if (ORDERED_KEYS.has(key)) {
+        sorted[key] = value
+      } else if (Array.isArray(value)) {
         sorted[key] = sortArray(value)
       } else if (isPlainObject(value)) {
         sorted[key] = sortObject(value)
