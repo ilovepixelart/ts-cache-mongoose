@@ -68,7 +68,9 @@ export function omitKeys(obj: Record<string, unknown>, keys: readonly string[]):
 
 // The data a model reads: its deployment (first seed host), database and collection. The model
 // name stays in the key as well, since discriminators share their base model's collection.
-export function getModelScope(model: Model<unknown>): Record<string, unknown> {
+// An aggregate without a model gets no scope and fails in mongoose's own exec, as without a cache.
+export function getModelScope(model: Model<unknown> | undefined): Record<string, unknown> {
+  if (model == null) return {}
   const { db, collection, modelName } = model
   return {
     model: modelName,

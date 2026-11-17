@@ -161,6 +161,23 @@ describe('cache key collisions', () => {
     })
   })
 
+  describe('aggregate without a model', () => {
+    it('rejects with the same error as without .cache()', async () => {
+      const uncached = await new mongoose.Aggregate()
+        .append({ $match: {} })
+        .exec()
+        .catch((err: Error) => err)
+      const cached = await new mongoose.Aggregate()
+        .append({ $match: {} })
+        .cache()
+        .exec()
+        .catch((err: Error) => err)
+      expect(uncached).toBeInstanceOf(Error)
+      expect(cached).toBeInstanceOf((uncached as Error).constructor)
+      expect((cached as Error).message).toBe((uncached as Error).message)
+    })
+  })
+
   describe('sort order', () => {
     it('serves sort({ b, a }) its own order after sort({ a, b }) was cached', async () => {
       await KModel.find().sort({ a: 1, b: 1 }).lean().cache()
