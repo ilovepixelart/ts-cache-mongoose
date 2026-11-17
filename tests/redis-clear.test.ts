@@ -3,10 +3,13 @@ import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import IORedis from 'ioredis'
 import { RedisCacheEngine } from '../src/cache/engine/RedisCacheEngine'
 
-const connection = { host: 'localhost', port: Number(process.env.REDIS_PORT ?? 6379), db: 9 }
+// FLUSHDBs db 9, so it runs only against a Redis named explicitly through REDIS_PORT (CI sets it),
+// never against whatever happens to listen on the default port.
+const redisPort = process.env.REDIS_PORT
 
-describe('RedisCacheEngine.clear', () => {
-  const raw = new IORedis(connection)
+describe.skipIf(!redisPort)('RedisCacheEngine.clear', () => {
+  const connection = { host: process.env.REDIS_HOST ?? 'localhost', port: Number(redisPort), db: 9 }
+  const raw = new IORedis({ ...connection, lazyConnect: true })
 
   beforeEach(async () => {
     await raw.flushdb()
