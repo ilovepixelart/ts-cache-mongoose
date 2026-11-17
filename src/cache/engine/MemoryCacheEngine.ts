@@ -41,7 +41,7 @@ const emptyOf = (value: Container): Container => {
 }
 
 const leafOf = (value: object): unknown => {
-  if (value instanceof Date) return new Date(value.getTime())
+  if (value instanceof Date) return new Date(value)
   if (Buffer.isBuffer(value)) return Buffer.from(value)
   return value
 }
