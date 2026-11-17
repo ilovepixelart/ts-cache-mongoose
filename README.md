@@ -95,6 +95,8 @@ const authors = await Book.distinct('author').cache('30 seconds').exec()
 
 A non-lean `find` or `findOne` is cached as document data and rebuilt on a hit as documents of the query's model (or discriminator), with the query's projection, so defaults apply only to selected paths, and with populated paths as populated documents. Query middleware (`pre('find')`, `post('find')`) runs only when the query reaches MongoDB; `init` hooks run on every hit. A result that a hit cannot rebuild exactly is not cached and every call reaches MongoDB: virtual populate, `refPath` or `ref` functions, populate with `options.lean`, a populated array filtered by `match` or `perDocumentLimit`, a reference to a deleted document, a document changed by a `post('find')` hook, and a document whose `_id` mongoose generates on load.
 
+The in-memory engine keeps its own copy of each result and returns a fresh copy on every hit, so changing a returned result (lean or non-lean, aggregate result or distinct list) does not change what later queries get.
+
 ### Aggregate caching
 
 ```typescript
