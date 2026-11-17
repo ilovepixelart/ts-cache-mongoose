@@ -18,6 +18,29 @@ export type MemoryCacheEngineOptions = {
 // well enough to return an O(1) estimate.
 const defaultSizer = (value: CacheData): number => serialize(value).byteLength
 
+// Callers own what they pass in and what they get back, so the engine keeps its own copy of
+// the data and hands out a fresh one on every read. Class instances are shared, not copied:
+// BSON values (ObjectId, Decimal128, Binary, UUID) are immutable in practice, and a live
+// mongoose document has no copy that `Model.hydrate()` reads back the same on every version.
+const copyOf = (value: unknown): unknown => {
+  if (value === null || typeof value !== 'object') return value
+  if (Array.isArray(value)) {
+    const copy: unknown[] = new Array(value.length)
+    for (let i = 0; i < value.length; i++) copy[i] = copyOf(value[i])
+    return copy
+  }
+  const proto: unknown = Object.getPrototypeOf(value)
+  if (proto === Object.prototype || proto === null) {
+    const copy: Record<string, unknown> = proto === null ? Object.create(null) : {}
+    for (const key of Object.keys(value)) copy[key] = copyOf((value as Record<string, unknown>)[key])
+    return copy
+  }
+  if (value instanceof Date) return new Date(value.getTime())
+  if (value instanceof Map) return new Map(Array.from(value, ([key, item]) => [key, copyOf(item)]))
+  if (Buffer.isBuffer(value)) return Buffer.from(value)
+  return value
+}
+
 export class MemoryCacheEngine implements CacheEngine {
   readonly #cache: Map<string, Entry>
   readonly #maxEntries: number
@@ -53,7 +76,7 @@ export class MemoryCacheEngine implements CacheEngine {
     // read keys outlive stale ones under eviction pressure.
     this.#cache.delete(key)
     this.#cache.set(key, item)
-    return item.value
+    return copyOf(item.value) as CacheData
   }
 
   set(key: string, value: CacheData, ttl?: Duration): void {
@@ -67,7 +90,7 @@ export class MemoryCacheEngine implements CacheEngine {
     }
 
     const bytes = this.#sizeOf(value)
-    this.#cache.set(key, { value, expiresAt: Date.now() + actualTTL, bytes })
+    this.#cache.set(key, { value: copyOf(value) as CacheData, expiresAt: Date.now() + actualTTL, bytes })
     this.#totalBytes += bytes
 
     // Soft cap: the just-written entry is never evicted. If either

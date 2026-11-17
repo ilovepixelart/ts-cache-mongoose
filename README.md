@@ -93,6 +93,8 @@ const count = await Book.countDocuments().cache('1 minute').exec()
 const authors = await Book.distinct('author').cache('30 seconds').exec()
 ```
 
+The in-memory engine keeps its own copy of each result and returns a fresh copy on every hit, so changing a returned lean result, aggregate result or distinct list does not change what later queries get. Non-lean results are stored as the live documents, so an unsaved change to one of them still reaches later hits.
+
 ### Aggregate caching
 
 ```typescript
