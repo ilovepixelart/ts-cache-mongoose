@@ -83,7 +83,7 @@
     "clean": "rm -rf ./dist",
     "type:check": "tsc --noEmit",
     "type:check:tests": "tsc --noEmit -p tests/tsconfig.json",
-    "build": "pkgroll --clean-dist",
+    "build": "pkgroll --clean-dist && node scripts/cjs-export-types.ts dist/index.d.cts dist/nest/index.d.cts",
     "release": "npm install && npm run biome && npm run type:check && npm run type:check:tests && npm run build && np --no-publish"
   },
   "dependencies": {
@@ -92,9 +92,9 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
     "@biomejs/biome": "2.6.8",
-    "@nestjs/common": "11.2.10",
-    "@nestjs/core": "11.2.10",
-    "@nestjs/testing": "11.2.10",
+    "@nestjs/common": "12.5.1",
+    "@nestjs/core": "12.5.1",
+    "@nestjs/testing": "12.5.1",
     "@types/node": "25.9.9",
     "@typescript/typescript6": "6.0.2",
     "@vitest/coverage-v8": "5.1.0",
@@ -110,7 +110,7 @@
     "vitest": "5.1.0"
   },
   "peerDependencies": {
-    "@nestjs/common": ">=9.0.0 < 12",
+    "@nestjs/common": ">=9.0.0 < 13",
     "bson": ">=4.7.2 < 8",
     "mongoose": ">=6.6.0 < 10"
   },
