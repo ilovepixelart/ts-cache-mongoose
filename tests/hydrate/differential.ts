@@ -184,8 +184,7 @@ export const describeDifferential = (engine: string, options: () => CacheOptions
         const hit = canonical(await query.run(true))
         if (miss !== truth) mismatches.push(`miss: ${query.describe}`)
         if (hit !== truth) mismatches.push(`hit: ${query.describe}`)
-        // null and 0 results are not cached yet (an `if (resultCache)` check), so they repeat.
-        if (reads !== 0 && uncached !== null && uncached !== 0) mismatches.push(`repeat reached MongoDB ${reads}x: ${query.describe}`)
+        if (reads !== 0) mismatches.push(`repeat reached MongoDB ${reads}x: ${query.describe}`)
       }
       expect(mismatches).toEqual([])
       expect(onError).not.toHaveBeenCalled()
