@@ -1,0 +1,53 @@
+name: Bug report
+description: Something in ts-cache-mongoose is not working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not use this form for security issues. Report those privately via a [GitHub Security Advisory](https://github.com/ilovepixelart/ts-cache-mongoose/security/advisories/new); see SECURITY.md.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you do, and what went wrong? Include error messages and stack traces.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: For example, which result should have been cached, the TTL behavior, or the invalidation you expected.
+    validations:
+      required: true
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Cache engine
+      options:
+        - in-memory
+        - redis
+        - both
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Schema, plugin options, and the query or aggregate pipeline that triggers the bug.
+      render: typescript
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: ts-cache-mongoose, mongoose, ioredis (for the redis engine), Node.js, and OS
+      placeholder: "ts-cache-mongoose 2.3.0, mongoose 9.4.1, ioredis 5.10.0, Node 24.11, macOS 15"
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Related issues, Redis configuration, TTL specifics, and so on.

@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest an idea for ts-cache-mongoose
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is the problem or missing behavior?
+      placeholder: I need to invalidate a cached query after a bulk update, but ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: For example, a new plugin option, `.cache()` API, cache engine, or invalidation strategy.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches, workarounds, or existing options you have tried.
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Cache engine
+      description: Which engine does this apply to?
+      options:
+        - in-memory
+        - redis
+        - both
+        - new engine (describe above)

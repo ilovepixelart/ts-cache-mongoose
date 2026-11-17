@@ -27,12 +27,12 @@ I need a way to cache mongoose queries and aggregations to improve application p
 
 ```json
 {
-  "node": "20.x || 22.x || 24.x",
+  "node": ">=20",
   "mongoose": ">=6.6.0 <10"
 }
 ```
 
-CI tests against mongoose `6.12.2`, `7.6.4`, `8.23.0`, and `9.4.1`.
+CI tests on Node.js `22.x`, `24.x`, and `26.x`, against mongoose `6.12.2`, `7.6.4`, `8.23.0`, and `9.4.1`.
 
 ## Features
 
@@ -48,7 +48,7 @@ CI tests against mongoose `6.12.2`, `7.6.4`, `8.23.0`, and `9.4.1`.
 
 ## Installation
 
-`mongoose` is a peer dependency — install it alongside `ts-cache-mongoose`.
+`mongoose` is a peer dependency: install it alongside `ts-cache-mongoose`.
 
 ```bash
 npm install ts-cache-mongoose mongoose
@@ -59,7 +59,7 @@ bun add ts-cache-mongoose mongoose
 
 ## Example
 
-Works with any Node.js framework — Express, Fastify, Koa, Hono, etc:
+Works with any Node.js framework: Express, Fastify, Koa, Hono, etc:
 
 ```typescript
 import mongoose from 'mongoose'
@@ -104,7 +104,7 @@ const books = await Book.aggregate([
 
 ### Bounded in-memory cache
 
-The in-memory engine is unbounded by default. For workloads where query keys are driven by user input (search, filters, pagination), cap the cache so a caller generating unique cache keys cannot grow the map without limit. Two bounds are available and can be combined — eviction is LRU, and whichever bound is hit first triggers it:
+The in-memory engine is unbounded by default. For workloads where query keys are driven by user input (search, filters, pagination), cap the cache so a caller generating unique cache keys cannot grow the map without limit. Two bounds are available and can be combined. Eviction is LRU, and whichever bound is hit first triggers it:
 
 ```typescript
 cache.init(mongoose, {
@@ -115,7 +115,7 @@ cache.init(mongoose, {
 })
 ```
 
-`maxBytes` measures entry size via `node:v8.serialize(value).byteLength` by default — handles circular references (mongoose `populate` parent-refs), single C++ call per `set`, works on Node / Bun / Deno. Provide your own `sizeCalculation` callback if you want an O(1) estimate instead:
+`maxBytes` measures entry size via `node:v8.serialize(value).byteLength` by default. It handles circular references (mongoose `populate` parent-refs), takes a single C++ call per `set`, and works on Node / Bun / Deno. Provide your own `sizeCalculation` callback if you want an O(1) estimate instead:
 
 ```typescript
 cache.init(mongoose, {
@@ -130,11 +130,11 @@ cache.init(mongoose, {
 
 Eviction is soft: the just-written entry is never dropped, even if its own size exceeds `maxBytes`. Everything older gets evicted until both bounds are satisfied (or only the new entry remains).
 
-Both options are ignored for the Redis engine — use Redis's own `maxmemory` + `maxmemory-policy` instead.
+Both options are ignored for the Redis engine; use Redis's own `maxmemory` + `maxmemory-policy` instead.
 
 ### Custom error handling
 
-By default, cache engine failures (Redis disconnects, serialization errors, etc.) are logged via `console.error` and the query falls through to the database. Pass an `onError` callback to route them somewhere else — e.g. a structured logger, Sentry, or a metric counter:
+By default, cache engine failures (Redis disconnects, serialization errors, etc.) are logged via `console.error` and the query falls through to the database. Pass an `onError` callback to route them somewhere else, e.g. a structured logger, Sentry, or a metric counter:
 
 ```typescript
 cache.init(mongoose, {
@@ -147,7 +147,7 @@ cache.init(mongoose, {
 })
 ```
 
-The callback receives the raw `Error`. Cache reads and writes never throw — a failing engine degrades to a cache miss.
+The callback receives the raw `Error`. Cache reads and writes never throw: a failing engine degrades to a cache miss.
 
 ### Cache invalidation
 
