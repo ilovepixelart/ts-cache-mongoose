@@ -58,9 +58,8 @@ const encodeReference = (obj: object, stack: object[]): string => {
 }
 
 export function getKey(data: Record<string, unknown>[] | Record<string, unknown>): string {
-  return createHash('sha1')
-    .update(encode(sortKeys(data), []))
-    .digest('hex')
+  const sortedStr = encode(sortKeys(data), [])
+  return createHash('sha1').update(sortedStr).digest('hex')
 }
 
 export function omitKeys(obj: Record<string, unknown>, keys: readonly string[]): Record<string, unknown> {
