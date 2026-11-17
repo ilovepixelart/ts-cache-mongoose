@@ -50,7 +50,6 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
 
     const isCount = this.op?.includes('count') ?? false
     const isDistinct = this.op === 'distinct'
-    const model = this.model.modelName
 
     const resultCache = await cache.get(key).catch((err: unknown) => {
       cache.onError(err as Error)
@@ -61,14 +60,16 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
         return resultCache
       }
 
-      const modelConstructor = mongoose.model<unknown>(model)
+      // The query's own model: registered on its connection (createConnection(), useDb()), not
+      // necessarily on the default one.
+      const model = this.model
 
       if (Array.isArray(resultCache)) {
         return resultCache.map((item) => {
-          return modelConstructor.hydrate(item)
+          return model.hydrate(item)
         })
       }
-      return modelConstructor.hydrate(resultCache)
+      return model.hydrate(resultCache)
     }
 
     const result = (await mongooseExec.call(this)) as Record<string, unknown>[] | Record<string, unknown>
