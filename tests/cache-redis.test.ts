@@ -9,7 +9,11 @@ import { server } from './mongo/server'
 
 import type CacheMongoose from '../src/index'
 
-describe('cache-redis', async () => {
+// Writes and clears cache keys, so it runs only against a Redis named explicitly through REDIS_PORT
+// (CI sets it), never against whatever happens to listen on the default port.
+const redisPort = process.env.REDIS_PORT
+
+describe.skipIf(!redisPort)('cache-redis', async () => {
   const instance = server('cache-redis')
   let cache: CacheMongoose
 
@@ -17,8 +21,8 @@ describe('cache-redis', async () => {
     cache = plugin.init(mongoose, {
       engine: 'redis',
       engineOptions: {
-        host: 'localhost',
-        port: 6379,
+        host: process.env.REDIS_HOST ?? 'localhost',
+        port: Number(redisPort),
       },
       defaultTTL: '10 seconds',
     })
