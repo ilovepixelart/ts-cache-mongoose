@@ -164,6 +164,12 @@ await instance.clear('user-key')
 
 With the Redis engine, `clear()` deletes only the keys under `engineOptions.keyPrefix` (default `cache-mongoose:`), so the cache can share a Redis database with other data. With `keyPrefix: ''` it deletes every key in the database.
 
+### Cache keys
+
+Without a custom key, the key is a hash of the query (or pipeline) and the data it reads: the model, its collection, database and deployment (first host and port of the connection), and the options that change the result. The same query on another database, for example through `useDb()` or a second connection, never shares an entry. A custom key is used as given, so it must be unique across databases itself.
+
+A query or aggregate that runs in a session (`.session(session)`) bypasses the cache: it is neither read from nor written to it, because a transaction can still abort.
+
 ### NestJS (because it's special)
 
 Import `CacheModule` from `ts-cache-mongoose/nest`:

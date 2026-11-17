@@ -1,8 +1,11 @@
-import { getKey } from '../key'
+import { getKey, getModelScope, omitKeys } from '../key'
 
 import type { Mongoose } from 'mongoose'
 import type { Cache } from '../cache/Cache'
 import type { Duration } from '../types'
+
+// Options that never change which documents come back. A ClientSession is not data at all.
+const NON_DATA_OPTIONS = ['session', 'comment', 'maxTimeMS', 'allowDiskUse', 'batchSize', 'cursor']
 
 export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
   const mongooseExec = mongoose.Aggregate.prototype.exec
@@ -11,7 +14,9 @@ export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
     if (this._key != null) return this._key
 
     return getKey({
+      ...getModelScope(this.model()),
       pipeline: this.pipeline(),
+      options: omitKeys(this.options, NON_DATA_OPTIONS),
     })
   }
 
@@ -26,7 +31,8 @@ export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
   }
 
   mongoose.Aggregate.prototype.exec = async function (...args: []) {
-    if (!Object.hasOwn(this, '_ttl')) {
+    // Reads in a session (a transaction may later abort) neither come from nor go to the shared cache.
+    if (!Object.hasOwn(this, '_ttl') || this.options.session != null) {
       return mongooseExec.apply(this, args)
     }
 
