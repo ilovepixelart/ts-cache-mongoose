@@ -162,6 +162,8 @@ const user = await User.findById(id).cache('1 minute', 'user-key').exec()
 await instance.clear('user-key')
 ```
 
+With the Redis engine, `clear()` deletes only the keys under `engineOptions.keyPrefix` (default `cache-mongoose:`), so the cache can share a Redis database with other data. With `keyPrefix: ''` it deletes every key in the database.
+
 ### NestJS (because it's special)
 
 Import `CacheModule` from `ts-cache-mongoose/nest`:
