@@ -73,8 +73,8 @@ step in that attack chain.
   engine uses Node built-ins only. Consumers audit a dependency
   surface of three: `ioredis`, `mongoose` (peer), and `bson` (peer).
 - **Pinned peer ranges.** `mongoose >=6.6.0 <10`, `bson >=4.7.2 <8`,
-  and `@nestjs/common >=9.0.0 <12` cap the upper bound at the first
-  untested major so a hypothetical mongoose 10, bson 8, or Nest 12
+  and `@nestjs/common >=9.0.0 <13` cap the upper bound at the first
+  untested major so a hypothetical mongoose 10, bson 8, or Nest 13
   cannot auto-pull into consumer installs.
 - **Exact production dep version.** `ioredis` is pinned to an exact
   version in `dependencies`, not a range.
