@@ -168,7 +168,7 @@ With the Redis engine, `clear()` deletes only the keys under `engineOptions.keyP
 
 Without a custom key, the key is a hash of the query (or pipeline) and the data it reads: the model, its collection, database and deployment (first host and port of the connection), and the options that change the result. The same query on another database, for example through `useDb()` or a second connection, never shares an entry. A custom key is used as given, so it must be unique across databases itself.
 
-A query or aggregate that runs in a session (`.session(session)`) bypasses the cache: it is neither read from nor written to it, because a transaction can still abort.
+A query or aggregate that runs in a session bypasses the cache: it is neither read from nor written to it. This covers an explicit `.session(session)` and the implicit session of `connection.transaction()` with `transactionAsyncLocalStorage` enabled, so reads inside a transaction are never cached: the transaction can still abort, and it must see its own writes.
 
 ### NestJS (because it's special)
 

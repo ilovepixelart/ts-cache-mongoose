@@ -1,4 +1,5 @@
 import { getKey, getModelScope, omitKeys } from '../key'
+import { runsInSession } from '../session'
 
 import type { Mongoose } from 'mongoose'
 import type { Cache } from '../cache/Cache'
@@ -40,8 +41,9 @@ export function extendQuery(mongoose: Mongoose, cache: Cache): void {
   }
 
   mongoose.Query.prototype.exec = async function (...args: []) {
-    // Reads in a session (a transaction may later abort) neither come from nor go to the shared cache.
-    if (!Object.hasOwn(this, '_ttl') || this.getOptions().session != null) {
+    // Reads in a session, explicit or from a surrounding transaction (which may still abort),
+    // neither come from nor go to the shared cache.
+    if (!Object.hasOwn(this, '_ttl') || runsInSession(this.getOptions(), this.model)) {
       return mongooseExec.apply(this, args)
     }
 
