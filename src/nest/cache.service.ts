@@ -20,9 +20,10 @@ export class CacheService implements OnApplicationBootstrap, OnApplicationShutdo
     return this.cacheMongoose
   }
 
-  async onApplicationBootstrap(): Promise<void> {
+  onApplicationBootstrap(): Promise<void> {
     this.cacheMongoose = CacheMongoose.init(mongoose, this.options)
     this.logger.log(`Cache initialized with ${this.options.engine} engine`)
+    return Promise.resolve()
   }
 
   async onApplicationShutdown(): Promise<void> {
