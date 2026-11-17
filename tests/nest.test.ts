@@ -176,6 +176,14 @@ describe('CacheService', () => {
     expect(service.instance).toBeDefined()
   })
 
+  it('should return a promise from bootstrap that resolves to undefined', async () => {
+    const service = new CacheService(defaultOptions)
+    const result = service.onApplicationBootstrap()
+    expect(result).toBeInstanceOf(Promise)
+    expect(service.instance).toBeDefined()
+    await expect(result).resolves.toBeUndefined()
+  })
+
   it('should close cache on shutdown', async () => {
     const service = new CacheService(defaultOptions)
     await service.onApplicationBootstrap()
