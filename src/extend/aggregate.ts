@@ -45,7 +45,7 @@ export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
       cache.onError(err as Error)
     })
 
-    if (resultCache) {
+    if (resultCache !== undefined) {
       return resultCache
     }
 
