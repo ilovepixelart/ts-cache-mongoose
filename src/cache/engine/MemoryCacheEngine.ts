@@ -22,23 +22,67 @@ const defaultSizer = (value: CacheData): number => serialize(value).byteLength
 // the data and hands out a fresh one on every read. Class instances are shared, not copied:
 // BSON values (ObjectId, Decimal128, Binary, UUID) are immutable in practice, and a live
 // mongoose document has no copy that `Model.hydrate()` reads back the same on every version.
-const copyOf = (value: unknown): unknown => {
-  if (value === null || typeof value !== 'object') return value
-  if (Array.isArray(value)) {
-    const copy: unknown[] = new Array(value.length)
-    for (let i = 0; i < value.length; i++) copy[i] = copyOf(value[i])
-    return copy
-  }
+// The walk uses its own stack rather than recursion, so depth is bounded by memory, not by
+// the call stack. An array, object or Map reached twice (a cycle, a shared reference) is
+// copied once and shared the same way in the copy.
+type Container = unknown[] | Record<string, unknown> | Map<unknown, unknown>
+
+const isPlainObject = (value: object): value is Record<string, unknown> => {
   const proto: unknown = Object.getPrototypeOf(value)
-  if (proto === Object.prototype || proto === null) {
-    const copy: Record<string, unknown> = proto === null ? Object.create(null) : {}
-    for (const key of Object.keys(value)) copy[key] = copyOf((value as Record<string, unknown>)[key])
-    return copy
-  }
+  return proto === Object.prototype || proto === null
+}
+
+const isContainer = (value: object): value is Container => Array.isArray(value) || isPlainObject(value) || value instanceof Map
+
+const emptyOf = (value: Container): Container => {
+  if (Array.isArray(value)) return new Array(value.length)
+  if (value instanceof Map) return new Map()
+  return Object.getPrototypeOf(value) === null ? Object.create(null) : {}
+}
+
+const leafOf = (value: object): unknown => {
   if (value instanceof Date) return new Date(value.getTime())
-  if (value instanceof Map) return new Map(Array.from(value, ([key, item]) => [key, copyOf(item)]))
   if (Buffer.isBuffer(value)) return Buffer.from(value)
   return value
+}
+
+const fill = (source: Container, target: Container, visit: (value: unknown) => unknown): void => {
+  if (Array.isArray(source)) {
+    const items = target as unknown[]
+    for (let i = 0; i < source.length; i++) items[i] = visit(source[i])
+  } else if (source instanceof Map) {
+    for (const [key, item] of source) (target as Map<unknown, unknown>).set(key, visit(item))
+  } else {
+    const copy = target as Record<string, unknown>
+    for (const key of Object.keys(source)) {
+      const item = visit(source[key])
+      // Plain assignment of "__proto__" would replace the prototype instead of adding the key.
+      if (key === '__proto__') Object.defineProperty(copy, key, { value: item, writable: true, enumerable: true, configurable: true })
+      else copy[key] = item
+    }
+  }
+}
+
+const copyOf = (root: unknown): unknown => {
+  const copies = new Map<Container, Container>()
+  const pending: Container[] = []
+  const visit = (value: unknown): unknown => {
+    if (value === null || typeof value !== 'object') return value
+    if (!isContainer(value)) return leafOf(value)
+    let copy = copies.get(value)
+    if (copy === undefined) {
+      copy = emptyOf(value)
+      copies.set(value, copy)
+      pending.push(value, copy)
+    }
+    return copy
+  }
+  const copy = visit(root)
+  while (pending.length > 0) {
+    const target = pending.pop() as Container
+    fill(pending.pop() as Container, target, visit)
+  }
+  return copy
 }
 
 export class MemoryCacheEngine implements CacheEngine {
@@ -83,6 +127,8 @@ export class MemoryCacheEngine implements CacheEngine {
     const givenTTL = ttl == null ? undefined : ms(ttl)
     const actualTTL = givenTTL ?? Number.POSITIVE_INFINITY
 
+    const stored = copyOf(value) as CacheData
+
     const existing = this.#cache.get(key)
     if (existing) {
       this.#cache.delete(key)
@@ -90,7 +136,7 @@ export class MemoryCacheEngine implements CacheEngine {
     }
 
     const bytes = this.#sizeOf(value)
-    this.#cache.set(key, { value: copyOf(value) as CacheData, expiresAt: Date.now() + actualTTL, bytes })
+    this.#cache.set(key, { value: stored, expiresAt: Date.now() + actualTTL, bytes })
     this.#totalBytes += bytes
 
     // Soft cap: the just-written entry is never evicted. If either
