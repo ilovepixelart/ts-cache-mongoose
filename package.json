@@ -82,7 +82,7 @@
     "clean": "rm -rf ./dist",
     "type:check": "tsc --noEmit",
     "type:check:tests": "tsc --noEmit -p tests/tsconfig.json",
-    "build": "pkgroll --clean-dist",
+    "build": "pkgroll --clean-dist && node scripts/cjs-export-types.ts dist/index.d.cts dist/nest/index.d.cts",
     "release": "npm install && npm run biome && npm run type:check && npm run type:check:tests && npm run build && np --no-publish"
   },
   "dependencies": {
