@@ -52,7 +52,16 @@ export class RedisCacheEngine implements CacheEngine {
   }
 
   async clear(): Promise<void> {
-    await this.#client.flushdb()
+    // ioredis prefixes command keys but not SCAN patterns, and SCAN returns full key
+    // names, so the prefix goes into the pattern by hand and comes off before UNLINK.
+    const prefix = this.#client.options.keyPrefix ?? ''
+    const escapedPrefix = prefix.replaceAll(/[*?[\]\\]/g, String.raw`\$&`)
+    const match = `${escapedPrefix}*`
+    for await (const keys of this.#client.scanStream({ match, count: 500 }) as AsyncIterable<string[]>) {
+      if (keys.length > 0) {
+        await this.#client.unlink(...keys.map((key) => key.slice(prefix.length)))
+      }
+    }
   }
 
   async close(): Promise<void> {
