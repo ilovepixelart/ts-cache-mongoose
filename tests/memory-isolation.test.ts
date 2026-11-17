@@ -107,15 +107,15 @@ describe('memory engine isolates stored values from callers', () => {
       expect(next[0].mixed).toEqual({ k: 1 })
     })
 
-    // Non-lean results reach the engine as live documents, which it shares rather than copies.
-    it.fails('an unsaved change on a non-lean miss result is not served by later hits', async () => {
+    // Non-lean results reach the engine as document data, so these hold like the lean cases.
+    it('an unsaved change on a non-lean miss result is not served by later hits', async () => {
       const first = await IsolatedModel.findOne({ a: 1 }).cache()
       if (first) first.name = 'unsaved-edit'
       const second = await IsolatedModel.findOne({ a: 1 }).cache()
       expect(second?.name).toBe('x')
     })
 
-    it.fails('an unsaved Mixed change on a non-lean hit is not served by later hits', async () => {
+    it('an unsaved Mixed change on a non-lean hit is not served by later hits', async () => {
       await IsolatedModel.findOne({ a: 1 }).cache()
       const hit = await IsolatedModel.findOne({ a: 1 }).cache()
       if (hit) (hit.mixed as Record<string, unknown>).k = 'edited'
