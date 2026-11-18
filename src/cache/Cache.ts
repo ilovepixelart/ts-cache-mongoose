@@ -54,13 +54,13 @@ export class Cache {
 
   /** Makes `load` the pending load of `key` until it settles, unless coalescing is off. */
   share(key: string, load: Promise<CacheData>): void {
-    if (!this.#coalesce) return
-    this.#pending.set(key, load)
     const settle = () => {
       if (this.#pending.get(key) === load) this.#pending.delete(key)
     }
-    // Also marks a rejection as handled: the caller that started the load receives it.
+    // Marks a rejection of `load` as handled whether or not it is shared: the caller that started
+    // it receives the error, and an unhandled rejection would end the process.
     load.then(settle, settle)
+    if (this.#coalesce) this.#pending.set(key, load)
   }
 
   async get(key: string): Promise<CacheData> {

@@ -57,4 +57,42 @@ describe('coalesce: false', () => {
     await OffItem.find({ n: 1 }).lean().cache()
     expect(reads).toBe(0)
   })
+
+  // A failing query must reject for its caller only. An unhandled rejection ends a Node process
+  // even when the caller caught the error.
+  it.each([
+    [
+      'find',
+      () =>
+        OffItem.find({ $expr: { $nope: 1 } } as never)
+          .lean()
+          .cache()
+          .exec(),
+    ],
+    [
+      'non-lean findOne',
+      () =>
+        OffItem.findOne({ $expr: { $nope: 1 } } as never)
+          .cache()
+          .exec(),
+    ],
+    [
+      'aggregate',
+      () =>
+        OffItem.aggregate([{ $nope: 1 }] as never)
+          .cache()
+          .exec(),
+    ],
+  ])('a failing cached %s rejects for its caller without an unhandled rejection', async (_label, run) => {
+    const unhandled: unknown[] = []
+    const listener = (reason: unknown) => unhandled.push(reason)
+    process.on('unhandledRejection', listener)
+    try {
+      await expect(run()).rejects.toThrow()
+      await new Promise((resolve) => setTimeout(resolve, 50))
+    } finally {
+      process.off('unhandledRejection', listener)
+    }
+    expect(unhandled).toEqual([])
+  })
 })

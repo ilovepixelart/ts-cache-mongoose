@@ -1,4 +1,10 @@
 {
   "description": "Scenarios whose result is meant to differ from the latest published release: each entry names the scenario (group/name), the pull request that changed it, and the change. Empty while main equals the release.",
-  "changes": []
+  "changes": [
+    {
+      "scenario": "memory-coalesce-off/with coalesce: false a failing cached query rejects for its caller",
+      "pr": "PENDING",
+      "change": "With coalesce: false, a failing cached query no longer leaves an unhandled rejection that ends the process: unhandledRejection true in 2.5.0, false now."
+    }
+  ]
 }
