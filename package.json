@@ -1,6 +1,6 @@
 {
   "name": "ts-cache-mongoose",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Cache plugin for mongoose Queries and Aggregate (in-memory, redis)",
   "author": "ilovepixelart",
   "license": "MIT",
