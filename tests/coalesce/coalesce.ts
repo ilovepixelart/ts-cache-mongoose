@@ -221,6 +221,31 @@ export const describeCoalescing = (engine: string, options: () => CacheOptions |
       expect(reads).toBe(5)
     })
 
+    it('never shares a query between two connections that are not open yet', async () => {
+      const baseUri = `mongodb://${mongoose.connection.host}:${mongoose.connection.port}`
+      for (const db of ['coalesce_conn_a', 'coalesce_conn_b']) {
+        const conn = mongoose.connection.useDb(db)
+        await conn.collection('conndocs').deleteMany({})
+        await conn.collection('conndocs').insertOne({ name: db })
+      }
+      reads = 0
+      const schema = new Schema({ name: String })
+      const a = mongoose.createConnection()
+      const b = mongoose.createConnection()
+      try {
+        const burst = (conn: mongoose.Connection) => Promise.all(Array.from({ length: CALLERS }, () => conn.model('ConnDoc', schema, 'conndocs').find().lean().cache().exec()))
+        const fromA = burst(a)
+        const fromB = burst(b)
+        await Promise.all([a.openUri(`${baseUri}/coalesce_conn_a`), b.openUri(`${baseUri}/coalesce_conn_b`)])
+        for (const rows of await fromA) expect(rows.map((row) => row.name)).toEqual(['coalesce_conn_a'])
+        for (const rows of await fromB) expect(rows.map((row) => row.name)).toEqual(['coalesce_conn_b'])
+        expect(reads).toBe(2)
+      } finally {
+        await a.close()
+        await b.close()
+      }
+    })
+
     it('shares a query by its custom key', async () => {
       const [first, second] = await Promise.all([Item.find({ n: 1 }).lean().cache('1 minute', 'shared-key'), Item.find({ n: 2 }).lean().cache('1 minute', 'shared-key')])
       expect(reads).toBe(1)
