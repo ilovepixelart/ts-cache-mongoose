@@ -1,3 +1,4 @@
+import { copyOf } from '../cache/engine/MemoryCacheEngine'
 import { getKey, getModelScope, omitKeys } from '../key'
 import { runsInSession } from '../session'
 
@@ -49,11 +50,22 @@ export function extendAggregate(mongoose: Mongoose, cache: Cache): void {
       return resultCache
     }
 
-    const result = (await mongooseExec.call(this)) as Record<string, unknown>[] | Record<string, unknown>
-    await cache.set(key, result, ttl).catch((err: unknown) => {
-      cache.onError(err as Error)
-    })
+    // A caller of a key that is already loading gets its own copy of that load's result, taken
+    // when the load settles, before the caller that started it can act on it.
+    const pending = cache.pending(key)
+    if (pending !== undefined) {
+      const shared = await pending
+      if (shared !== undefined) return copyOf(shared)
+    }
 
-    return result
+    const own = (async () => {
+      const result = (await mongooseExec.call(this)) as Record<string, unknown>[] | Record<string, unknown>
+      await cache.set(key, result, ttl).catch((err: unknown) => {
+        cache.onError(err as Error)
+      })
+      return result
+    })()
+    if (pending === undefined) cache.share(key, own)
+    return own
   }
 }

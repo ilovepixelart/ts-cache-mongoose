@@ -44,6 +44,7 @@ CI tests on Node.js `22.x` and `24.x` against mongoose `6.12.2`, `7.6.4`, `8.23.
 - Cache key prefix
 - Query caching
 - Aggregate caching
+- One database round trip for concurrent identical queries
 - Supports ESM and CommonJS
 
 ## Installation
@@ -175,6 +176,25 @@ With the Redis engine, `clear()` deletes only the keys under `engineOptions.keyP
 Without a custom key, the key is a hash of the query (or pipeline) and the data it reads: the model, its collection, database and deployment (first host and port of the connection), and the options that change the result. The same query on another database, for example through `useDb()` or a second connection, never shares an entry. A custom key is used as given, so it must be unique across databases itself.
 
 A query or aggregate that runs in a session bypasses the cache: it is neither read from nor written to it. This covers an explicit `.session(session)` and the implicit session of `connection.transaction()` with `transactionAsyncLocalStorage` enabled, so reads inside a transaction are never cached: the transaction can still abort, and it must see its own writes.
+
+### Concurrent queries
+
+Cached queries with the same cache key that miss the cache at the same time share one MongoDB round trip: the first one runs, the others wait for it, and each caller gets its own copy of the result, as from a cache hit (its own documents for a non-lean query, its own objects for a lean query, aggregate or distinct). Queries with different keys never share, so the scoping above applies. Queries with the same custom key share one round trip whatever they query, as they share one cache entry.
+
+- If the shared query fails, every caller waiting on it rejects with its error, and the next call runs the query again.
+- A result that is not cached (see Query caching) is not shared either: every waiting caller then runs its own query. A TTL of 0 caches nothing, but concurrent callers still share the query in flight.
+- A query in a session never shares a round trip.
+- A query started after `clear()` or `clear(key)` does not join a query that was already in flight, so it reads the data as of the clear.
+
+Sharing is on by default. Turn it off with `coalesce: false`; every concurrent caller then runs its own query:
+
+```typescript
+cache.init(mongoose, {
+  engine: 'memory',
+  defaultTTL: '60 seconds',
+  coalesce: false,
+})
+```
 
 ### NestJS (because it's special)
 
