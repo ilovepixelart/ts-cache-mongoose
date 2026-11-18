@@ -3,7 +3,7 @@
   "changes": [
     {
       "scenario": "memory-coalesce-off/with coalesce: false a failing cached query rejects for its caller",
-      "pr": "PENDING",
+      "pr": "#411",
       "change": "With coalesce: false, a failing cached query no longer leaves an unhandled rejection that ends the process: unhandledRejection true in 2.5.0, false now."
     }
   ]
