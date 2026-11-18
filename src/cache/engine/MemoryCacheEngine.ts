@@ -121,7 +121,7 @@ const fill = (source: Container, target: Container, visit: (value: unknown) => u
   }
 }
 
-const copyOf = (root: unknown): unknown => {
+export const copyOf = (root: unknown): unknown => {
   const copies = new Map<Container, Container>()
   const pending: Container[] = []
   const visit = (value: unknown): unknown => {

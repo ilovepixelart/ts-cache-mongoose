@@ -9,6 +9,8 @@ export class Cache {
   readonly #defaultTTL: number
   readonly #debug: boolean
   readonly #onError: (error: Error) => void
+  readonly #coalesce: boolean
+  readonly #pending = new Map<string, Promise<CacheData>>()
   readonly #engines = ['memory', 'redis'] as const
 
   constructor(cacheOptions: CacheOptions) {
@@ -38,10 +40,27 @@ export class Cache {
     }
 
     this.#debug = cacheOptions.debug === true
+    this.#coalesce = cacheOptions.coalesce !== false
   }
 
   get onError(): (error: Error) => void {
     return this.#onError
+  }
+
+  /** The load of `key` a concurrent caller started and that has not settled yet. */
+  pending(key: string): Promise<CacheData> | undefined {
+    return this.#pending.get(key)
+  }
+
+  /** Makes `load` the pending load of `key` until it settles, unless coalescing is off. */
+  share(key: string, load: Promise<CacheData>): void {
+    if (!this.#coalesce) return
+    this.#pending.set(key, load)
+    const settle = () => {
+      if (this.#pending.get(key) === load) this.#pending.delete(key)
+    }
+    // Also marks a rejection as handled: the caller that started the load receives it.
+    load.then(settle, settle)
   }
 
   async get(key: string): Promise<CacheData> {
@@ -68,7 +87,10 @@ export class Cache {
     }
   }
 
+  // A load already in flight may have read the data before the change that prompted the
+  // invalidation, so later callers no longer join it.
   async del(key: string): Promise<void> {
+    this.#pending.delete(key)
     await this.#engine.del(key)
     if (this.#debug) {
       console.log(`[ts-cache-mongoose] DEL '${key}'`)
@@ -76,6 +98,7 @@ export class Cache {
   }
 
   async clear(): Promise<void> {
+    this.#pending.clear()
     await this.#engine.clear()
     if (this.#debug) {
       console.log('[ts-cache-mongoose] CLEAR')

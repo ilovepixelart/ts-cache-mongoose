@@ -14,6 +14,7 @@ export type CacheOptions = {
   maxEntries?: number
   maxBytes?: number
   sizeCalculation?: (value: CacheData) => number
+  coalesce?: boolean
 }
 
 export interface CacheEngine {

@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto'
+import { createHash, randomUUID } from 'node:crypto'
 import { sortKeys } from './sort-keys'
 
 import type { Model } from 'mongoose'
@@ -66,17 +66,27 @@ export function omitKeys(obj: Record<string, unknown>, keys: readonly string[]):
   return Object.fromEntries(Object.entries(obj).filter(([key]) => !keys.includes(key)))
 }
 
+// Mongoose sets a connection's database name and host when it opens. A query run before that
+// is buffered, so the database it reads is not known yet: the connection itself stands in, under
+// an id unique to this connection object and process, and never shares an entry.
+const pendingConnections = new WeakMap<object, string>()
+
+const pendingConnectionId = (db: object): string => {
+  let id = pendingConnections.get(db)
+  if (id == null) {
+    id = randomUUID()
+    pendingConnections.set(db, id)
+  }
+  return id
+}
+
 // The data a model reads: its deployment (first seed host), database and collection. The model
 // name stays in the key as well, since discriminators share their base model's collection.
 // An aggregate without a model gets no scope and fails in mongoose's own exec, as without a cache.
 export function getModelScope(model: Model<unknown> | undefined): Record<string, unknown> {
   if (model == null) return {}
   const { db, collection, modelName } = model
-  return {
-    model: modelName,
-    collection: collection.collectionName,
-    db: db.name,
-    host: db.host,
-    port: db.port,
-  }
+  const scope = { model: modelName, collection: collection.collectionName }
+  if (db.name == null || db.host == null) return { ...scope, pendingConnection: pendingConnectionId(db) }
+  return { ...scope, db: db.name, host: db.host, port: db.port }
 }
