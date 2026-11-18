@@ -190,6 +190,69 @@ jobs:
             -Dsonar.coverage.exclusions=tests/**
             -Dsonar.qualitygate.wait=true
 
+  # The packed package installed into a consumer project of its own, through require() and
+  # import, against a real MongoDB replica set and Redis, compared with the published release.
+  e2e:
+    name: E2E ${{ matrix.mongoose-version[0] }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    services:
+      # Label used to access the service container
+      redis:
+        # Docker Hub image, pinned to a major
+        image: redis:8-alpine
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps port 6379 on service container to the host
+          - 6379:6379
+
+    strategy:
+      fail-fast: false
+      matrix:
+        mongoose-version:
+          [
+            [mongoose@6.12.2, bson@^4.7.2],
+            [mongoose@7.6.4, bson@^5.5.0],
+            [mongoose@8.23.0, bson@^6.10.4],
+            [mongoose@9.4.1, bson@^7.0.0],
+          ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.x
+          cache: npm
+
+      # No dependency install scripts; the one the run needs comes next.
+      - name: Installing dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Download the MongoDB binary
+        run: node node_modules/mongodb-memory-server/postinstall.js
+
+      # Builds and packs the package, installs it with the matrix peers into a consumer
+      # project outside the repository, and runs every scenario group there.
+      - name: E2E
+        run: npm run test:e2e
+        env:
+          E2E_MONGOOSE: ${{ matrix.mongoose-version[0] }}
+          E2E_BSON: ${{ matrix.mongoose-version[1] }}
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+
   zizmor:
     name: Workflow audit (zizmor)
     runs-on: ubuntu-latest
@@ -213,7 +276,7 @@ jobs:
   # The one check branch rules require: it fails unless every job above succeeded.
   ci:
     name: CI
-    needs: [tests, sonar, zizmor]
+    needs: [tests, sonar, e2e, zizmor]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5

@@ -1,9 +1,10 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["../src", "../scripts", "."],
+  "include": ["../src", "../scripts", "../e2e", "."],
   "compilerOptions": {
     "rootDir": "..",
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "noUncheckedIndexedAccess": false
   }
 }
