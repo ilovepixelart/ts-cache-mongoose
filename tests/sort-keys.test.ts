@@ -78,3 +78,22 @@ describe('sortKeys', () => {
     expect(result).toEqual([{ a: 2, b: 1 }])
   })
 })
+
+describe('sortKeys on a pipeline', () => {
+  // toEqual ignores key order, so the order is compared through the serialized text.
+  const sortedPipeline = (pipeline: unknown[]) => JSON.stringify(sortKeys({ pipeline }))
+
+  it('orders the top-level fields of a $match and keeps their values as given', () => {
+    expect(sortedPipeline([{ $match: { z: 1, sub: { b: 2, a: 1 } } }])).toBe(JSON.stringify({ pipeline: [{ $match: { sub: { b: 2, a: 1 }, z: 1 } }] }))
+  })
+
+  it('keeps any other stage as given', () => {
+    const stage = { $project: { z: 1, same: { $eq: ['$sub', { b: 2, a: 1 }] } } }
+    expect(sortedPipeline([stage])).toBe(JSON.stringify({ pipeline: [stage] }))
+  })
+
+  it('keeps a stage with more than one key as given', () => {
+    const stage = { $match: { z: 1, a: 1 }, $limit: 1 }
+    expect(sortedPipeline([stage])).toBe(JSON.stringify({ pipeline: [stage] }))
+  })
+})
