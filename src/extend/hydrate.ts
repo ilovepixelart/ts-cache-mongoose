@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import { getKey } from '../key'
 
 import type { Query } from 'mongoose'
@@ -89,34 +88,6 @@ const isPlain = (value: unknown): value is Plain => {
 const isDocument = (value: unknown): value is DocumentLike => value != null && typeof value === 'object' && '$__' in value && typeof (value as { toObject?: unknown }).toObject === 'function'
 
 const sameValue = (a: unknown, b: unknown): boolean => getKey({ v: a ?? null }) === getKey({ v: b ?? null })
-
-type BsonLike = Record<string, unknown> & { EJSON: { serialize: (value: unknown, options: Plain) => Plain; deserialize: (value: Plain, options: Plain) => unknown } }
-
-// The driver's bson: `mongo.BSON` exists from mongoose 6 on, though mongoose 6's types omit it.
-const driverBson = (mongoose.mongo as unknown as { BSON: BsonLike }).BSON
-const driverClass = (type: string): unknown => driverBson[type === 'ObjectID' ? 'ObjectId' : type]
-
-// Cached data can hold BSON values of another instance of the bson package than the driver's:
-// the engine's EJSON.parse() resolves `bson` itself, and its ESM build or another version is a
-// separate set of classes. mongoose drops Decimal128 and Binary values of foreign classes when
-// it casts them, so every such value is rebuilt with the driver's classes. Keys are defined,
-// never assigned, so data keys such as "__proto__" stay plain own properties.
-const withDriverBson = (value: unknown): unknown => {
-  if (Array.isArray(value)) return value.map(withDriverBson)
-  if (value === null || typeof value !== 'object') return value
-  const type = (value as { _bsontype?: unknown })._bsontype
-  if (typeof type === 'string') {
-    const own = driverClass(type)
-    if (typeof own === 'function' && value instanceof own) return value
-    return (driverBson.EJSON.deserialize(driverBson.EJSON.serialize({ v: value }, { relaxed: false }), { relaxed: false }) as Plain).v
-  }
-  if (!isPlain(value)) return value
-  const copy: Plain = {}
-  for (const key of Object.keys(value)) {
-    Object.defineProperty(copy, key, { value: withDriverBson(value[key]), enumerable: true, writable: true, configurable: true })
-  }
-  return copy
-}
 
 // Copy of `value` with every value at `parts` replaced by `fn(value)`; arrays on the way, and an
 // array at the end, are mapped element by element. Keys are defined, never assigned.
@@ -366,7 +337,7 @@ export const toCacheData = (query: Query<unknown, unknown>, result: unknown): Ca
 export const fromCacheData = (query: Query<unknown, unknown>, cached: CacheData): unknown => {
   const self = query as unknown as QueryLike & { model: ModelLike }
   const options = populateOptionsOf(self)
-  const items = (Array.isArray(cached) ? cached : [cached]).map(withDriverBson)
+  const items = Array.isArray(cached) ? cached : [cached]
   if (!items.every((item) => isPlain(item) && rebuildable(self.model, item, options))) return undefined
   const fields = queryFields(self)
   const docs = items.map((item) => rebuild(self.model, item as Plain, fields, options))
