@@ -111,6 +111,10 @@ export class RedisCacheEngine implements CacheEngine {
       this.#client.disconnect()
       return
     }
+    // QUIT resolves on the server's reply, before the socket has closed; waiting for `end` keeps a
+    // command issued right after close() from finding a half-closed stream.
+    const ended = this.#client.status === 'ready' ? new Promise((resolve) => this.#client.once('end', resolve)) : undefined
     await this.#client.quit()
+    await ended
   }
 }
