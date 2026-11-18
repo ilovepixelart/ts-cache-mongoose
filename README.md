@@ -98,6 +98,8 @@ A non-lean `find` or `findOne` is cached as document data and rebuilt on a hit a
 
 The in-memory engine keeps its own copy of each result and returns a fresh copy on every hit, so changing a returned result (lean or non-lean, aggregate result or distinct list) does not change what later queries get.
 
+The Redis engine stores results as relaxed Extended JSON, written and read with the MongoDB driver's own bson, so BSON values on a hit (`ObjectId`, `Decimal128`, `Binary`, `UUID`, `Timestamp`) are instances of the same classes as in an uncached result, such as `mongoose.Types.ObjectId`. Relaxed Extended JSON stores every `Long` as a number, so a `Long` beyond 2^53 comes back rounded.
+
 ### Aggregate caching
 
 ```typescript

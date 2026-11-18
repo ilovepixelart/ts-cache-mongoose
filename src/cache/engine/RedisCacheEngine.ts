@@ -1,10 +1,16 @@
-import { EJSON } from 'bson'
 import IORedis from 'ioredis'
+import mongoose from 'mongoose'
 import { ms } from '../../ms'
 import { convertToObject } from '../../version'
 
+import type { EJSON as EJSONType } from 'bson'
 import type { Redis, RedisOptions } from 'ioredis'
 import type { CacheData, CacheEngine, Duration } from '../../types'
+
+// The driver's EJSON, so a hit holds the BSON classes the driver returns (mongoose.Types.ObjectId
+// and the like) rather than those of another copy of the bson package. `mongo.BSON` exists from
+// mongoose 6 on, though mongoose 6's types omit it.
+const { EJSON } = (mongoose.mongo as unknown as { BSON: { EJSON: typeof EJSONType } }).BSON
 
 export class RedisCacheEngine implements CacheEngine {
   readonly #client: Redis
@@ -35,7 +41,7 @@ export class RedisCacheEngine implements CacheEngine {
       if (converted === undefined) {
         // Nothing to cache. Redis has no distinct representation of
         // "undefined" vs "not set", and bson 7's EJSON.stringify types
-        // reject undefined input — so skip the write entirely.
+        // reject undefined input, so skip the write entirely.
         return
       }
       const givenTTL = ttl == null ? undefined : ms(ttl)
