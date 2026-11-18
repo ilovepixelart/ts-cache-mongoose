@@ -158,6 +158,18 @@ cache.init(mongoose, {
 
 The callback receives the raw `Error`. Cache reads and writes never throw: a failing engine degrades to a cache miss.
 
+### Redis unavailable
+
+When the Redis connection is down (Redis stopped, host unreachable, connection lost), a cache read or write fails at once: `onError` receives the error and the query goes to MongoDB. ioredis keeps reconnecting with its `retryStrategy`, and caching resumes when Redis is back, without a restart. `clear()` rejects at once in the same situation. Commands issued while the first connection is still being established wait for it, for at most one second, so a query sent right after `init()` is still served from Redis.
+
+This comes from two ioredis defaults the engine sets: `enableOfflineQueue: false` and `maxRetriesPerRequest: 0`. A value set in `engineOptions` is used as given. To have commands wait in the ioredis offline queue through reconnection attempts instead (the behaviour before 2.5.0, where a cold query against a stopped Redis took 40 seconds or more), set the ioredis defaults back:
+
+```typescript
+engineOptions: { host: 'localhost', port: 6379, enableOfflineQueue: true, maxRetriesPerRequest: 20 }
+```
+
+A Redis that accepts connections but stops answering (paused, or a network path that drops packets) is not detected by the connection state; set ioredis `commandTimeout` (milliseconds) to bound how long a cache command waits for it.
+
 ### Cache invalidation
 
 ```typescript
