@@ -79,6 +79,7 @@
     "biome:fix": "npx @biomejs/biome check --write .",
     "lint:package": "publint --strict && attw --pack .",
     "test": "vitest run --coverage",
+    "test:e2e": "npm run build && node e2e/run.ts",
     "test:open": "vitest run --coverage && open-cli coverage/lcov-report/index.html",
     "clean": "rm -rf ./dist",
     "type:check": "tsc --noEmit",

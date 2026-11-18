@@ -1,0 +1,4 @@
+{
+  "description": "Scenarios whose result is meant to differ from the latest published release: each entry names the scenario (group/name), the pull request that changed it, and the change. Empty while main equals the release.",
+  "changes": []
+}
